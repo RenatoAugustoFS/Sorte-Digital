@@ -1,3 +1,15 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+
+formulario-concurso:
+  path: /formulario-concurso
+  methods:
+    - GET
+  controller: App\Controller\Concurso\ConcursoController::formularioCriarConcurso
+
+novo-concurso:
+  path: /novo-concurso
+  methods:
+    - POST
+  controller: App\Controller\Concurso\ConcursoController::criarNovoConcurso
