@@ -19,32 +19,54 @@ class ConcursoRepository extends ServiceEntityRepository
         parent::__construct($registry, Concurso::class);
     }
 
-    // /**
-    //  * @return Concurso[] Returns an array of Concurso objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findConcursosAbertos()
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        /*
+        $query = $this->getEntityManager()
+            ->createQuery(
+                'Select c FROM App\Entity\Concurso\Concurso c WHERE c.estado = :estado'
+            )->setParameter(
+                'estado',
+                '1'
+            );
+        */
+        $classe = Concurso::class;
+        $dql = "SELECT concurso, estado FROM $classe concurso 
+                JOIN concurso.estado estado 
+                WITH estado.descricao = 'Aberto'";
 
-    /*
-    public function findOneBySomeField($value): ?Concurso
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $concursosAbertos = $this->getEntityManager()
+            ->createQuery($dql)
+            ->getResult();
+
+        return $concursosAbertos;
     }
-    */
+
+    public function findConcursosEmAndamento()
+    {
+        $classe = Concurso::class;
+        $dql = "SELECT concurso, estado FROM $classe concurso 
+                JOIN concurso.estado estado 
+                WITH estado.descricao = 'Em Andamento'";
+
+        $concursosAbertos = $this->getEntityManager()
+            ->createQuery($dql)
+            ->getResult();
+
+        return $concursosAbertos;
+    }
+
+    public function findConcursosFechados()
+    {
+        $classe = Concurso::class;
+        $dql = "SELECT concurso, estado FROM $classe concurso 
+                JOIN concurso.estado estado 
+                WITH estado.descricao = 'Fechado'";
+
+        $concursosAbertos = $this->getEntityManager()
+            ->createQuery($dql)
+            ->getResult();
+
+        return $concursosAbertos;
+    }
 }

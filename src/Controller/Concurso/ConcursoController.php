@@ -2,6 +2,10 @@
 
 namespace App\Controller\Concurso;
 
+use App\Entity\Concurso\EstadoConcurso\Aberto;
+use App\Entity\Concurso\EstadoConcurso\EstadoConcurso;
+use App\Repository\ConcursoRepository;
+use App\Repository\EstadoConcursoRepository;
 use App\Service\EntityFactory\ConcursoFactory;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,13 +17,17 @@ class ConcursoController extends AbstractController
 {
     private ConcursoFactory $concursoFactory;
     private EntityManagerInterface $entityManager;
+    private ConcursoRepository $concursoRepository;
 
     public function __construct(
         ConcursoFactory $concursoFactory,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        ConcursoRepository $concursoRepository,
+        EstadoConcursoRepository $estadoConcursoRepository
     ) {
         $this->concursoFactory = $concursoFactory;
         $this->entityManager = $entityManager;
+        $this->concursoRepository = $concursoRepository;
     }
 
     public function formularioCriarConcurso(Request $request): Response
@@ -41,7 +49,17 @@ class ConcursoController extends AbstractController
             return $this->redirectToRoute('formulario-concurso');
         }
 
-        $this->addFlash('notice', 'Parabén! Concurso Criado Com Sucesso!');
-        return $this->redirectToRoute('formulario-concurso');
+        $this->addFlash('notice', 'Parabéns! Concurso Criado Com Sucesso!');
+        return $this->redirectToRoute('home');
+    }
+
+    public function buscarConcursos(Request $request): Response
+    {
+        $concursosAbertos = $this->concursoRepository->findConcursosAbertos();
+
+        return $this->render('/home/index.html.twig', [
+            'h1_name' => 'Página inicial',
+            'concursos' => $concursosAbertos
+        ]);
     }
 }

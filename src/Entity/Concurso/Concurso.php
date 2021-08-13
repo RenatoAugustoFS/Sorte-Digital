@@ -29,7 +29,7 @@ class Concurso
      * @ORM\ManyToOne(targetEntity="App\Entity\Concurso\EstadoConcurso\EstadoConcurso")
      * @ORM\JoinColumn(nullable=false)
      */
-    public EstadoConcurso $estado;
+    private EstadoConcurso $estado;
 
     /**
      * @ORM\Column(type="datetime")
@@ -79,6 +79,11 @@ class Concurso
         $this->cartelas->add($cartela);
         $cartela->addConcurso($this);
         return $this;
+    }
+
+    public function estadoDescricao()
+    {
+        return $this->estado->descricao();
     }
 
     public function getCartelas(): Collection

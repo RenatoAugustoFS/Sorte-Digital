@@ -9,21 +9,11 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h1>Hello {{ h1_name }}! ✅</h1>
 
     <ul>
         {% for concurso in concursos %}
-            <li>{{ concurso.descricao }}</li>
-        {% endfor %}
-    </ul>
-
-    <ul>
-        {% for cartela in cartelas %}
-            <li>{{ cartela.nomeDoJogador }}</li>
-            <li>{{ cartela.telefoneDoJogador }}</li>
-            {% for cartela in cartela.dezenas %}
-                <li>{{ cartela }}</li>
-            {% endfor %}
+            <li>{{ concurso.descricao }} - {{ concurso.estadoDescricao }}</li>
         {% endfor %}
     </ul>
 
