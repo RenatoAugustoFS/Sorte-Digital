@@ -27,8 +27,8 @@ class ConcursoFactory
 
         try {
             return new Concurso($descricao, $dataInicioEnviada, $estadoConcurso);
-        } catch (\InvalidArgumentException $exception) {
-            throw new \InvalidArgumentException($exception->getMessage());
+        } catch (\Exception $exception) {
+            throw new \Exception($exception->getMessage());
         }
     }
 

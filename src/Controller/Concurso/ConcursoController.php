@@ -44,7 +44,7 @@ class ConcursoController extends AbstractController
             $concurso = $this->concursoFactory->criarConcurso($request);
             $this->entityManager->persist($concurso);
             $this->entityManager->flush();
-        } catch (\InvalidArgumentException $exception) {
+        } catch (\Exception $exception) {
             $this->addFlash('notice', $exception->getMessage());
             return $this->redirectToRoute('formulario-concurso');
         }

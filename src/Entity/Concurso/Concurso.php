@@ -54,16 +54,16 @@ class Concurso
         $this->estado = $estado;
     }
 
-    private function validarData(string $data)
+    private function validarData(string $dataInicio)
     {
         try {
-            $dataInicio = new \DateTimeImmutable($data);
+            $dataInicio = new \DateTimeImmutable($dataInicio);
         } catch (\Exception $exception) {
             throw new \InvalidArgumentException("Data enviada está num formato inválido");
         }
 
         if ($dataInicio < new \DateTimeImmutable('now')) {
-            throw new \InvalidArgumentException(
+            throw new \DomainException(
                 "Data enviada não pode ser anterior nem igual a hoje - 
                 (Todo Concurso precisa de tempo desde a criação até seu início)"
             );
@@ -105,7 +105,7 @@ class Concurso
         return $this->estado->podeReceberAposta();
     }
 
-    public function dataAbertura()
+    public function dataAbertura(): string
     {
         return $this->dataInicio->format('d/m/Y');
     }
