@@ -11,8 +11,23 @@
 <div class="example-wrapper">
     <h1>Hello {{ h1_name }}! ✅</h1>
 
+    <h2>Concursos Abertos</h2>
     <ul>
-        {% for concurso in concursos %}
+        {% for concurso in concursosAbertos %}
+            <li>{{ concurso.descricao }} - {{ concurso.estadoDescricao }} - {{ concurso.dataAbertura }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Concursos Em Andamento</h2>
+    <ul>
+        {% for concurso in concursosEmAndamento %}
+            <li>{{ concurso.descricao }} - {{ concurso.estadoDescricao }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Concursos Fechados</h2>
+    <ul>
+        {% for concurso in concursosFechados %}
             <li>{{ concurso.descricao }} - {{ concurso.estadoDescricao }}</li>
         {% endfor %}
     </ul>

@@ -56,10 +56,14 @@ class ConcursoController extends AbstractController
     public function buscarConcursos(Request $request): Response
     {
         $concursosAbertos = $this->concursoRepository->findConcursosAbertos();
+        $concursosEmAndamento = $this->concursoRepository->findConcursosEmAndamento();
+        $concursosFechados = $this->concursoRepository->findConcursosFechados();
 
         return $this->render('/home/index.html.twig', [
             'h1_name' => 'Página inicial',
-            'concursos' => $concursosAbertos
+            'concursosAbertos' => $concursosAbertos,
+            'concursosEmAndamento' => $concursosEmAndamento,
+            'concursosFechados' => $concursosFechados,
         ]);
     }
 }
