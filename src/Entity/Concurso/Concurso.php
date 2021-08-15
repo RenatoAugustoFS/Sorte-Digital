@@ -79,7 +79,7 @@ class Concurso
 
     public function addCartela(Cartela $cartela): self
     {
-        if ($this->verificarSeConcursoPodeReceberAposta() == false) {
+        if (!$this->verificarSeConcursoPodeReceberAposta()) {
             throw new \DomainException(
                 "Concurso com estado ". $this->estado->descricao() ." não podem receber Cartelas"
             );

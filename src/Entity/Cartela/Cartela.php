@@ -36,7 +36,7 @@ class Cartela
     /**
      * @ORM\Column(type="simple_array")
      */
-    private $dezenas = [];
+    private $dezenas;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Concurso\Concurso", inversedBy="cartelas")
@@ -64,15 +64,5 @@ class Cartela
     public function getDezenas(): ?array
     {
         return $this->dezenas;
-    }
-
-    public function getNomeDoJogador()
-    {
-        return $this->nomeDoJogador;
-    }
-
-    public function getTelefoneDoJogador()
-    {
-        return $this->telefoneDoJogador;
     }
 }
