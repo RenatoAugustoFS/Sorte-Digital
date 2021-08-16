@@ -56,13 +56,13 @@ class Cartela
         $this->concurso = $concurso;
     }
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function getDezenas(): ?array
+    public function dezenas(): ?array
     {
         return $this->dezenas;
+    }
+
+    public function nomeJogador():string
+    {
+        return $this->nomeDoJogador;
     }
 }

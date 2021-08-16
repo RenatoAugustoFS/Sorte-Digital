@@ -2,6 +2,7 @@
 
 namespace App\Controller\Concurso;
 
+use App\Entity\Cartela\Cartela;
 use App\Entity\Concurso\EstadoConcurso\Aberto;
 use App\Entity\Concurso\EstadoConcurso\EstadoConcurso;
 use App\Repository\ConcursoRepository;
@@ -65,5 +66,34 @@ class ConcursoController extends AbstractController
             'concursosEmAndamento' => $concursosEmAndamento,
             'concursosFechados' => $concursosFechados,
         ]);
+    }
+
+    public function concursoPorId(int $id): Response
+    {
+        $concurso = $this->concursoRepository->findOneBy(['id' => $id]);
+
+        if (is_null($concurso)) {
+            return new Response('', Response::HTTP_NOT_FOUND);
+        }
+
+        $dezenas = [1,2,3,4,5,6,7,8,9,10];
+        $cartela = new Cartela(
+            'Renato',
+            '123456789',
+            'renatoaugusto@ads.gmail.com',
+            $dezenas
+        );
+
+        $concurso->addCartela($cartela);
+
+        $this->entityManager->flush();
+
+
+
+        return $this
+            ->render(
+                '/concursos/concurso-por-id.html.twig',
+                ['concurso' => $concurso]
+            );
     }
 }

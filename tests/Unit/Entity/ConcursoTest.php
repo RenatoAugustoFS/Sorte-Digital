@@ -33,12 +33,15 @@ class ConcursoTest extends TestCase
     public function testConcursoAbertoDeveReceberCartelas(Concurso $concurso)
     {
         $concurso->addCartela($this->cartela);
-        $cartelas = $concurso->getCartelas();
+        $cartelas = $concurso->cartelas();
 
         self::assertCount(1, $cartelas);
     }
 
-    public function testConcursoNaoDeveReceberCartelasComQuantidadeDezenasDiferenteDoPermitido()
+    /**
+     * @dataProvider concursoAberto
+     */
+    public function testConcursoNaoDeveReceberCartelasComQuantidadeDezenasDiferenteDoPermitido(Concurso $concurso)
     {
         self::expectException(DomainException::class);
         self::expectExceptionMessage("Este concurso só pode receber cartelas com 10 dezenas");
@@ -49,14 +52,8 @@ class ConcursoTest extends TestCase
             'renatoaugusto@ads.gmail.com',
             [1,2,3,4,5,6,7,8,9]
         );
-        $concursoComDezDezenas = new Concurso(
-            'Concurso-Com-10-Dezenas',
-            '12/12/2050',
-            new Aberto(),
-            10
-        );
 
-        $concursoComDezDezenas->addCartela($cartelaComNoveDezenas);
+        $concurso->addCartela($cartelaComNoveDezenas);
     }
 
     /**
@@ -80,7 +77,6 @@ class ConcursoTest extends TestCase
 
         $concurso->addCartela($this->cartela);
     }
-
 
     public function testConcursoNaoPodeSerCriadoComDataDeInicioMenorQueADataAtual()
     {
@@ -111,7 +107,7 @@ class ConcursoTest extends TestCase
         );
     }
 
-    /**DATA PROVIDERS*/
+    /**Data Providers*/
     public function concursoAberto()
     {
         $estadoConcurso = new Aberto();

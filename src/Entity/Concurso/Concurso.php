@@ -3,7 +3,9 @@
 namespace App\Entity\Concurso;
 
 use App\Entity\Cartela\Cartela;
+use App\Entity\Concurso\EstadoConcurso\Aberto;
 use App\Entity\Concurso\EstadoConcurso\EstadoConcurso;
+use App\Entity\Concurso\EstadoConcurso\Fechado;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -82,14 +84,47 @@ class Concurso
         return $dataInicio;
     }
 
-    public function getDescricao(): string
+    public function descricao(): string
     {
         return $this->descricao;
     }
 
+    public function cartelas(): Collection
+    {
+        return $this->cartelas;
+    }
+
+    public function descricaoEstadoDoConcurso(): string
+    {
+        return $this->estado->descricao();
+    }
+
+    public function dataAbertura(): string
+    {
+        return $this->dataInicio->format('d/m/Y');
+    }
+
+    public function dezenasPermitidasPorCartela(): int
+    {
+        return $this->dezenasPermitidasPorCartela;
+    }
+
+    public function alteraEstado(EstadoConcurso $estadoConcurso): void
+    {
+        if ($this->estado instanceof Fechado) {
+            throw new \DomainException("Concurso fechado não pode ter seu estado alterado");
+        }
+
+        if ($estadoConcurso instanceof Aberto){
+            throw new \DomainException("Concurso não pode retroceder de estado para voltar a estar aberto");
+        }
+
+        $this->estado = $estadoConcurso;
+    }
+
     public function addCartela(Cartela $cartela): self
     {
-        if (!$this->verificarSeConcursoPodeReceberAposta()) {
+        if (!$this->podeReceberAposta()) {
             throw new \DomainException(
                 "Concurso com estado ". $this->estado->descricao() ." não podem receber Cartelas"
             );
@@ -106,25 +141,14 @@ class Concurso
         return $this;
     }
 
-    public function estadoDescricao()
-    {
-        return $this->estado->descricao();
-    }
-
-    public function getCartelas(): Collection
-    {
-        return $this->cartelas;
-    }
-
-    private function verificarSeConcursoPodeReceberAposta(): bool
+    public function podeReceberAposta(): bool
     {
         return $this->estado->podeReceberAposta();
     }
 
     private function verificarQuantidadeDeDezenasCartela(Cartela $cartela): bool
     {
-        $quantidadeDezenas = count($cartela->getDezenas());
-
+        $quantidadeDezenas = count($cartela->dezenas());
         if ($quantidadeDezenas != $this->dezenasPermitidasPorCartela){
             return false;
         }
@@ -132,22 +156,12 @@ class Concurso
         return true;
     }
 
-    private function validarQuantidadeDezenasPermitidasPorCartela(int $dezenasPermitidasPorCartela)
+    private function validarQuantidadeDezenasPermitidasPorCartela(int $dezenasPermitidasPorCartela): void
     {
         if ($dezenasPermitidasPorCartela > 10 || $dezenasPermitidasPorCartela < 5) {
             throw new \DomainException("Quantidade de Dezenas permitidas por concurso deve ser > 5 OU < 10");
         }
 
         $this->dezenasPermitidasPorCartela = $dezenasPermitidasPorCartela;
-    }
-
-    public function dataAbertura(): string
-    {
-        return $this->dataInicio->format('d/m/Y');
-    }
-
-    public function dezenasPermitidasPorCartela(): int
-    {
-        return $this->dezenasPermitidasPorCartela;
     }
 }
