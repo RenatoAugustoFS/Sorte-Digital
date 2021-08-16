@@ -23,10 +23,16 @@ class ConcursoFactory
 
         $dataInicioEnviada = $propriedades['dataInicio'];
         $descricao = $propriedades['descricao'];
+        $quantidadeDezenasPorCartela = $propriedades['quantidadeDezenasPorCartela'];
         $estadoConcurso = $this->estadoInicialConcurso();
 
         try {
-            return new Concurso($descricao, $dataInicioEnviada, $estadoConcurso);
+            return new Concurso(
+                $descricao,
+                $dataInicioEnviada,
+                $estadoConcurso,
+                $quantidadeDezenasPorCartela
+            );
         } catch (\Exception $exception) {
             throw new \Exception($exception->getMessage());
         }
@@ -45,9 +51,17 @@ class ConcursoFactory
                 "Data de Inicio do concurso deve ser preenchida!"
             );
         }
+
+        if (!$request->request->get('quantidadeDezenasPorCartela')) {
+            throw new \DomainException(
+                "Quantidade de dezenas que será permitido em cada cartela deste concurso deve ser especificada!"
+            );
+        }
+
         return [
             'dataInicio' =>  $request->request->get('dataInicio'),
             'descricao' => $request->request->get('descricao'),
+            'quantidadeDezenasPorCartela' => $request->get('quantidadeDezenasPorCartela')
         ];
     }
 

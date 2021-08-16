@@ -18,12 +18,12 @@ class Concurso
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $descricao;
+    private string $descricao;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Concurso\EstadoConcurso\EstadoConcurso")
@@ -42,16 +42,26 @@ class Concurso
     private $dataFim;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    private int $dezenasPermitidasPorCartela;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Cartela\Cartela", mappedBy="concurso", cascade={"remove", "persist"})
      */
     private $cartelas;
 
-    public function __construct(string $descricao, string $dataInicio, EstadoConcurso $estado)
-    {
+    public function __construct(
+        string $descricao,
+        string $dataInicio,
+        EstadoConcurso $estado,
+        int $dezenasPermitidasPorCartela
+    ) {
         $this->cartelas = new ArrayCollection();
         $this->descricao = $descricao;
         $this->dataInicio = $this->validarData($dataInicio);
         $this->estado = $estado;
+        $this->validarQuantidadeDezenasPermitidasPorCartela($dezenasPermitidasPorCartela);
     }
 
     private function validarData(string $dataInicio)
@@ -85,6 +95,12 @@ class Concurso
             );
         }
 
+        if(!$this->verificarQuantidadeDeDezenasCartela($cartela)){
+            throw new \DomainException(
+                "Este concurso só pode receber cartelas com {$this->dezenasPermitidasPorCartela} dezenas"
+            );
+        }
+
         $this->cartelas->add($cartela);
         $cartela->addConcurso($this);
         return $this;
@@ -105,8 +121,33 @@ class Concurso
         return $this->estado->podeReceberAposta();
     }
 
+    private function verificarQuantidadeDeDezenasCartela(Cartela $cartela): bool
+    {
+        $quantidadeDezenas = count($cartela->getDezenas());
+
+        if ($quantidadeDezenas != $this->dezenasPermitidasPorCartela){
+            return false;
+        }
+
+        return true;
+    }
+
+    private function validarQuantidadeDezenasPermitidasPorCartela(int $dezenasPermitidasPorCartela)
+    {
+        if ($dezenasPermitidasPorCartela > 10 || $dezenasPermitidasPorCartela < 5) {
+            throw new \DomainException("Quantidade de Dezenas permitidas por concurso deve ser > 5 OU < 10");
+        }
+
+        $this->dezenasPermitidasPorCartela = $dezenasPermitidasPorCartela;
+    }
+
     public function dataAbertura(): string
     {
         return $this->dataInicio->format('d/m/Y');
+    }
+
+    public function dezenasPermitidasPorCartela(): int
+    {
+        return $this->dezenasPermitidasPorCartela;
     }
 }

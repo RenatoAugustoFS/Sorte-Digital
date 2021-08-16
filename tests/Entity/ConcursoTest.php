@@ -38,6 +38,27 @@ class ConcursoTest extends TestCase
         self::assertCount(1, $cartelas);
     }
 
+    public function testConcursoNaoDeveReceberCartelasComQuantidadeDezenasDiferenteDoPermitido()
+    {
+        self::expectException(DomainException::class);
+        self::expectExceptionMessage("Este concurso só pode receber cartelas com 10 dezenas");
+
+        $cartelaComNoveDezenas = new Cartela(
+            'Renato',
+            '123456789',
+            'renatoaugusto@ads.gmail.com',
+            [1,2,3,4,5,6,7,8,9]
+        );
+        $concursoComDezDezenas = new Concurso(
+            'Concurso-Com-10-Dezenas',
+            '12/12/2050',
+            new Aberto(),
+            10
+        );
+
+        $concursoComDezDezenas->addCartela($cartelaComNoveDezenas);
+    }
+
     /**
      * @dataProvider concursoEmAndamento
      */
@@ -60,6 +81,7 @@ class ConcursoTest extends TestCase
         $concurso->addCartela($this->cartela);
     }
 
+
     public function testConcursoNaoPodeSerCriadoComDataDeInicioMenorQueADataAtual()
     {
         self::expectException(DomainException::class);
@@ -70,7 +92,8 @@ class ConcursoTest extends TestCase
         $concurso = new Concurso(
             'Concurso-teste1',
             $this->dataInicioInvalida,
-            $estadoConcurso
+            $estadoConcurso,
+            10
         );
     }
 
@@ -83,17 +106,20 @@ class ConcursoTest extends TestCase
         $concurso = new Concurso(
             'Concurso-teste1',
             'data-inválida',
-            $estadoConcurso
+            $estadoConcurso,
+            10
         );
     }
 
+    /**DATA PROVIDERS*/
     public function concursoAberto()
     {
         $estadoConcurso = new Aberto();
         $concurso = new Concurso(
             'Concurso-teste',
             '12/30/2050',
-            $estadoConcurso
+            $estadoConcurso,
+            10
         );
 
         return [
@@ -107,7 +133,8 @@ class ConcursoTest extends TestCase
         $concurso = new Concurso(
             'Concurso-teste',
             '12/30/2050',
-            $estadoConcurso
+            $estadoConcurso,
+            10
         );
 
         return [
@@ -121,7 +148,8 @@ class ConcursoTest extends TestCase
         $concurso = new Concurso(
             'Concurso-teste',
             '12/30/2050',
-            $estadoConcurso
+            $estadoConcurso,
+            10
         );
 
         return [
