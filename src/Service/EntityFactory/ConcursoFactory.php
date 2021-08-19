@@ -21,15 +21,15 @@ class ConcursoFactory
     {
         $propriedades = $this->checarPropriedadesEnviadas($request);
 
-        $dataInicioEnviada = $propriedades['dataInicio'];
         $descricao = $propriedades['descricao'];
+        $dataInicio = $propriedades['dataInicio'];
         $quantidadeDezenasPorCartela = $propriedades['quantidadeDezenasPorCartela'];
         $estadoConcurso = $this->estadoInicialConcurso();
 
         try {
             return new Concurso(
                 $descricao,
-                $dataInicioEnviada,
+                $dataInicio,
                 $estadoConcurso,
                 $quantidadeDezenasPorCartela
             );
@@ -59,7 +59,7 @@ class ConcursoFactory
         }
 
         return [
-            'dataInicio' =>  $request->request->get('dataInicio'),
+            'dataInicio' =>  new \DateTimeImmutable($request->request->get('dataInicio')),
             'descricao' => $request->request->get('descricao'),
             'quantidadeDezenasPorCartela' => $request->get('quantidadeDezenasPorCartela')
         ];

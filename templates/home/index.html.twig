@@ -14,21 +14,21 @@
     <h2>Concursos Abertos</h2>
     <ul>
         {% for concurso in concursosAbertos %}
-            <li>{{ concurso.descricaoConcurso }} - {{ concurso.descricaoEstadoDoConcurso }} - {{ concurso.dataAbertura }}</li>
+            <li>{{ concurso.descricao }} - {{ concurso.dataAbertura }}</li>
         {% endfor %}
     </ul>
 
     <h2>Concursos Em Andamento</h2>
     <ul>
         {% for concurso in concursosEmAndamento %}
-            <li>{{ concurso.descricaoConcurso }} - {{ concurso.descricaoEstadoDoConcurso }}</li>
+            <li>{{ concurso.descricao }}</li>
         {% endfor %}
     </ul>
 
     <h2>Concursos Fechados</h2>
     <ul>
         {% for concurso in concursosFechados %}
-            <li>{{ concurso.descricaoConcurso }} - {{ concurso.descricaoEstadoDoConcurso }}</li>
+            <li>{{ concurso.descricao }}</li>
         {% endfor %}
     </ul>
 

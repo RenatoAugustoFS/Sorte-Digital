@@ -34,9 +34,9 @@ class Concurso
     private EstadoConcurso $estado;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime_immutable")
      */
-    private $dataInicio;
+    private \DateTimeImmutable $dataInicio;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -44,18 +44,18 @@ class Concurso
     private $dataFim;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private int $dezenasPermitidasPorCartela;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Cartela\Cartela", mappedBy="concurso", cascade={"remove", "persist"})
      */
     private $cartelas;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private int $dezenasPermitidasPorCartela;
+
     public function __construct(
         string $descricao,
-        string $dataInicio,
+        \DateTimeImmutable $dataInicio,
         EstadoConcurso $estado,
         int $dezenasPermitidasPorCartela
     ) {
@@ -64,24 +64,6 @@ class Concurso
         $this->dataInicio = $this->validarData($dataInicio);
         $this->estado = $estado;
         $this->validarQuantidadeDezenasPermitidasPorCartela($dezenasPermitidasPorCartela);
-    }
-
-    private function validarData(string $dataInicio)
-    {
-        try {
-            $dataInicio = new \DateTimeImmutable($dataInicio);
-        } catch (\Exception $exception) {
-            throw new \InvalidArgumentException("Data enviada está num formato inválido");
-        }
-
-        if ($dataInicio < new \DateTimeImmutable('now')) {
-            throw new \DomainException(
-                "Data enviada não pode ser anterior nem igual a hoje - 
-                (Todo Concurso precisa de tempo desde a criação até seu início)"
-            );
-        }
-
-        return $dataInicio;
     }
 
     public function descricao(): string
@@ -94,19 +76,9 @@ class Concurso
         return $this->cartelas;
     }
 
-    public function descricaoEstadoDoConcurso(): string
-    {
-        return $this->estado->descricao();
-    }
-
     public function dataAbertura(): string
     {
         return $this->dataInicio->format('d/m/Y');
-    }
-
-    public function dezenasPermitidasPorCartela(): int
-    {
-        return $this->dezenasPermitidasPorCartela;
     }
 
     public function alteraEstado(EstadoConcurso $estadoConcurso): void
@@ -163,5 +135,24 @@ class Concurso
         }
 
         $this->dezenasPermitidasPorCartela = $dezenasPermitidasPorCartela;
+    }
+
+    private function validarData(\DateTimeImmutable $dataInicio)
+    {
+        if ($dataInicio < new \DateTimeImmutable('now')) {
+            throw new \DomainException(
+                "Data enviada não pode ser anterior nem igual a hoje - 
+                (Todo Concurso precisa de tempo desde a criação até seu início)"
+            );
+        }
+        return $dataInicio;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDezenasPermitidasPorCartela(): int
+    {
+        return $this->dezenasPermitidasPorCartela;
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Entity\Cartela;
 
 use App\Entity\Concurso\Concurso;
+use App\Entity\Jogador\Jogador;
 use App\Repository\CartelaRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -19,19 +20,9 @@ class Cartela
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Embedded
      */
-    private $nomeDoJogador;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $telefoneDoJogador;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $EmailDoJogador;
+    private Jogador $jogador;
 
     /**
      * @ORM\Column(type="simple_array")
@@ -43,12 +34,10 @@ class Cartela
      */
     private $concurso;
 
-    public function __construct($nomeDoJogador, $telefoneDoJogador, $EmailDoJogador,  array $dezenas)
+    public function __construct(array $dezenas, Jogador $jogador)
     {
-        $this->nomeDoJogador = $nomeDoJogador;
-        $this->telefoneDoJogador = $telefoneDoJogador;
-        $this->EmailDoJogador = $EmailDoJogador;
         $this->dezenas = $dezenas;
+        $this->jogador = $jogador;
     }
 
     public function addConcurso(Concurso $concurso)
@@ -61,8 +50,8 @@ class Cartela
         return $this->dezenas;
     }
 
-    public function nomeJogador():string
+    public function nomeJogador()
     {
-        return $this->nomeDoJogador;
+        return $this->jogador->nome();
     }
 }

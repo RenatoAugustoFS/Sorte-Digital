@@ -2,9 +2,6 @@
 
 namespace App\Controller\Concurso;
 
-use App\Entity\Cartela\Cartela;
-use App\Entity\Concurso\EstadoConcurso\Aberto;
-use App\Entity\Concurso\EstadoConcurso\EstadoConcurso;
 use App\Repository\ConcursoRepository;
 use App\Repository\EstadoConcursoRepository;
 use App\Service\EntityFactory\ConcursoFactory;
@@ -76,24 +73,16 @@ class ConcursoController extends AbstractController
             return new Response('', Response::HTTP_NOT_FOUND);
         }
 
-        $dezenas = [1,2,3,4,5,6,7,8,9,10];
-        $cartela = new Cartela(
-            'Renato',
-            '123456789',
-            'renatoaugusto@ads.gmail.com',
-            $dezenas
-        );
-
-        $concurso->addCartela($cartela);
-
-        $this->entityManager->flush();
-
-
+        $cartelas = $concurso->cartelas();
+        $dezenasSorteadas = [1,5,6,8,10];
 
         return $this
             ->render(
-                '/concursos/concurso-por-id.html.twig',
-                ['concurso' => $concurso]
+                '/concursos/concurso-por-id.html.twig', [
+                    'dezenasSorteadas' => $dezenasSorteadas,
+                    'concurso' => $concurso,
+                    'cartelas' => $cartelas,
+                ]
             );
     }
 }
