@@ -3,20 +3,13 @@
 namespace App\Service\EntityFactory;
 
 use App\Entity\Concurso\Concurso;
+use App\Entity\Concurso\EstadoConcurso\Aberto;
 use App\Entity\Concurso\EstadoConcurso\EstadoConcurso;
-use App\Repository\EstadoConcursoRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class ConcursoFactory
 {
-    private EstadoConcursoRepository $estadoConcursoRepository;
-
-    public function __construct(EstadoConcursoRepository $estadoConcursoRepository)
-    {
-        $this->estadoConcursoRepository = $estadoConcursoRepository;
-    }
-
     public function criarConcurso(Request $request): Concurso
     {
         $propriedades = $this->checarPropriedadesEnviadas($request);
@@ -67,8 +60,6 @@ class ConcursoFactory
 
     private function estadoInicialConcurso(): EstadoConcurso
     {
-        return $this->estadoConcursoRepository->findOneBy([
-            'descricao' => 'aberto',
-        ]);
+        return new Aberto();
     }
 }

@@ -5,7 +5,7 @@ namespace App\Entity\Concurso\EstadoConcurso;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Embeddable
  */
 class Fechado extends EstadoConcurso
 {

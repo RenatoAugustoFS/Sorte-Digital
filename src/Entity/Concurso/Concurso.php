@@ -6,6 +6,7 @@ use App\Entity\Cartela\Cartela;
 use App\Entity\Concurso\EstadoConcurso\Aberto;
 use App\Entity\Concurso\EstadoConcurso\EstadoConcurso;
 use App\Entity\Concurso\EstadoConcurso\Fechado;
+use App\Entity\Concurso\Periodo\Periodo;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -28,20 +29,14 @@ class Concurso
     private string $descricao;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Concurso\EstadoConcurso\EstadoConcurso")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Embedded(class="App\Entity\Concurso\EstadoConcurso\EstadoConcurso")
      */
-    private EstadoConcurso $estado;
+    public EstadoConcurso $estado;
 
     /**
-     * @ORM\Column(type="datetime_immutable")
+     * @ORM\Embedded(class="App\Entity\Concurso\Periodo\Periodo")
      */
-    private \DateTimeImmutable $dataInicio;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $dataFim;
+    private Periodo $periodo;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Cartela\Cartela", mappedBy="concurso", cascade={"remove", "persist"})
@@ -55,14 +50,13 @@ class Concurso
 
     public function __construct(
         string $descricao,
-        \DateTimeImmutable $dataInicio,
-        EstadoConcurso $estado,
+        Periodo $periodo,
         int $dezenasPermitidasPorCartela
     ) {
         $this->cartelas = new ArrayCollection();
         $this->descricao = $descricao;
-        $this->dataInicio = $this->validarData($dataInicio);
-        $this->estado = $estado;
+        $this->periodo = $periodo;
+        $this->estado = new Aberto();
         $this->validarQuantidadeDezenasPermitidasPorCartela($dezenasPermitidasPorCartela);
     }
 
@@ -78,25 +72,22 @@ class Concurso
 
     public function dataAbertura(): string
     {
-        return $this->dataInicio->format('d/m/Y');
+        return $this->periodo->dataAbertura();
     }
 
-    public function alteraEstado(EstadoConcurso $estadoConcurso): void
+    public function inicia(): void
     {
-        if ($this->estado instanceof Fechado) {
-            throw new \DomainException("Concurso fechado não pode ter seu estado alterado");
-        }
+        $this->estado->inicia($this);
+    }
 
-        if ($estadoConcurso instanceof Aberto){
-            throw new \DomainException("Concurso não pode retroceder de estado para voltar a estar aberto");
-        }
-
-        $this->estado = $estadoConcurso;
+    public function encerra(): void
+    {
+        $this->estado = new Fechado();
     }
 
     public function addCartela(Cartela $cartela): self
     {
-        if (!$this->podeReceberAposta()) {
+        if (!$this->estado->podeReceberAposta()) {
             throw new \DomainException(
                 "Concurso com estado ". $this->estado->descricao() ." não podem receber Cartelas"
             );
@@ -113,18 +104,12 @@ class Concurso
         return $this;
     }
 
-    public function podeReceberAposta(): bool
-    {
-        return $this->estado->podeReceberAposta();
-    }
-
     private function verificarQuantidadeDeDezenasCartela(Cartela $cartela): bool
     {
         $quantidadeDezenas = count($cartela->dezenas());
         if ($quantidadeDezenas != $this->dezenasPermitidasPorCartela){
             return false;
         }
-
         return true;
     }
 
@@ -133,24 +118,9 @@ class Concurso
         if ($dezenasPermitidasPorCartela > 10 || $dezenasPermitidasPorCartela < 5) {
             throw new \DomainException("Quantidade de Dezenas permitidas por concurso deve ser > 5 OU < 10");
         }
-
         $this->dezenasPermitidasPorCartela = $dezenasPermitidasPorCartela;
     }
 
-    private function validarData(\DateTimeImmutable $dataInicio)
-    {
-        if ($dataInicio < new \DateTimeImmutable('now')) {
-            throw new \DomainException(
-                "Data enviada não pode ser anterior nem igual a hoje - 
-                (Todo Concurso precisa de tempo desde a criação até seu início)"
-            );
-        }
-        return $dataInicio;
-    }
-
-    /**
-     * @return int
-     */
     public function getDezenasPermitidasPorCartela(): int
     {
         return $this->dezenasPermitidasPorCartela;

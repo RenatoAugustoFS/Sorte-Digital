@@ -2,22 +2,15 @@
 
 namespace App\Entity\Concurso\EstadoConcurso;
 
+use App\Entity\Concurso\Concurso;
 use App\Repository\EstadoConcursoRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
- * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\Embeddable
  */
 abstract class EstadoConcurso
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -28,7 +21,22 @@ abstract class EstadoConcurso
         $this->descricao = $descricao;
     }
 
+    public function inicia(Concurso $concurso)
+    {
+        throw new \DomainException("Este concurso não pode ser iniciado");
+    }
+
+    public function encerra(Concurso $concurso)
+    {
+        throw new \DomainException("Este concurso não pode ser encerrado");
+    }
+
     public function descricao(): string
+    {
+        return $this->descricao;
+    }
+
+    public function __toString(): string
     {
         return $this->descricao;
     }

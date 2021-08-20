@@ -25,3 +25,9 @@ concurso-por-id:
   methods:
     - GET
   controller: App\Controller\Concurso\ConcursoController::concursoPorId
+
+teste:
+  path: /teste
+  methods:
+    - GET
+  controller: App\Controller\Concurso\ConcursoController::teste

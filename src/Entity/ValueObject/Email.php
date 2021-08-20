@@ -3,7 +3,6 @@
 namespace App\Entity\ValueObject;
 
 use Doctrine\ORM\Mapping as ORM;
-use http\Exception\InvalidArgumentException;
 
 /**
  * @ORM\Embeddable
@@ -24,7 +23,7 @@ class Email
     private function validarEmail($email): bool
     {
         if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
-            throw new InvalidArgumentException("Email inválido");
+            throw new \InvalidArgumentException("Email inválido");
         }
 
         return true;

@@ -2,8 +2,13 @@
 
 namespace App\Controller\Concurso;
 
+use App\Entity\Cartela\Cartela;
+use App\Entity\Cartela\Jogador\Jogador;
+use App\Entity\Concurso\Concurso;
+use App\Entity\Concurso\Periodo\Periodo;
+use App\Entity\ValueObject\Email;
+use App\Entity\ValueObject\Telefone;
 use App\Repository\ConcursoRepository;
-use App\Repository\EstadoConcursoRepository;
 use App\Service\EntityFactory\ConcursoFactory;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,8 +25,7 @@ class ConcursoController extends AbstractController
     public function __construct(
         ConcursoFactory $concursoFactory,
         EntityManagerInterface $entityManager,
-        ConcursoRepository $concursoRepository,
-        EstadoConcursoRepository $estadoConcursoRepository
+        ConcursoRepository $concursoRepository
     ) {
         $this->concursoFactory = $concursoFactory;
         $this->entityManager = $entityManager;
@@ -84,5 +88,32 @@ class ConcursoController extends AbstractController
                     'cartelas' => $cartelas,
                 ]
             );
+    }
+
+    public function teste(): Response
+    {
+        try {
+            $periodo = new Periodo(
+                new \DateTimeImmutable('05/08/2022')
+            );
+
+            $concurso = new Concurso('Concurso Malandragem', $periodo, 10);
+
+            $telefone = new Telefone('9672180047');
+            $email = new Email('renatoaugusto.ads@gmail.com');
+            $jogador = new Jogador('Renato', $telefone, $email);
+
+            $cartela = new Cartela([1,2,3,4,5,6,7,8,9,10], $jogador);
+
+            $concurso->addCartela($cartela);
+
+            $concurso->inicia();
+
+            $this->entityManager->persist($concurso);
+            $this->entityManager->flush();
+        } catch (\Exception $e){
+            $this->addFlash('notice', $e->getMessage());
+        }
+        return $this->redirectToRoute('formulario-concurso');
     }
 }

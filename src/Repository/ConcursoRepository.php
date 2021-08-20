@@ -18,18 +18,9 @@ class ConcursoRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Concurso::class);
     }
-
+    /*
     public function findConcursosAbertos()
     {
-        /*
-        $query = $this->getEntityManager()
-            ->createQuery(
-                'Select c FROM App\Entity\Concurso\Concurso c WHERE c.estado = :estado'
-            )->setParameter(
-                'estado',
-                '1'
-            );
-        */
         $classe = Concurso::class;
         $dql = "SELECT concurso, estado FROM $classe concurso 
                 JOIN concurso.estado estado 
@@ -69,4 +60,5 @@ class ConcursoRepository extends ServiceEntityRepository
 
         return $concursosAbertos;
     }
+    */
 }

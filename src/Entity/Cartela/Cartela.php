@@ -2,8 +2,8 @@
 
 namespace App\Entity\Cartela;
 
+use App\Entity\Cartela\Jogador\Jogador;
 use App\Entity\Concurso\Concurso;
-use App\Entity\Jogador\Jogador;
 use App\Repository\CartelaRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -20,7 +20,7 @@ class Cartela
     private $id;
 
     /**
-     * @ORM\Embedded
+     * @ORM\Embedded(class="App\Entity\Cartela\Jogador\Jogador")
      */
     private Jogador $jogador;
 

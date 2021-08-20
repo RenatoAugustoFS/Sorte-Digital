@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity\Jogador;
+namespace App\Entity\Cartela\Jogador;
 
 use App\Entity\ValueObject\Email;
 use App\Entity\ValueObject\Telefone;
