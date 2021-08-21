@@ -17,13 +17,11 @@ class ConcursoFactory
         $descricao = $propriedades['descricao'];
         $dataInicio = $propriedades['dataInicio'];
         $quantidadeDezenasPorCartela = $propriedades['quantidadeDezenasPorCartela'];
-        $estadoConcurso = $this->estadoInicialConcurso();
 
         try {
             return new Concurso(
                 $descricao,
                 $dataInicio,
-                $estadoConcurso,
                 $quantidadeDezenasPorCartela
             );
         } catch (\Exception $exception) {

@@ -3,18 +3,17 @@
 namespace App\Entity\Concurso\EstadoConcurso;
 
 use App\Entity\Concurso\Concurso;
-use App\Repository\EstadoConcursoRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Embeddable
  */
-abstract class EstadoConcurso
+class EstadoConcurso
 {
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $descricao;
+    protected $descricao;
 
     public function __construct(string $descricao)
     {
@@ -40,7 +39,5 @@ abstract class EstadoConcurso
     {
         return $this->descricao;
     }
-
-    abstract public function podeReceberAposta(): bool;
 }
 

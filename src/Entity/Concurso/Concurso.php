@@ -5,15 +5,13 @@ namespace App\Entity\Concurso;
 use App\Entity\Cartela\Cartela;
 use App\Entity\Concurso\EstadoConcurso\Aberto;
 use App\Entity\Concurso\EstadoConcurso\EstadoConcurso;
-use App\Entity\Concurso\EstadoConcurso\Fechado;
-use App\Entity\Concurso\Periodo\Periodo;
+use App\Entity\Concurso\PeriodoConcurso\Periodo;
+use App\Entity\Concurso\RestricaoConcurso\RestricaoDezenasPorCartela;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=ConcursoRepository::class)
- */
+/** @ORM\Entity(repositoryClass=ConcursoRepository::class) */
 class Concurso
 {
     /**
@@ -39,40 +37,30 @@ class Concurso
     private Periodo $periodo;
 
     /**
+     * @ORM\Embedded(class="App\Entity\Concurso\RestricaoConcurso\Resticao")
+     */
+    private RestricaoDezenasPorCartela $restricao;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Cartela\Cartela", mappedBy="concurso", cascade={"remove", "persist"})
      */
     private $cartelas;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private int $dezenasPermitidasPorCartela;
-
     public function __construct(
         string $descricao,
         Periodo $periodo,
-        int $dezenasPermitidasPorCartela
+        RestricaoDezenasPorCartela $restricao
     ) {
         $this->cartelas = new ArrayCollection();
+        $this->estado = new Aberto();
         $this->descricao = $descricao;
         $this->periodo = $periodo;
-        $this->estado = new Aberto();
-        $this->validarQuantidadeDezenasPermitidasPorCartela($dezenasPermitidasPorCartela);
-    }
-
-    public function descricao(): string
-    {
-        return $this->descricao;
+        $this->restricao = $restricao;
     }
 
     public function cartelas(): Collection
     {
         return $this->cartelas;
-    }
-
-    public function dataAbertura(): string
-    {
-        return $this->periodo->dataAbertura();
     }
 
     public function inicia(): void
@@ -82,7 +70,7 @@ class Concurso
 
     public function encerra(): void
     {
-        $this->estado = new Fechado();
+        $this->estado->encerra($this);
     }
 
     public function addCartela(Cartela $cartela): self
@@ -92,37 +80,20 @@ class Concurso
                 "Concurso com estado ". $this->estado->descricao() ." não podem receber Cartelas"
             );
         }
-
-        if(!$this->verificarQuantidadeDeDezenasCartela($cartela)){
-            throw new \DomainException(
-                "Este concurso só pode receber cartelas com {$this->dezenasPermitidasPorCartela} dezenas"
-            );
-        }
+        $this->restricao->validarQuantidadeDezenasCartela($cartela);
 
         $this->cartelas->add($cartela);
         $cartela->addConcurso($this);
         return $this;
     }
 
-    private function verificarQuantidadeDeDezenasCartela(Cartela $cartela): bool
+    public function dados(): array
     {
-        $quantidadeDezenas = count($cartela->dezenas());
-        if ($quantidadeDezenas != $this->dezenasPermitidasPorCartela){
-            return false;
-        }
-        return true;
-    }
-
-    private function validarQuantidadeDezenasPermitidasPorCartela(int $dezenasPermitidasPorCartela): void
-    {
-        if ($dezenasPermitidasPorCartela > 10 || $dezenasPermitidasPorCartela < 5) {
-            throw new \DomainException("Quantidade de Dezenas permitidas por concurso deve ser > 5 OU < 10");
-        }
-        $this->dezenasPermitidasPorCartela = $dezenasPermitidasPorCartela;
-    }
-
-    public function getDezenasPermitidasPorCartela(): int
-    {
-        return $this->dezenasPermitidasPorCartela;
+        return [
+            'descricao' => $this->descricao,
+            'dataAbertura' => $this->periodo->dataAbertura(),
+            'estado' => $this->estado,
+            'dezenasPermitidasPorCartela' => $this->restricao->dezenasPorCartela(),
+        ];
     }
 }

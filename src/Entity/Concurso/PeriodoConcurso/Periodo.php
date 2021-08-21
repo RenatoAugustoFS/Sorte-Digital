@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity\Concurso\Periodo;
+namespace App\Entity\Concurso\PeriodoConcurso;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -24,7 +24,7 @@ class Periodo
         $this->dataAbertura = $this->validarDataAbertura($dataAbertura);
     }
 
-    public function encerrar(): void
+    public function encerra(): void
     {
         $this->dataEncerramento = new \DateTimeImmutable('now');
     }
@@ -42,6 +42,6 @@ class Periodo
 
     public function dataAbertura(): string
     {
-        return $this->dataAbertura->format('d/m/Y');;
+        return $this->dataAbertura->format('d/m/Y');
     }
 }
