@@ -106,7 +106,7 @@
 
                         <h3>
                             <i class="fa fa-tachometer"></i>
-                            {{concurso.descricao}}
+                            {{concurso.dados.descricao}}
                             <a class="show-tooltip" title="Entrar no Grupo Whatssapp" href="https://chat.whatsapp.com/41jsxh06XowKTMBF9ii4rq">
                                 <button class="btn btn-success2">
                                     <i class="fa fa-whatsapp"></i>
@@ -139,14 +139,14 @@
                         ×
                     </button>
 
-                    <h2 style="color: red">Início: {{concurso.dataAbertura}}</h2>
+                    <h2 style="color: red">Início: {{concurso.dados.dataAbertura}}</h2>
                     <h3>
                         ATUALIZAÇÃO AUTOMÁTICA 10 MINUTOS APÓS O RESULTADO OFICIAL DA LOTERIA
                     </h3>
 
                     - FAÇA UM JOGO DE
                     <b>
-                        {{concurso.dezenasPermitidasPorCartela}} NÚMEROS.  QUEM ACERTAR PRIMEIRO OS {{concurso.dezenasPermitidasPorCartela}} NÚMEROS, INDEPENDENTEMENTE DE QUANTOS SORTEIOS ACONTEÇAM, SERÁ O GANHADOR.
+                        {{concurso.dados.dezenasPermitidasPorCartela}} NÚMEROS.  QUEM ACERTAR PRIMEIRO OS {{concurso.dados.dezenasPermitidasPorCartela}} NÚMEROS, INDEPENDENTEMENTE DE QUANTOS SORTEIOS ACONTEÇAM, SERÁ O GANHADOR.
                     </b>
                     <BR>
                     - HAVENDO MAIS DE UM GANHADOR SERÁ FEITO A DIVISÃO IGUALMENTE

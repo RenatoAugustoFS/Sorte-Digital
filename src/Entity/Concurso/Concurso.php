@@ -32,12 +32,12 @@ class Concurso
     public EstadoConcurso $estado;
 
     /**
-     * @ORM\Embedded(class="App\Entity\Concurso\Periodo\Periodo")
+     * @ORM\Embedded(class="App\Entity\Concurso\PeriodoConcurso\Periodo")
      */
     private Periodo $periodo;
 
     /**
-     * @ORM\Embedded(class="App\Entity\Concurso\RestricaoConcurso\Resticao")
+     * @ORM\Embedded(class="App\Entity\Concurso\RestricaoConcurso\RestricaoDezenasPorCartela")
      */
     private RestricaoDezenasPorCartela $restricao;
 

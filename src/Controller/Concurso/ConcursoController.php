@@ -5,7 +5,8 @@ namespace App\Controller\Concurso;
 use App\Entity\Cartela\Cartela;
 use App\Entity\Cartela\Jogador\Jogador;
 use App\Entity\Concurso\Concurso;
-use App\Entity\Concurso\Periodo\Periodo;
+use App\Entity\Concurso\PeriodoConcurso\Periodo;
+use App\Entity\Concurso\RestricaoConcurso\RestricaoDezenasPorCartela;
 use App\Entity\ValueObject\Email;
 use App\Entity\ValueObject\Telefone;
 use App\Repository\ConcursoRepository;
@@ -14,7 +15,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
 class ConcursoController extends AbstractController
 {
@@ -97,7 +97,9 @@ class ConcursoController extends AbstractController
                 new \DateTimeImmutable('05/08/2022')
             );
 
-            $concurso = new Concurso('Concurso Malandragem', $periodo, 10);
+            $restricao = new RestricaoDezenasPorCartela(10);
+
+            $concurso = new Concurso('Concurso Malandragem', $periodo, $restricao);
 
             $telefone = new Telefone('9672180047');
             $email = new Email('renatoaugusto.ads@gmail.com');
@@ -108,6 +110,7 @@ class ConcursoController extends AbstractController
             $concurso->addCartela($cartela);
 
             $concurso->inicia();
+            $concurso->encerra();
 
             $this->entityManager->persist($concurso);
             $this->entityManager->flush();
