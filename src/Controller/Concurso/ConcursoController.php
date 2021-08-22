@@ -2,19 +2,19 @@
 
 namespace App\Controller\Concurso;
 
-use App\Entity\Cartela\Cartela;
-use App\Entity\Cartela\Jogador\Jogador;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Concurso\Concurso;
 use App\Entity\Concurso\PeriodoConcurso\Periodo;
 use App\Entity\Concurso\RestricaoConcurso\RestricaoDezenasPorCartela;
-use App\Entity\ValueObject\Email;
-use App\Entity\ValueObject\Telefone;
 use App\Repository\ConcursoRepository;
 use App\Service\EntityFactory\ConcursoFactory;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use App\Entity\Cartela\Cartela;
+use App\Entity\ValueObject\Jogador\Jogador;
+use App\Entity\ValueObject\Email\Email;
+use App\Entity\ValueObject\Telefone\Telefone;
 
 class ConcursoController extends AbstractController
 {
