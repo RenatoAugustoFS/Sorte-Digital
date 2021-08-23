@@ -2,6 +2,8 @@
 
 namespace App\Controller\Concurso;
 
+use App\Entity\SorteioOficial\MegaSena;
+use App\Entity\SorteioOficial\Quina;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -79,6 +81,7 @@ class ConcursoController extends AbstractController
 
         $cartelas = $concurso->cartelas();
         $dezenasSorteadas = [1,5,6,8,10];
+        $sorteiosOficiais = $concurso->sorteiosOficiais();
 
         return $this
             ->render(
@@ -86,6 +89,7 @@ class ConcursoController extends AbstractController
                     'dezenasSorteadas' => $dezenasSorteadas,
                     'concurso' => $concurso,
                     'cartelas' => $cartelas,
+                    'sorteiosOficiais' => $sorteiosOficiais,
                 ]
             );
     }
@@ -108,9 +112,6 @@ class ConcursoController extends AbstractController
             $cartela = new Cartela([1,2,3,4,5,6,7,8,9,10], $jogador);
 
             $concurso->addCartela($cartela);
-
-            $concurso->inicia();
-            $concurso->encerra();
 
             $this->entityManager->persist($concurso);
             $this->entityManager->flush();

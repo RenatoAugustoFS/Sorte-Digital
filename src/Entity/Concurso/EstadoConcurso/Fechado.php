@@ -4,18 +4,22 @@ namespace App\Entity\Concurso\EstadoConcurso;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Embeddable
- */
 class Fechado extends EstadoConcurso
 {
-    public function __construct()
-    {
-        parent::__construct('Fechado');
-    }
+    const ESTADO = 'fechado';
 
     public function podeReceberAposta(): bool
     {
         return false;
+    }
+
+    public function podeReceberSorteioOficial(): bool
+    {
+        return false;
+    }
+
+    public function __toString()
+    {
+        return self::ESTADO;
     }
 }

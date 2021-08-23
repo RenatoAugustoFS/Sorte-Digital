@@ -5,15 +5,9 @@ namespace App\Entity\Concurso\EstadoConcurso;
 use App\Entity\Concurso\Concurso;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Embeddable
- */
 class EmAndamento extends EstadoConcurso
 {
-    public function __construct()
-    {
-        parent::__construct('Em Andamento');
-    }
+    const ESTADO = 'emandamento';
 
     public function encerra(Concurso $concurso)
     {
@@ -23,5 +17,15 @@ class EmAndamento extends EstadoConcurso
     public function podeReceberAposta(): bool
     {
         return false;
+    }
+
+    public function podeReceberSorteioOficial(): bool
+    {
+        return true;
+    }
+
+    public function __toString()
+    {
+        return self::ESTADO;
     }
 }
