@@ -2,7 +2,6 @@
 
 namespace App\Controller\Concurso;
 
-use App\Entity\SorteioOficial\MegaSena;
 use App\Entity\SorteioOficial\Quina;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\ORM\EntityManagerInterface;
@@ -57,7 +56,7 @@ class ConcursoController extends AbstractController
         return $this->redirectToRoute('home');
     }
 
-    public function buscarConcursos(Request $request): Response
+    public function homeConcursos(Request $request): Response
     {
         $concursosAbertos = $this->concursoRepository->findConcursosAbertos();
         $concursosEmAndamento = $this->concursoRepository->findConcursosEmAndamento();
@@ -80,21 +79,25 @@ class ConcursoController extends AbstractController
         }
 
         $cartelas = $concurso->cartelas();
-        $dezenasSorteadas = [1,5,6,8,10];
         $sorteiosOficiais = $concurso->sorteiosOficiais();
+
+        $dezenasSorteadas = [];
+        foreach ($sorteiosOficiais as $sorteioOficial){
+            $dezenasSorteadas = $sorteioOficial->dezenas();
+        }
 
         return $this
             ->render(
                 '/concursos/concurso-por-id.html.twig', [
-                    'dezenasSorteadas' => $dezenasSorteadas,
                     'concurso' => $concurso,
                     'cartelas' => $cartelas,
                     'sorteiosOficiais' => $sorteiosOficiais,
+                    'dezenasSorteadas' => $dezenasSorteadas,
                 ]
             );
     }
 
-    public function teste(): Response
+    public function teste(Request $request): Response
     {
         try {
             $periodo = new Periodo(
@@ -112,6 +115,12 @@ class ConcursoController extends AbstractController
             $cartela = new Cartela([1,2,3,4,5,6,7,8,9,10], $jogador);
 
             $concurso->addCartela($cartela);
+
+            $concurso->inicia();
+
+            $sorteioOficial = new Quina([7,5,9,6,25], 123);
+
+            $concurso->addSorteioOficial($sorteioOficial);
 
             $this->entityManager->persist($concurso);
             $this->entityManager->flush();

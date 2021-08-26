@@ -291,7 +291,9 @@
                                     Números Sorteados
                                 </h3>
                                 {% for sorteioOficial in sorteiosOficiais %}
-
+                                    {% for dezena in sorteioOficial.dezenas %}
+                                        {{ dezena }}
+                                    {% endfor %}
                                 {% endfor %}
                             </div>
                             <div class="box-content">

@@ -6,7 +6,7 @@ home:
   path: /
   methods:
     - GET
-  controller: App\Controller\Concurso\ConcursoController::buscarConcursos
+  controller: App\Controller\Concurso\ConcursoController::homeConcursos
 
 formulario-concurso:
   path: /formulario-concurso

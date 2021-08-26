@@ -5,7 +5,7 @@ namespace App\Entity\Concurso\EstadoConcurso;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 
-class EstadoConcursoType extends Type
+class EnumTypeEstadoConcurso extends Type
 {
     const ENUM_ESTADOCONCURSO = 'enumestadoconcurso';
     const ESTADO_ABERTO = 'aberto';

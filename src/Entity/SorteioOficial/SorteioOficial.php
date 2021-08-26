@@ -49,7 +49,7 @@ abstract class SorteioOficial
 
     public function dezenas(): array
     {
-        return $this->dezenas();
+        return $this->dezenas;
     }
 
     abstract protected function validarDezenas(array $dezenas);
