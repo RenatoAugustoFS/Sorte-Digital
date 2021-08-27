@@ -96,37 +96,4 @@ class ConcursoController extends AbstractController
                 ]
             );
     }
-
-    public function teste(Request $request): Response
-    {
-        try {
-            $periodo = new Periodo(
-                new \DateTimeImmutable('05/08/2022')
-            );
-
-            $restricao = new RestricaoDezenasPorCartela(10);
-
-            $concurso = new Concurso('Concurso Malandragem', $periodo, $restricao);
-
-            $telefone = new Telefone('9672180047');
-            $email = new Email('renatoaugusto.ads@gmail.com');
-            $jogador = new Jogador('Renato', $telefone, $email);
-
-            $cartela = new Cartela([1,2,3,4,5,6,7,8,9,10], $jogador);
-
-            $concurso->addCartela($cartela);
-
-            $concurso->inicia();
-
-            $sorteioOficial = new Quina([7,5,9,6,25], 123);
-
-            $concurso->addSorteioOficial($sorteioOficial);
-
-            $this->entityManager->persist($concurso);
-            $this->entityManager->flush();
-        } catch (\Exception $e){
-            $this->addFlash('notice', $e->getMessage());
-        }
-        return $this->redirectToRoute('formulario-concurso');
-    }
 }
