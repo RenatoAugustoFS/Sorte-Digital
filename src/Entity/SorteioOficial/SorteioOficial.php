@@ -21,19 +21,13 @@ abstract class SorteioOficial
      */
     protected $id;
 
-    /**
-     * @ORM\Column(type="simple_array")
-     */
+    /** @ORM\Column(type="simple_array") */
     protected $dezenas;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    /** @ORM\Column(type="integer") */
     protected $numeroConcursoOficial;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Concurso\Concurso", inversedBy="sorteiosOficiais")
-     */
+    /** @ORM\ManyToOne(targetEntity="App\Entity\Concurso\Concurso", inversedBy="sorteiosOficiais") */
     protected $concurso;
 
     public function __construct(array $dezenas, int $numeroConcursoOficial)
@@ -50,6 +44,11 @@ abstract class SorteioOficial
     public function dezenas(): array
     {
         return $this->dezenas;
+    }
+
+    public function numeroConcursoOficial(): int
+    {
+        return $this->numeroConcursoOficial;
     }
 
     abstract protected function validarDezenas(array $dezenas);

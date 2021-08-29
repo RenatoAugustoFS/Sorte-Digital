@@ -27,7 +27,7 @@ class ConcursoFactory
         return new Concurso($descricao, $periodo, $restricaoDezenas);
     }
 
-    private function checarPropriedadesEnviadas(Request $request): bool
+    private function checarPropriedadesEnviadas(Request $request)
     {
         if(!$request->request->has('descricao')) {
             throw new \DomainException(
@@ -44,6 +44,5 @@ class ConcursoFactory
                 "Quantidade de dezenas que será permitido em cada cartela deste concurso deve ser especificada!"
             );
         }
-        return true;
     }
 }

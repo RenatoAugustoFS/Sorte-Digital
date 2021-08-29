@@ -4,8 +4,6 @@ namespace App\Entity\Concurso;
 
 use App\Entity\Cartela\Cartela;
 use App\Entity\Concurso\EstadoConcurso\Aberto;
-use App\Entity\Concurso\EstadoConcurso\EstadoConcurso;
-use App\Entity\Concurso\EstadoConcurso\EstadoConcursoType;
 use App\Entity\Concurso\PeriodoConcurso\Periodo;
 use App\Entity\Concurso\RestricaoConcurso\RestricaoDezenasPorCartela;
 use App\Entity\SorteioOficial\SorteioOficial;
@@ -76,11 +74,7 @@ class Concurso
 
     public function addCartela(Cartela $cartela): self
     {
-        if (!$this->estado->podeReceberAposta()) {
-            throw new \DomainException(
-                "Concurso com estado ". $this->estado ." não podem receber Cartelas"
-            );
-        }
+        $this->podeReceberAposta();
         $this->restricao->validarQuantidadeDezenasCartela($cartela);
 
         $this->cartelas->add($cartela);
@@ -90,23 +84,38 @@ class Concurso
 
     public function addSorteioOficial(SorteioOficial $sorteioOficial): self
     {
-        if (!$this->estado->podeReceberSorteioOficial()) {
-            throw new \DomainException(
-                "Concurso com estado ". $this->estado ." não podem receber SorteiosOficiais"
-            );
-        }
+        $this->podeReceberSorteioOficial();
+        $this->verificarSeSorteioOficialJaFoiAdd($sorteioOficial);
+
         $this->sorteiosOficiais->add($sorteioOficial);
         $sorteioOficial->addConcurso($this);
         return $this;
     }
 
-    public function dados(): array
+    private function verificarSeSorteioOficialJaFoiAdd(SorteioOficial $sorteioOficial): void
     {
-        return [
-            'descricao' => $this->descricao,
-            'dataAbertura' => $this->periodo->dataAbertura(),
-            'estado' => $this->estado,
-            'dezenasPermitidasPorCartela' => $this->restricao->dezenasPorCartela(),
-        ];
+        if ($this->sorteiosOficiais->exists(function($key, $element) use ($sorteioOficial) {
+            return $element->numeroConcursoOficial() === $sorteioOficial->numeroConcursoOficial();
+            })) {
+            throw new \DomainException("Este concurso já recebeu este sorteio oficial");
+        }
+    }
+
+    public function podeReceberSorteioOficial(): void
+    {
+        if (!$this->estado->podeReceberSorteioOficial()) {
+            throw new \DomainException(
+                "Concurso com estado " . $this->estado . " não podem receber SorteiosOficiais"
+            );
+        }
+    }
+
+    public function podeReceberAposta(): void
+    {
+        if (!$this->estado->podeReceberAposta()) {
+            throw new \DomainException(
+                "Concurso com estado " . $this->estado . " não podem receber Cartelas"
+            );
+        }
     }
 }
