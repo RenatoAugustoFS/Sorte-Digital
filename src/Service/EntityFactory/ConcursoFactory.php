@@ -3,8 +3,8 @@
 namespace App\Service\EntityFactory;
 
 use App\Entity\Concurso\Concurso;
-use App\Entity\Concurso\PeriodoConcurso\Periodo;
-use App\Entity\Concurso\RestricaoConcurso\RestricaoDezenasPorCartela;
+use App\Entity\Concurso\Periodo\Periodo;
+use App\Entity\Concurso\Restricao\RestricaoDezenasPorCartela;
 use Symfony\Component\HttpFoundation\Request;
 
 class ConcursoFactory

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity\Concurso\EstadoConcurso;
+namespace App\Entity\Concurso\Estado;
 
 use App\Entity\Concurso\Concurso;
 use Doctrine\ORM\Mapping as ORM;
@@ -16,8 +16,5 @@ abstract class EstadoConcurso
     {
         throw new \DomainException("Este concurso não pode ser encerrado");
     }
-
-    abstract public function podeReceberAposta();
-    abstract public function podeReceberSorteioOficial();
 }
 

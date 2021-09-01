@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity\Concurso\EstadoConcurso;
+namespace App\Entity\Concurso\Estado;
 
 use Doctrine\DBAL\Types\Type;
 use Doctrine\DBAL\Platforms\AbstractPlatform;

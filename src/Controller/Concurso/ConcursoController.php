@@ -2,13 +2,14 @@
 
 namespace App\Controller\Concurso;
 
+use App\Repository\SorteioOficialRepositoryAPILoterias;
+use App\Service\Sorteio\BuscadorSorteioOficial;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Repository\ConcursoRepository;
 use App\Service\EntityFactory\ConcursoFactory;
-
 
 class ConcursoController extends AbstractController
 {
@@ -66,7 +67,6 @@ class ConcursoController extends AbstractController
     public function concursoPorId(int $id): Response
     {
         $concurso = $this->concursoRepository->findOneBy(['id' => $id]);
-
         if (is_null($concurso)) {
             return new Response('', Response::HTTP_NOT_FOUND);
         }
@@ -76,7 +76,9 @@ class ConcursoController extends AbstractController
 
         $dezenasSorteadas = [];
         foreach ($sorteiosOficiais as $sorteioOficial){
-            $dezenasSorteadas = $sorteioOficial->dezenas();
+            foreach ($sorteioOficial->dezenas() as $dezena ) {
+                $dezenasSorteadas[] = $dezena;
+            }
         }
 
         return $this

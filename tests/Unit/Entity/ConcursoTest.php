@@ -2,9 +2,9 @@
 
 use App\Entity\Cartela\Cartela;
 use App\Entity\Concurso\Concurso;
-use App\Entity\Concurso\EstadoConcurso\Aberto;
-use App\Entity\Concurso\EstadoConcurso\EmAndamento;
-use App\Entity\Concurso\EstadoConcurso\Fechado;
+use App\Entity\Concurso\Estado\Aberto;
+use App\Entity\Concurso\Estado\EmAndamento;
+use App\Entity\Concurso\Estado\Fechado;
 use PHPUnit\Framework\TestCase;
 
 class ConcursoTest extends TestCase

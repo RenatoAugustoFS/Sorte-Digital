@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Entity\ValueObject\Jogador;
+namespace App\Entity\Cartela\Jogador;
 
-use App\Entity\ValueObject\Email\Email;
-use App\Entity\ValueObject\Telefone\Telefone;
+use App\Entity\Cartela\Jogador\Email\Email;
+use App\Entity\Cartela\Jogador\Telefone\Telefone;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -17,12 +17,12 @@ class Jogador
     private string $nome;
 
     /**
-     * @ORM\Embedded(class="App\Entity\ValueObject\Telefone\Telefone")
+     * @ORM\Embedded(class="App\Entity\Cartela\Jogador\Telefone\Telefone")
      */
     private Telefone $telefone;
 
     /**
-     * @ORM\Embedded(class="App\Entity\ValueObject\Email\Email")
+     * @ORM\Embedded(class="App\Entity\Cartela\Jogador\Email\Email")
      */
     private Email $email;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity\Concurso\PeriodoConcurso;
+namespace App\Entity\Concurso\Periodo;
 
 use Doctrine\ORM\Mapping as ORM;
 

@@ -4,7 +4,7 @@ namespace App\Entity\Cartela;
 
 use App\Repository\CartelaRepository;
 use App\Entity\Concurso\Concurso;
-use App\Entity\ValueObject\Jogador\Jogador;
+use App\Entity\Cartela\Jogador\Jogador;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -20,7 +20,7 @@ class Cartela
     private $id;
 
     /**
-     * @ORM\Embedded(class="App\Entity\ValueObject\Jogador\Jogador")
+     * @ORM\Embedded(class="App\Entity\Cartela\Jogador\Jogador")
      */
     private Jogador $jogador;
 

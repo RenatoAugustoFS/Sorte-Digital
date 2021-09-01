@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity\Concurso\RestricaoConcurso;
+namespace App\Entity\Concurso\Restricao;
 
 use App\Entity\Cartela\Cartela;
 use Doctrine\ORM\Mapping as ORM;
