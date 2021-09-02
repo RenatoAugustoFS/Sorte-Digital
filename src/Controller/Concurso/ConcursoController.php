@@ -2,8 +2,6 @@
 
 namespace App\Controller\Concurso;
 
-use App\Repository\SorteioOficialRepositoryAPILoterias;
-use App\Service\Sorteio\BuscadorSorteioOficial;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
