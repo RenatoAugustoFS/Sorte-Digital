@@ -2,12 +2,13 @@
 
 namespace App\Controller\Concurso;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Service\Concurso\ConcursoDto;
+use App\Repository\ConcursoRepository;
+use App\Service\Concurso\ConcursoFactory;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use App\Repository\ConcursoRepository;
-use App\Service\EntityFactory\ConcursoFactory;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ConcursoController extends AbstractController
 {
@@ -35,8 +36,14 @@ class ConcursoController extends AbstractController
 
     public function criarNovoConcurso(Request $request): Response
     {
+        $concursoDto = new ConcursoDto(
+            $request->request->get('descricao'),
+            $request->request->get('dataInicio'),
+            $request->request->get('quantidadeDezenasPorCartela')
+        );
+
         try {
-            $concurso = $this->concursoFactory->criarConcurso($request);
+            $concurso = $this->concursoFactory->criarConcurso($concursoDto);
             $this->entityManager->persist($concurso);
             $this->entityManager->flush();
         } catch (\Exception $exception) {
