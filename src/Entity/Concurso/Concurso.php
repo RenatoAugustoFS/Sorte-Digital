@@ -7,6 +7,7 @@ use App\Entity\Concurso\Estado\Aberto;
 use App\Entity\Concurso\Estado\EmAndamento;
 use App\Entity\Concurso\Periodo\Periodo;
 use App\Entity\Concurso\Restricao\RestricaoDezenasPorCartela;
+use App\Entity\Faturamento\Faturamento;
 use App\Entity\SorteioOficial\SorteioOficial;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -40,6 +41,9 @@ class Concurso
     /** @ORM\OneToMany(targetEntity="App\Entity\SorteioOficial\SorteioOficial", mappedBy="concurso", cascade={"remove", "persist"}) */
     private $sorteiosOficiais;
 
+    /** @ORM\OneToOne(targetEntity="App\Entity\Faturamento\Faturamento", cascade={"persist", "remove"}) */
+    private Faturamento $faturamento;
+
     public function __construct(
         string $descricao,
         Periodo $periodo,
@@ -48,6 +52,7 @@ class Concurso
         $this->cartelas = new ArrayCollection();
         $this->sorteiosOficiais = new ArrayCollection();
         $this->estado = new Aberto();
+        $this->faturamento = new Faturamento($this);
         $this->descricao = $descricao;
         $this->periodo = $periodo;
         $this->restricao = $restricao;
@@ -80,6 +85,8 @@ class Concurso
 
         $this->cartelas->add($cartela);
         $cartela->addConcurso($this);
+
+        $this->faturamento->atualizar();
         return $this;
     }
 
