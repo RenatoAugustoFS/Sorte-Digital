@@ -5,9 +5,9 @@ namespace App\Entity\Concurso;
 use App\Entity\Cartela\Cartela;
 use App\Entity\Concurso\Estado\Aberto;
 use App\Entity\Concurso\Estado\EmAndamento;
+use App\Entity\Concurso\Faturamento\Faturamento;
 use App\Entity\Concurso\Periodo\Periodo;
 use App\Entity\Concurso\Restricao\RestricaoDezenasPorCartela;
-use App\Entity\Faturamento\Faturamento;
 use App\Entity\SorteioOficial\SorteioOficial;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -41,7 +41,7 @@ class Concurso
     /** @ORM\OneToMany(targetEntity="App\Entity\SorteioOficial\SorteioOficial", mappedBy="concurso", cascade={"remove", "persist"}) */
     private $sorteiosOficiais;
 
-    /** @ORM\OneToOne(targetEntity="App\Entity\Faturamento\Faturamento", cascade={"persist", "remove"}) */
+    /** @ORM\OneToOne(targetEntity="App\Entity\Concurso\Faturamento\Faturamento", cascade={"persist", "remove"}) */
     private Faturamento $faturamento;
 
     public function __construct(
@@ -78,25 +78,37 @@ class Concurso
         $this->estado->encerra($this);
     }
 
+    public function cota(): int
+    {
+        return 10;
+    }
+
     public function addCartela(Cartela $cartela): self
     {
-        $this->checarSeConcursoEstaEmAndamento();
+        $this->checarSeConcursoEstaAberto();
         $this->restricao->validarQuantidadeDezenasCartela($cartela);
-
         $this->cartelas->add($cartela);
         $cartela->addConcurso($this);
-
         $this->faturamento->atualizar();
         return $this;
+    }
+
+    private function checarSeConcursoEstaAberto()
+    {
+        if (!$this->estado instanceof Aberto) {
+            throw new \DomainException(
+                "Concurso com estado " . $this->estado . " não está aptos à adição de novas cartelas"
+            );
+        }
     }
 
     public function addSorteioOficial(SorteioOficial $sorteioOficial): self
     {
         $this->checarSeConcursoEstaEmAndamento();
         $this->checarSeSorteioOficialJaFoiAdd($sorteioOficial);
-
         $this->sorteiosOficiais->add($sorteioOficial);
         $sorteioOficial->addConcurso($this);
+        $this->pontuarCartelas();
         return $this;
     }
 
@@ -118,6 +130,22 @@ class Concurso
         }
     }
 
+    private function pontuarCartelas(): void
+    {
+        $dezenasSorteadas = [];
+        $sorteiosOficiais = $this->sorteiosOficiais->toArray();
+        foreach ($sorteiosOficiais as $sorteioOficial) {
+            $dezenasSorteadas = array_unique(
+                array_merge($dezenasSorteadas, $sorteioOficial->dezenas())
+            );
+        }
+        foreach ($this->cartelas as $cartela){
+            $dezenasPremiadas = array_intersect($dezenasSorteadas, $cartela->dezenas());
+            $pontos = count($dezenasPremiadas);
+            $cartela->pontua($pontos);
+        }
+    }
+
     public function dados(): array
     {
         return [
@@ -125,6 +153,7 @@ class Concurso
             'dataAbertura' => $this->periodo->dataAbertura(),
             'estado' => $this->estado,
             'dezenasPermitidasPorCartela' => $this->restricao->dezenasPorCartela(),
+            'valorArrecadado' => $this->faturamento->valorArrecadado(),
         ];
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity\Faturamento;
+namespace App\Entity\Concurso\Faturamento;
 
 use App\Entity\Concurso\Concurso;
 use App\Repository\FaturamentoRepository;
@@ -40,6 +40,11 @@ class Faturamento
             ->cartelas()
             ->count();
 
-        $this->valorArrecadado = $quantidadeCartelas * 10;
+        $this->valorArrecadado = $quantidadeCartelas * $this->concurso->cota();
+    }
+
+    public function valorArrecadado(): int
+    {
+        return $this->valorArrecadado;
     }
 }

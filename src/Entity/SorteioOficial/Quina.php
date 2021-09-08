@@ -11,11 +11,11 @@ class Quina extends SorteioOficial
 {
     public function __construct(array $dezenas, int $numeroConcursoOficial)
     {
-        $this->validarDezenas($dezenas);
+        $this->validarQuantidadeDezenas($dezenas);
         parent::__construct($dezenas, $numeroConcursoOficial);
     }
 
-    protected function validarDezenas(array $dezenas)
+    protected function validarQuantidadeDezenas(array $dezenas)
     {
         if (count($dezenas) != 5){
             throw new \DomainException("Quina só pode ter 5 dezenas por sorteio");

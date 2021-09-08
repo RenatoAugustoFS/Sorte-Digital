@@ -32,7 +32,7 @@ abstract class SorteioOficial
 
     public function __construct(array $dezenas, int $numeroConcursoOficial)
     {
-        $this->dezenas = $dezenas;
+        $this->definirDezenas($dezenas);
         $this->numeroConcursoOficial = $numeroConcursoOficial;
     }
 
@@ -51,5 +51,14 @@ abstract class SorteioOficial
         return $this->numeroConcursoOficial;
     }
 
-    abstract protected function validarDezenas(array $dezenas);
+    protected function definirDezenas(array $dezenas)
+    {
+        $dezenasLimpas = [];
+        foreach ($dezenas as $dezena) {
+            $dezenasLimpas[] = (int) $dezena;
+        }
+        $this->dezenas = $dezenasLimpas;
+    }
+
+    abstract protected function validarQuantidadeDezenas(array $dezenas);
 }

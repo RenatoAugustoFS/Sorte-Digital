@@ -2,6 +2,11 @@
 
 namespace App\Controller\Concurso;
 
+use App\Entity\Cartela\Cartela;
+use App\Entity\Cartela\Jogador\Email\Email;
+use App\Entity\Cartela\Jogador\Jogador;
+use App\Entity\Cartela\Jogador\Telefone\Telefone;
+use App\Repository\SorteioOficialRepositoryAPILoterias;
 use App\Service\Concurso\ConcursoDto;
 use App\Repository\ConcursoRepository;
 use App\Service\Concurso\ConcursoFactory;
@@ -95,5 +100,34 @@ class ConcursoController extends AbstractController
                     'dezenasSorteadas' => $dezenasSorteadas,
                 ]
             );
+    }
+
+    public function teste(): Response
+    {
+        $concurso = $this->concursoRepository->findOneBy([
+            'id' => 20
+        ]);
+
+        $cartela = new Cartela(
+            [1,2,32,54,50,65,7,8,9,10],
+            new Jogador(
+                'Renato',
+                new Telefone('21967218047'),
+                new Email('renato@gmail.com')
+            )
+        );
+
+        //$concurso->inicia();
+
+        //$concurso->addCartela($cartela);
+
+
+        $sorteioOficial = new SorteioOficialRepositoryAPILoterias();
+        $quina = $sorteioOficial->buscarResultadoOficialQuina();
+        $concurso->addSorteioOficial($quina);
+
+
+        $this->entityManager->persist($concurso);
+        $this->entityManager->flush();
     }
 }

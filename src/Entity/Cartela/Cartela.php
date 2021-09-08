@@ -34,10 +34,16 @@ class Cartela
      */
     private $concurso;
 
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $pontos;
+
     public function __construct(array $dezenas, Jogador $jogador)
     {
         $this->dezenas = $dezenas;
         $this->jogador = $jogador;
+        $this->pontos = 0;
     }
 
     public function addConcurso(Concurso $concurso)
@@ -53,5 +59,10 @@ class Cartela
     public function nomeJogador()
     {
         return $this->jogador->nome();
+    }
+
+    public function pontua(int $pontos): void
+    {
+        $this->pontos = $pontos;
     }
 }
