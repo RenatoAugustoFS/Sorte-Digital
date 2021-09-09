@@ -51,18 +51,27 @@ class Cartela
         $this->concurso = $concurso;
     }
 
-    public function dezenas(): ?array
+    public function dezenas(): array
     {
         return $this->dezenas;
     }
 
-    public function nomeJogador()
+    public function nomeJogador(): string
     {
         return $this->jogador->nome();
     }
 
-    public function pontua(int $pontos): void
+    public function pontuar(): void
     {
+        $dezenasSorteadas = [];
+        $sorteiosOficiais = $this->concurso->sorteiosOficiais()->toArray();
+        foreach ($sorteiosOficiais as $sorteioOficial) {
+            $dezenasSorteadas = array_unique(
+                array_merge($dezenasSorteadas, $sorteioOficial->dezenas())
+            );
+        }
+        $dezenasPremiadas = array_intersect($dezenasSorteadas, $this->dezenas());
+        $pontos = count($dezenasPremiadas);
         $this->pontos = $pontos;
     }
 }

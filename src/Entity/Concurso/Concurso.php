@@ -78,19 +78,13 @@ class Concurso
         $this->estado->encerra($this);
     }
 
-    public function cota(): int
-    {
-        return 10;
-    }
-
-    public function addCartela(Cartela $cartela): self
+    public function addCartela(Cartela $cartela): void
     {
         $this->checarSeConcursoEstaAberto();
         $this->restricao->validarQuantidadeDezenasCartela($cartela);
         $this->cartelas->add($cartela);
         $cartela->addConcurso($this);
         $this->faturamento->atualizar();
-        return $this;
     }
 
     private function checarSeConcursoEstaAberto()
@@ -102,14 +96,13 @@ class Concurso
         }
     }
 
-    public function addSorteioOficial(SorteioOficial $sorteioOficial): self
+    public function addSorteioOficial(SorteioOficial $sorteioOficial): void
     {
         $this->checarSeConcursoEstaEmAndamento();
         $this->checarSeSorteioOficialJaFoiAdd($sorteioOficial);
         $this->sorteiosOficiais->add($sorteioOficial);
         $sorteioOficial->addConcurso($this);
-        $this->pontuarCartelas();
-        return $this;
+        $this->pontuaCartelas();
     }
 
     public function checarSeConcursoEstaEmAndamento(): void
@@ -130,19 +123,10 @@ class Concurso
         }
     }
 
-    private function pontuarCartelas(): void
+    public function pontuaCartelas()
     {
-        $dezenasSorteadas = [];
-        $sorteiosOficiais = $this->sorteiosOficiais->toArray();
-        foreach ($sorteiosOficiais as $sorteioOficial) {
-            $dezenasSorteadas = array_unique(
-                array_merge($dezenasSorteadas, $sorteioOficial->dezenas())
-            );
-        }
-        foreach ($this->cartelas as $cartela){
-            $dezenasPremiadas = array_intersect($dezenasSorteadas, $cartela->dezenas());
-            $pontos = count($dezenasPremiadas);
-            $cartela->pontua($pontos);
+        foreach ($this->cartelas as $cartela) {
+            $cartela->pontuar();
         }
     }
 

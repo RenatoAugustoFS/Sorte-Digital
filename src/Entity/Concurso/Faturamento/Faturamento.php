@@ -40,7 +40,7 @@ class Faturamento
             ->cartelas()
             ->count();
 
-        $this->valorArrecadado = $quantidadeCartelas * $this->concurso->cota();
+        $this->valorArrecadado = $quantidadeCartelas * 10;
     }
 
     public function valorArrecadado(): int
