@@ -123,7 +123,7 @@ class Concurso
         }
     }
 
-    public function pontuaCartelas()
+    public function pontuaCartelas(): void
     {
         foreach ($this->cartelas as $cartela) {
             $cartela->pontuar();
