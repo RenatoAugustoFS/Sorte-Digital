@@ -63,6 +63,15 @@ class Concurso
         return $this->cartelas;
     }
 
+    public function cartelasPagas(): Collection
+    {
+        $cartelasPagas = $this->cartelas->filter(function($cartela) {
+            return $cartela->statusPagamento() === true;
+        });
+
+        return $cartelasPagas;
+    }
+
     public function sorteiosOficiais(): Collection
     {
         return $this->sorteiosOficiais;
