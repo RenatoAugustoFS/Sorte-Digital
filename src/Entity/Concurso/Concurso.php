@@ -5,7 +5,7 @@ namespace App\Entity\Concurso;
 use App\Entity\Cartela\Cartela;
 use App\Entity\Concurso\Estado\Aberto;
 use App\Entity\Concurso\Estado\EmAndamento;
-use App\Entity\Concurso\Faturamento\Faturamento;
+use App\Entity\Concurso\Premiacao\Premiacao;
 use App\Entity\Concurso\Periodo\Periodo;
 use App\Entity\Concurso\Restricao\RestricaoDezenasPorCartela;
 use App\Entity\SorteioOficial\SorteioOficial;
@@ -41,8 +41,8 @@ class Concurso
     /** @ORM\OneToMany(targetEntity="App\Entity\SorteioOficial\SorteioOficial", mappedBy="concurso", cascade={"remove", "persist"}) */
     private $sorteiosOficiais;
 
-    /** @ORM\OneToOne(targetEntity="App\Entity\Concurso\Faturamento\Faturamento", cascade={"persist", "remove"}) */
-    private Faturamento $faturamento;
+    /** @ORM\OneToOne(targetEntity="App\Entity\Concurso\Premiacao\Premiacao", cascade={"persist", "remove"}) */
+    private Premiacao $premiacao;
 
     public function __construct(
         string $descricao,
@@ -52,7 +52,7 @@ class Concurso
         $this->cartelas = new ArrayCollection();
         $this->sorteiosOficiais = new ArrayCollection();
         $this->estado = new Aberto();
-        $this->faturamento = new Faturamento($this);
+        $this->premiacao = new Premiacao($this);
         $this->descricao = $descricao;
         $this->periodo = $periodo;
         $this->restricao = $restricao;
@@ -93,7 +93,7 @@ class Concurso
         $this->restricao->validarQuantidadeDezenasCartela($cartela);
         $this->cartelas->add($cartela);
         $cartela->addConcurso($this);
-        $this->faturamento->atualizar();
+        $this->premiacao->atualizarArrecadacao();
     }
 
     private function checarSeConcursoEstaAberto()
@@ -146,7 +146,7 @@ class Concurso
             'dataAbertura' => $this->periodo->dataAbertura(),
             'estado' => $this->estado,
             'dezenasPermitidasPorCartela' => $this->restricao->dezenasPorCartela(),
-            'valorArrecadado' => $this->faturamento->valorArrecadado(),
+            'valorArrecadado' => $this->premiacao->valorArrecadado(),
         ];
     }
 }

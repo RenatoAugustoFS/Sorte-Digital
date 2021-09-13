@@ -2,6 +2,12 @@
 
 namespace App\Controller\Concurso;
 
+use App\Entity\Cartela\Cartela;
+use App\Entity\Cartela\Jogador\Email\Email;
+use App\Entity\Cartela\Jogador\Jogador;
+use App\Entity\Cartela\Jogador\Telefone\Telefone;
+use App\Repository\SorteioOficialRepositoryAPILoterias;
+use App\Service\Cartela\RemovedorCartelasNaoPagas;
 use App\Service\Concurso\ConcursoDto;
 use App\Repository\ConcursoRepository;
 use App\Service\Concurso\ConcursoFactory;
@@ -15,15 +21,18 @@ class ConcursoController extends AbstractController
     private ConcursoFactory $concursoFactory;
     private EntityManagerInterface $entityManager;
     private ConcursoRepository $concursoRepository;
+    private RemovedorCartelasNaoPagas $removedorCartelasNaoPagas;
 
     public function __construct(
         ConcursoFactory $concursoFactory,
         EntityManagerInterface $entityManager,
-        ConcursoRepository $concursoRepository
+        ConcursoRepository $concursoRepository,
+        RemovedorCartelasNaoPagas $removedorCartelasNaoPagas
     ) {
         $this->concursoFactory = $concursoFactory;
         $this->entityManager = $entityManager;
         $this->concursoRepository = $concursoRepository;
+        $this->removedorCartelasNaoPagas = $removedorCartelasNaoPagas;
     }
 
     public function formularioCriarConcurso(Request $request): Response
@@ -95,5 +104,18 @@ class ConcursoController extends AbstractController
                     'dezenasSorteadas' => $dezenasSorteadas,
                 ]
             );
+    }
+
+    public function teste(): Response
+    {
+        $concurso = $this->concursoRepository->findOneBy([
+            'id' => 1
+        ]);
+        $concurso->inicia();
+        $cartelas = $concurso->cartelas();
+        $this->removedorCartelasNaoPagas->execute($cartelas);
+        $this->entityManager->persist($concurso);
+        $this->entityManager->flush();
+
     }
 }

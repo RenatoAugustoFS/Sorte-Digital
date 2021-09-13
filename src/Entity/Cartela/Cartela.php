@@ -35,7 +35,7 @@ class Cartela
     private $concurso;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="integer")
      */
     private $pontos;
 
@@ -67,6 +67,16 @@ class Cartela
         return $this->jogador->nome();
     }
 
+    public function pagar(): void
+    {
+        $this->statusPagamento = true;
+    }
+
+    public function statusPagamento(): bool
+    {
+        return $this->statusPagamento;
+    }
+
     public function pontuar(): void
     {
         $dezenasSorteadas = [];
@@ -79,15 +89,5 @@ class Cartela
         $dezenasPremiadas = array_intersect($dezenasSorteadas, $this->dezenas());
         $pontos = count($dezenasPremiadas);
         $this->pontos = $pontos;
-    }
-
-    public function pagar(): void
-    {
-        $this->statusPagamento = true;
-    }
-
-    public function statusPagamento(): bool
-    {
-        return $this->statusPagamento;
     }
 }
