@@ -63,6 +63,11 @@ class Concurso
         return $this->cartelas;
     }
 
+    public function valorCota(): float
+    {
+        return 10;
+    }
+
     public function cartelasPagas(): Collection
     {
         $cartelasPagas = $this->cartelas->filter(function($cartela) {

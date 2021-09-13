@@ -13,7 +13,6 @@ class Premiacao
 {
     const PORCENTAGEM_GANHADOR = 80;
     const PORCENTAGEM_BANCA = 20;
-    const VALOR_CARTELA = 10;
 
     /**
      * @ORM\Id
@@ -55,7 +54,7 @@ class Premiacao
         $cartelasPagas = $this->concurso->cartelasPagas();
         $quantidadeCartelasPagas = $cartelasPagas->count();
 
-        $this->valorArrecadado = $quantidadeCartelasPagas * self::VALOR_CARTELA;
+        $this->valorArrecadado = $quantidadeCartelasPagas * $this->concurso->valorCota();
         $this->premioMaisPontos = ($this->valorArrecadado / 100) * self::PORCENTAGEM_GANHADOR;
         $this->arrecadacaoBanca = ($this->valorArrecadado / 100) * self::PORCENTAGEM_BANCA;
     }
