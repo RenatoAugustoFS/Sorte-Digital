@@ -3,7 +3,6 @@
 namespace App\Entity\Concurso\Premiacao;
 
 use App\Entity\Concurso\Concurso;
-use App\Repository\PremiacaoRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -59,8 +58,14 @@ class Premiacao
         $this->arrecadacaoBanca = ($this->valorArrecadado / 100) * self::PORCENTAGEM_BANCA;
     }
 
-    public function valorArrecadado(): float
+    public function premioMaisPontos(): float
     {
-        return $this->valorArrecadado;
+        return $this->premioMaisPontos;
+    }
+
+    public function caulcarPremioDividido($cartelasVencedoras): float
+    {
+        $premio = ($this->premioMaisPontos / $cartelasVencedoras->count());
+        return $premio;
     }
 }

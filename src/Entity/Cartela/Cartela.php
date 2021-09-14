@@ -2,7 +2,6 @@
 
 namespace App\Entity\Cartela;
 
-use App\Repository\CartelaRepository;
 use App\Entity\Concurso\Concurso;
 use App\Entity\Cartela\Jogador\Jogador;
 use Doctrine\ORM\Mapping as ORM;
@@ -32,7 +31,7 @@ class Cartela
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Concurso\Concurso", inversedBy="cartelas")
      */
-    private $concurso;
+    private Concurso $concurso;
 
     /**
      * @ORM\Column(type="integer")
@@ -70,6 +69,7 @@ class Cartela
     public function pagar(): void
     {
         $this->statusPagamento = true;
+        $this->concurso->atualizarPremiacao();
     }
 
     public function statusPagamento(): bool
@@ -77,17 +77,15 @@ class Cartela
         return $this->statusPagamento;
     }
 
-    public function pontuar(): void
+    public function pontuar($dezenasSorteadas): void
     {
-        $dezenasSorteadas = [];
-        $sorteiosOficiais = $this->concurso->sorteiosOficiais()->toArray();
-        foreach ($sorteiosOficiais as $sorteioOficial) {
-            $dezenasSorteadas = array_unique(
-                array_merge($dezenasSorteadas, $sorteioOficial->dezenas())
-            );
-        }
         $dezenasPremiadas = array_intersect($dezenasSorteadas, $this->dezenas());
         $pontos = count($dezenasPremiadas);
         $this->pontos = $pontos;
+    }
+
+    public function pontos(): float
+    {
+        return $this->pontos;
     }
 }
