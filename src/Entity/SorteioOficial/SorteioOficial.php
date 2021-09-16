@@ -3,6 +3,7 @@
 namespace App\Entity\SorteioOficial;
 
 use App\Entity\Concurso\Concurso;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -27,18 +28,19 @@ abstract class SorteioOficial
     /** @ORM\Column(type="integer") */
     protected $numeroConcursoOficial;
 
-    /** @ORM\ManyToOne(targetEntity="App\Entity\Concurso\Concurso", inversedBy="sorteiosOficiais") */
-    protected $concurso;
+    /** @ORM\ManyToMany(targetEntity="App\Entity\Concurso\Concurso", inversedBy="sorteiosOficiais") */
+    protected $concursos;
 
     public function __construct(array $dezenas, int $numeroConcursoOficial)
     {
+        $this->concursos = new ArrayCollection();
         $this->definirDezenas($dezenas);
         $this->numeroConcursoOficial = $numeroConcursoOficial;
     }
 
     public function addConcurso(Concurso $concurso)
     {
-        $this->concurso = $concurso;
+        $this->concursos->add($concurso);
     }
 
     public function dezenas(): array

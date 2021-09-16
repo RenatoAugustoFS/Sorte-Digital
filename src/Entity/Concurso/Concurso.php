@@ -39,7 +39,7 @@ class Concurso
     /** @ORM\OneToMany(targetEntity="App\Entity\Cartela\Cartela", mappedBy="concurso", cascade={"remove", "persist"}) */
     private $cartelas;
 
-    /** @ORM\OneToMany(targetEntity="App\Entity\SorteioOficial\SorteioOficial", mappedBy="concurso", cascade={"remove", "persist"}) */
+    /** @ORM\ManyToMany(targetEntity="App\Entity\SorteioOficial\SorteioOficial", mappedBy="concursos", cascade={"remove", "persist"}) */
     private $sorteiosOficiais;
 
     /** @ORM\OneToOne(targetEntity="App\Entity\Concurso\Premiacao\Premiacao", cascade={"persist", "remove"}) */

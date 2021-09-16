@@ -8,8 +8,8 @@ use App\Entity\SorteioOficial\SorteioOficialRepository;
 
 class SorteioOficialRepositoryAPILoterias implements SorteioOficialRepository
 {
-    const URL_QUINA = "http://apiloterias.com.br/app/resultado?loteria=quina&token=FgO3B0vZhR4pIag";
-    const URL_MEGASENA = "http://apiloterias.com.br/app/resultado?loteria=megasena&token=FgO3B0vZhR4pIag";
+    const URL_QUINA = "http://apiloterias.com.br/app/resultado?loteria=quina&token=79wY8WeG0ajGwl5";
+    const URL_MEGASENA = "http://apiloterias.com.br/app/resultado?loteria=megasena&token=79wY8WeG0ajGwl5";
 
     public function buscarResultadoOficialQuina(): Quina
     {

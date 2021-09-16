@@ -6,28 +6,28 @@ home:
   path: /
   methods:
     - GET
-  controller: App\Controller\Concurso\ConcursoController::homeConcursos
+  controller: App\Controller\Concurso\ListarConcursos::handle
 
 formulario-concurso:
   path: /formulario-concurso
   methods:
     - GET
-  controller: App\Controller\Concurso\ConcursoController::formularioCriarConcurso
+  controller: App\Controller\Concurso\FormularioCriarConcurso::handle
 
 novo-concurso:
   path: /novo-concurso
   methods:
     - POST
-  controller: App\Controller\Concurso\ConcursoController::criarNovoConcurso
+  controller: App\Controller\Concurso\PersistirConcurso::handle
 
 concurso-por-id:
   path: /concursos/{id}
   methods:
     - GET
-  controller: App\Controller\Concurso\ConcursoController::concursoPorId
+  controller: App\Controller\Concurso\ListarConcursoPorId::handle
 
-teste:
-  path: /teste
+novo-sorteio-oficial:
+  path: /atualizar-sorteio-oficial
   methods:
     - GET
-  controller: App\Controller\Concurso\ConcursoController::teste
+  controller: App\Controller\Concurso\PersistirSorteioOficial::handle
