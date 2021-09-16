@@ -22,7 +22,7 @@ class ListarConcursos extends AbstractController
         $concursosEmAndamento = $this->concursoRepository->findConcursosEmAndamento();
         $concursosFechados = $this->concursoRepository->findConcursosFechados();
 
-        return $this->render('/home/index.html.twig', [
+        return $this->render('/concurso/index.html.twig', [
             'h1_name' => 'Página inicial',
             'concursosAbertos' => $concursosAbertos,
             'concursosEmAndamento' => $concursosEmAndamento,

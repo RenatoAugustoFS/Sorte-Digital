@@ -63,6 +63,16 @@ class Concurso
         $this->restricao = $restricao;
     }
 
+    public function id(): int
+    {
+        return $this->id;
+    }
+
+    public function dataAbertura(): string
+    {
+        return $this->periodo->dataAbertura();
+    }
+
     public function cartelas(): Collection
     {
         return $this->cartelas;
@@ -80,6 +90,11 @@ class Concurso
         });
 
         return $cartelasPagas;
+    }
+
+    public function dezenasPorCartela(): int
+    {
+        return $this->restricao->dezenasPorCartela();
     }
 
     public function sorteiosOficiais(): Collection
@@ -181,16 +196,5 @@ class Concurso
     public function atualizarPremiacao(): void
     {
         $this->premiacao->atualizarArrecadacao();
-    }
-
-    public function dados(): array
-    {
-        return [
-            'descricao' => $this->descricao,
-            'dataAbertura' => $this->periodo->dataAbertura(),
-            'estado' => $this->estado,
-            'dezenasPermitidasPorCartela' => $this->restricao->dezenasPorCartela(),
-            'valorArrecadado' => $this->premiacao->premioMaisPontos(),
-        ];
     }
 }

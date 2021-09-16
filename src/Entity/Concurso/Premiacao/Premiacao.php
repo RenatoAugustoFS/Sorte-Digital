@@ -40,19 +40,25 @@ class Premiacao
      */
     private float $arrecadacaoBanca;
 
+    private $premiacaoPrevista;
+
     public function __construct(Concurso $concurso)
     {
         $this->concurso = $concurso;
         $this->valorArrecadado = 0;
         $this->premioMaisPontos = 0;
         $this->arrecadacaoBanca = 0;
+        $this->premiacaoPrevista = 0;
     }
 
     public function atualizarArrecadacao(): void
     {
+        $cartelas = $this->concurso->cartelas();
+        $quantidadeCartelas = $cartelas->count();
         $cartelasPagas = $this->concurso->cartelasPagas();
         $quantidadeCartelasPagas = $cartelasPagas->count();
 
+        $this->valorPremiacaoPrevista = $quantidadeCartelas * $this->concurso->valorCota();
         $this->valorArrecadado = $quantidadeCartelasPagas * $this->concurso->valorCota();
         $this->premioMaisPontos = ($this->valorArrecadado / 100) * self::PORCENTAGEM_GANHADOR;
         $this->arrecadacaoBanca = ($this->valorArrecadado / 100) * self::PORCENTAGEM_BANCA;

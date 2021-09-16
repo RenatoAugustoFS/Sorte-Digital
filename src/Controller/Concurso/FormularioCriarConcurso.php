@@ -12,7 +12,7 @@ class FormularioCriarConcurso extends AbstractController
     {
         return $this
             ->render(
-                '/concursos/formulario-inserir-concurso.html.twig'
+                '/concurso/formulario-inserir-concurso.html.twig'
             );
     }
 }

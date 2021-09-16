@@ -41,5 +41,6 @@ class PersistirSorteioOficial extends AbstractController
 
         $this->entityManager->flush();
         $this->entityManager->commit();
+        return new Response('', Response::HTTP_OK);
     }
 }
