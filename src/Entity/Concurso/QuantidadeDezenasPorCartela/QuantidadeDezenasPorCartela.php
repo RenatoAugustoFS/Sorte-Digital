@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity\Concurso\Restricao;
+namespace App\Entity\Concurso\QuantidadeDezenasPorCartela;
 
 use App\Entity\Cartela\Cartela;
 use Doctrine\ORM\Mapping as ORM;
@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Embeddable
  */
-class RestricaoDezenasPorCartela
+class QuantidadeDezenasPorCartela
 {
     /**
      * @ORM\Column(type="integer")

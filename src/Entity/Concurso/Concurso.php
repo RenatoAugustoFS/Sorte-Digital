@@ -7,7 +7,7 @@ use App\Entity\Concurso\Estado\Aberto;
 use App\Entity\Concurso\Estado\EmAndamento;
 use App\Entity\Concurso\Premiacao\Premiacao;
 use App\Entity\Concurso\Periodo\Periodo;
-use App\Entity\Concurso\Restricao\RestricaoDezenasPorCartela;
+use App\Entity\Concurso\QuantidadeDezenasPorCartela\QuantidadeDezenasPorCartela;
 use App\Entity\Concurso\Vencedor\Vencedor;
 use App\Entity\SorteioOficial\SorteioOficial;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -34,7 +34,7 @@ class Concurso
     private Periodo $periodo;
 
     /** @ORM\Embedded(class="App\Entity\Concurso\Restricao\RestricaoDezenasPorCartela") */
-    private RestricaoDezenasPorCartela $restricao;
+    private QuantidadeDezenasPorCartela $quantidadeDezenasPorCartela;
 
     /** @ORM\OneToMany(targetEntity="App\Entity\Cartela\Cartela", mappedBy="concurso", cascade={"remove", "persist"}) */
     private $cartelas;
@@ -51,16 +51,16 @@ class Concurso
     public function __construct(
         string $descricao,
         Periodo $periodo,
-        RestricaoDezenasPorCartela $restricao
+        QuantidadeDezenasPorCartela $quantidadeDezenasPorCartela
     ) {
-        $this->cartelas = new ArrayCollection();
-        $this->sorteiosOficiais = new ArrayCollection();
-        $this->estado = new Aberto();
-        $this->premiacao = new Premiacao($this);
-        $this->vencedores = new ArrayCollection();
         $this->descricao = $descricao;
         $this->periodo = $periodo;
-        $this->restricao = $restricao;
+        $this->quantidadeDezenasPorCartela = $quantidadeDezenasPorCartela;
+        $this->estado = new Aberto();
+        $this->cartelas = new ArrayCollection();
+        $this->sorteiosOficiais = new ArrayCollection();
+        $this->premiacao = new Premiacao($this);
+        $this->vencedores = new ArrayCollection();
     }
 
     public function id(): int
@@ -94,7 +94,7 @@ class Concurso
 
     public function dezenasPorCartela(): int
     {
-        return $this->restricao->dezenasPorCartela();
+        return $this->quantidadeDezenasPorCartela->dezenasPorCartela();
     }
 
     public function sorteiosOficiais(): Collection
@@ -116,7 +116,7 @@ class Concurso
     public function addCartela(Cartela $cartela): void
     {
         $this->checarSeConcursoEstaAberto();
-        $this->restricao->validarQuantidadeDezenasCartela($cartela);
+        $this->quantidadeDezenasPorCartela->validarQuantidadeDezenasCartela($cartela);
         $this->cartelas->add($cartela);
         $cartela->addConcurso($this);
     }
@@ -176,7 +176,7 @@ class Concurso
     private function verificarSeHouveVencedores()
     {
         $cartelasVencedoras = $this->cartelas->filter(function($cartela) {
-            return $cartela->pontos() >= $this->restricao->dezenasPorCartela();
+            return $cartela->pontos() >= $this->quantidadeDezenasPorCartela->dezenasPorCartela();
         });
 
         if ($cartelasVencedoras->count() !== 0){
