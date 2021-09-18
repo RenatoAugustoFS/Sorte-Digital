@@ -30,6 +30,11 @@ class Telefone
             $numero
         );
     }
-    
-    
+
+    public function numero()
+    {
+        return $this->numero;
+    }
+
+
 }

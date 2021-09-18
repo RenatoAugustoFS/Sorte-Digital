@@ -31,10 +31,19 @@ class Vencedor
     /** @ORM\OneToOne(targetEntity="App\Entity\Cartela\Cartela") */
     private Cartela $cartela;
 
-    public function __construct(Concurso $concurso, float $premio, Cartela $cartela)
+    public function __construct(float $premio, Cartela $cartela)
     {
-        $this->concurso = $concurso;
         $this->premio = $premio;
         $this->cartela = $cartela;
+    }
+
+    public function addConcurso(Concurso $concurso): void
+    {
+        $this->concurso = $concurso;
+    }
+
+    public function __toString(): string
+    {
+        return $this->cartela->nomeJogador() . ' / '  . $this->cartela->telefoneJogador();
     }
 }

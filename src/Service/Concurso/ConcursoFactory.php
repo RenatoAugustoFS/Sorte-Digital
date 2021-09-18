@@ -4,6 +4,7 @@ namespace App\Service\Concurso;
 
 use App\Entity\Concurso\Concurso;
 use App\Entity\Concurso\Periodo\Periodo;
+use App\Entity\Concurso\QuantidadeDezenasPorCartela\QuantidadeDezenasPorCartela;
 use App\Entity\Concurso\Restricao\RestricaoDezenasPorCartela;
 
 class ConcursoFactory
@@ -13,9 +14,9 @@ class ConcursoFactory
         $this->checarPropriedadesEnviadas($concursoDto);
         $descricao = $concursoDto->descricao;
         $periodo = new Periodo(new \DateTimeImmutable($concursoDto->periodo));
-        $restricaoDezenas = new RestricaoDezenasPorCartela($concursoDto->restricaoDezenasPorCartela);
+        $dezenasPorCartela = new QuantidadeDezenasPorCartela($concursoDto->restricaoDezenasPorCartela);
 
-        return new Concurso($descricao, $periodo, $restricaoDezenas);
+        return new Concurso($descricao, $periodo, $dezenasPorCartela);
     }
 
     private function checarPropriedadesEnviadas(ConcursoDto $concursoDto)

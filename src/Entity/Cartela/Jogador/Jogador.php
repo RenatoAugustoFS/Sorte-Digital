@@ -37,4 +37,9 @@ class Jogador
     {
         return $this->nome;
     }
+
+    public function telefone(): string
+    {
+        return $this->telefone->numero();
+    }
 }

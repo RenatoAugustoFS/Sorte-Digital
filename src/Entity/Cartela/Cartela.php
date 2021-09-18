@@ -48,7 +48,6 @@ class Cartela
         $this->dezenas = $dezenas;
         $this->jogador = $jogador;
         $this->pontos = 0;
-        $this->statusPagamento = false;
     }
 
     public function addConcurso(Concurso $concurso)
@@ -77,9 +76,12 @@ class Cartela
         return $this->statusPagamento;
     }
 
-    public function pontuar($dezenasSorteadas): void
+    public function pontuar(): void
     {
-        $dezenasPremiadas = array_intersect($dezenasSorteadas, $this->dezenas());
+        $dezenasPremiadas = array_intersect(
+            $this->concurso->dezenasOficiaisSorteadas(),
+            $this->dezenas()
+        );
         $pontos = count($dezenasPremiadas);
         $this->pontos = $pontos;
     }
@@ -87,5 +89,10 @@ class Cartela
     public function pontos(): float
     {
         return $this->pontos;
+    }
+
+    public function telefoneJogador()
+    {
+        return $this->jogador->telefone();
     }
 }

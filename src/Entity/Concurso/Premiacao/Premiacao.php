@@ -3,6 +3,8 @@
 namespace App\Entity\Concurso\Premiacao;
 
 use App\Entity\Concurso\Concurso;
+use App\Entity\Concurso\Vencedor\Vencedor;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -40,25 +42,20 @@ class Premiacao
      */
     private float $arrecadacaoBanca;
 
-    private $premiacaoPrevista;
-
     public function __construct(Concurso $concurso)
     {
         $this->concurso = $concurso;
         $this->valorArrecadado = 0;
         $this->premioMaisPontos = 0;
         $this->arrecadacaoBanca = 0;
-        $this->premiacaoPrevista = 0;
     }
 
     public function atualizarArrecadacao(): void
     {
         $cartelas = $this->concurso->cartelas();
-        $quantidadeCartelas = $cartelas->count();
         $cartelasPagas = $this->concurso->cartelasPagas();
         $quantidadeCartelasPagas = $cartelasPagas->count();
 
-        $this->valorPremiacaoPrevista = $quantidadeCartelas * $this->concurso->valorCota();
         $this->valorArrecadado = $quantidadeCartelasPagas * $this->concurso->valorCota();
         $this->premioMaisPontos = ($this->valorArrecadado / 100) * self::PORCENTAGEM_GANHADOR;
         $this->arrecadacaoBanca = ($this->valorArrecadado / 100) * self::PORCENTAGEM_BANCA;
@@ -69,7 +66,15 @@ class Premiacao
         return $this->premioMaisPontos;
     }
 
-    public function caulcarPremioDividido($cartelasVencedoras): float
+    public function premia(Collection $cartelasVencedoras): void
+    {
+        $premioDividido = $this->caulcarPremioDividido($cartelasVencedoras);
+        foreach ($cartelasVencedoras as $cartela){
+            $this->concurso->addVencedor(new Vencedor($premioDividido, $cartela));
+        }
+    }
+
+    private function caulcarPremioDividido($cartelasVencedoras): float
     {
         $premio = ($this->premioMaisPontos / $cartelasVencedoras->count());
         return $premio;

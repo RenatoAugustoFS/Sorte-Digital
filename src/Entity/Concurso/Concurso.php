@@ -33,7 +33,7 @@ class Concurso
     /** @ORM\Embedded(class="App\Entity\Concurso\Periodo\Periodo") */
     private Periodo $periodo;
 
-    /** @ORM\Embedded(class="App\Entity\Concurso\Restricao\RestricaoDezenasPorCartela") */
+    /** @ORM\Embedded(class="App\Entity\Concurso\QuantidadeDezenasPorCartela\QuantidadeDezenasPorCartela") */
     private QuantidadeDezenasPorCartela $quantidadeDezenasPorCartela;
 
     /** @ORM\OneToMany(targetEntity="App\Entity\Cartela\Cartela", mappedBy="concurso", cascade={"remove", "persist"}) */
@@ -133,7 +133,7 @@ class Concurso
     public function addSorteioOficial(SorteioOficial $sorteioOficial): void
     {
         $this->checarSeConcursoEstaEmAndamento();
-        $this->checarSeSorteioOficialJaFoiAdd($sorteioOficial);
+        if($this->sorteioOficialJaFoiAdd($sorteioOficial)){return;}
         $this->sorteiosOficiais->add($sorteioOficial);
         $sorteioOficial->addConcurso($this);
         $this->pontuaCartelas();
@@ -149,16 +149,14 @@ class Concurso
         }
     }
 
-    private function checarSeSorteioOficialJaFoiAdd(SorteioOficial $sorteioOficial): void
+    public function pontuaCartelas(): void
     {
-        if ($this->sorteiosOficiais->exists(function($key, $element) use ($sorteioOficial) {
-            return $element->numeroConcursoOficial() === $sorteioOficial->numeroConcursoOficial();
-        })) {
-            throw new \DomainException("Este concurso já recebeu este sorteio oficial");
+        foreach ($this->cartelas as $cartela) {
+            $cartela->pontuar();
         }
     }
 
-    public function pontuaCartelas(): void
+    public function dezenasOficiaisSorteadas(): array
     {
         $dezenasSorteadas = [];
         $sorteiosOficiais = $this->sorteiosOficiais()->toArray();
@@ -167,34 +165,48 @@ class Concurso
                 array_merge($dezenasSorteadas, $sorteioOficial->dezenas())
             );
         }
+        return $dezenasSorteadas;
+    }
 
-        foreach ($this->cartelas as $cartela) {
-            $cartela->pontuar($dezenasSorteadas);
+    private function sorteioOficialJaFoiAdd(SorteioOficial $sorteioOficial): bool
+    {
+        if ($this->sorteiosOficiais->exists(function($key, $element) use ($sorteioOficial) {
+            return $element->numeroConcursoOficial() === $sorteioOficial->numeroConcursoOficial();
+        })) {
+            return true;
         }
+        return false;
     }
 
     private function verificarSeHouveVencedores()
     {
         $cartelasVencedoras = $this->cartelas->filter(function($cartela) {
-            return $cartela->pontos() >= $this->quantidadeDezenasPorCartela->dezenasPorCartela();
+            return $cartela->pontos() == $this->quantidadeDezenasPorCartela->dezenasPorCartela();
         });
 
-        if ($cartelasVencedoras->count() !== 0){
+        if ($cartelasVencedoras->count() > 0){
             $this->encerra();
-            $this->addVencedores($cartelasVencedoras);
-        }
-    }
-
-    private function addVencedores($cartelasVencedoras)
-    {
-        $premio = $this->premiacao->caulcarPremioDividido($cartelasVencedoras);
-        foreach ($cartelasVencedoras as $cartela) {
-            $this->vencedores->add(new Vencedor($this, $premio, $cartela));
+            $this->premiacao->premia($cartelasVencedoras);
         }
     }
 
     public function atualizarPremiacao(): void
     {
         $this->premiacao->atualizarArrecadacao();
+    }
+
+    public function addVencedor(Vencedor $vencedor): void
+    {
+        $this->vencedores->add($vencedor);
+        $vencedor->addConcurso($this);
+    }
+
+    public function dadosVencedores(): array
+    {
+        $dadosVencedores = [];
+        foreach ($this->vencedores as $vencedor){
+            $dadosVencedores[] = (string) $vencedor;
+        }
+        return $dadosVencedores;
     }
 }
