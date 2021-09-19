@@ -31,3 +31,9 @@ novo-sorteio-oficial:
   methods:
     - GET
   controller: App\Controller\Concurso\PersistirSorteioOficial::handle
+
+iniciar-concursos:
+  path: /iniciar-concursos
+  methods:
+    - GET
+  controller: App\Controller\Concurso\IniciarConcursoAberto::handle

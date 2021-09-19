@@ -201,12 +201,8 @@ class Concurso
         $vencedor->addConcurso($this);
     }
 
-    public function dadosVencedores(): array
+    public function vencedores(): Collection
     {
-        $dadosVencedores = [];
-        foreach ($this->vencedores as $vencedor){
-            $dadosVencedores[] = (string) $vencedor;
-        }
-        return $dadosVencedores;
+        return $this->vencedores;
     }
 }

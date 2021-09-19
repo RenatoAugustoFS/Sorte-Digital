@@ -52,7 +52,6 @@ class Premiacao
 
     public function atualizarArrecadacao(): void
     {
-        $cartelas = $this->concurso->cartelas();
         $cartelasPagas = $this->concurso->cartelasPagas();
         $quantidadeCartelasPagas = $cartelasPagas->count();
 
