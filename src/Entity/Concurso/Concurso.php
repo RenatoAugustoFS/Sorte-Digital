@@ -36,7 +36,10 @@ class Concurso
     /** @ORM\Embedded(class="App\Entity\Concurso\QuantidadeDezenasPorCartela\QuantidadeDezenasPorCartela") */
     private QuantidadeDezenasPorCartela $quantidadeDezenasPorCartela;
 
-    /** @ORM\OneToMany(targetEntity="App\Entity\Cartela\Cartela", mappedBy="concurso", cascade={"remove", "persist"}) */
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Cartela\Cartela", mappedBy="concurso", cascade={"remove", "persist"})
+     * @ORM\OrderBy({"pontos" = "DESC"})
+     */
     private $cartelas;
 
     /** @ORM\ManyToMany(targetEntity="App\Entity\SorteioOficial\SorteioOficial", mappedBy="concursos", cascade={"remove", "persist"}) */
@@ -133,7 +136,7 @@ class Concurso
     public function addSorteioOficial(SorteioOficial $sorteioOficial): void
     {
         $this->checarSeConcursoEstaEmAndamento();
-        if($this->sorteioOficialJaFoiAdd($sorteioOficial)){return;}
+        if($this->checarSesorteioOficialJaFoiAdd($sorteioOficial)){return;}
         $this->sorteiosOficiais->add($sorteioOficial);
         $sorteioOficial->addConcurso($this);
         $this->pontuaCartelas();
@@ -168,7 +171,7 @@ class Concurso
         return $dezenasSorteadas;
     }
 
-    private function sorteioOficialJaFoiAdd(SorteioOficial $sorteioOficial): bool
+    private function checarSesorteioOficialJaFoiAdd(SorteioOficial $sorteioOficial): bool
     {
         if ($this->sorteiosOficiais->exists(function($key, $element) use ($sorteioOficial) {
             return $element->numeroConcursoOficial() === $sorteioOficial->numeroConcursoOficial();
@@ -204,5 +207,10 @@ class Concurso
     public function vencedores(): Collection
     {
         return $this->vencedores;
+    }
+
+    public function premiacaoMaisPontos(): float
+    {
+        return $this->premiacao->premioMaisPontos();
     }
 }

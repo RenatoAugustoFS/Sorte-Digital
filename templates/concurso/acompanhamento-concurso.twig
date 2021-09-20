@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Acompanhamento Sorte Digital - CONCURSO {{concurso.id}} </title>
+    <meta charset="utf_8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="description" content="Sorte Digital">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ asset('assets/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/font-awesome/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{asset('css/custom.css')}}">
+    <link rel="stylesheet" href="{{asset('css/dezenasPremiadas.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/flaty.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/flaty-responsive.css') }}">
+    <link rel="shortcut icon" href="{{ asset('img/favicon.png') }}">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <meta property="og:description" content="MEGAPALMEIRA - CONCURSO {{concurso.id}}">
+    <meta property="og:title" content="Acompanhamento de sorteio - Concurso:  {{concurso.id}}">
+    <meta property="og:url" content="https://www.sortedigital.com.br">
+    <meta property="og:image" content="{{ asset('/img/letsDive.png') }}">
+    <meta property="og:image:secure_url" content="{{ asset('/img/letsDive.png') }}">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Sorte Digital">
+</head>
+
+<body class="cores">
+  <div id="theme-setting"></div>
+    <div id="navbar" class="navbar">
+        <button type="button" class="navbar-toggle navbar-btn collapsed" data-toggle="collapse" data-target="#sidebar">
+            <span class="fa fa-bars"></span>
+        </button>
+        <a class="navbar-brand" href="#">
+          <img src="{{asset('img/logoPequeno.png')}}">
+        </a>
+    </div>
+
+  <div class="container" id="main-container">
+    <div id="main-content">
+      <div class="page-title">
+        <div>
+          <h3> 
+            <i class="fa fa-tachometer"></i> Concurso: {{concurso.id}} 
+            <a class="show-tooltip" title="Entrar no Grupo Whatssapp" href="https://chat.whatsapp.com/41jsxh06XowKTMBF9ii4rq">
+              <button class="btn btn-success2"><i class="fa fa-whatsapp"></i>Entrar no Grupo do  Whatsapp</button>
+            </a>
+            <a class="show-tooltip" title="Instagram" href="http://www.instagram.com/megapalmeira">
+              <button class="btn btn-warning2"><i class="fa fa-instagram" target='_blank'></i>Instagram</button>
+            </a>
+            <a class="show-tooltip" title="REGRAS" href="javascript:abreDetalhes('000036')">
+              <button class="btn btn-warning2"><i class="fa fa-gavel"></i> Como Jogar</button>
+            </a>
+          </h3>
+        </div>
+      </div>
+
+    {% if concurso.estado == 'aberto'%}
+      <div class="alert alert-success">
+        <button class="close" data-dismiss="alert">×</button>
+          <h2 style="color: red">Início: {{concurso.dataAbertura}}</h2>
+          <h3>ATUALIZAÇÃO AUTOMÁTICA 10 MINUTOS APÓS O RESULTADO OFICIAL DA LOTERIA</h3>
+          - FAÇA UM JOGO DE  <b>{{concurso.dezenasPorCartela}} NÚMEROS.  QUEM ACERTAR PRIMEIRO OS {{concurso.dezenasPorCartela}} NÚMEROS, 
+          INDEPENDENTEMENTE DE QUANTOS SORTEIOS ACONTEÇAM, SERÁ O GANHADOR. </b><BR>
+          - HAVENDO MAIS DE UM GANHADOR SERÁ FEITO A DIVISÃO IGUALMENTE<BR>
+          <a class="show-tooltip" title="Nova Aposta" href="apostasIncluir.php?idGrupo=000037&chave=b067c1378a7880766929156f48772605&idVendedor="><br>
+          <button class="btn btn-success2"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-plus"></i> Faça Seu Jogo Agora!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button></a><br>
+          <h2 style="color: red"> Valor da cota: R$ 10,00 ou 3 cotas por R$ 25,00</h2>
+      </div>
+    {% endif %}
+    
+    <div class="alert alert-{{ (concurso.estado == 'fechado') ? 'danger' : 'success' }}">
+      <button class="close" data-dismiss="alert">×</button>
+      <strong>Concurso {{concurso.estado}}</strong> Acompanhe os resultados!
+    </div>
+
+    <div class="row">
+      <div class="col-md-4">
+        <div class="box">
+          <div class="box-title">
+            <h3>Premiação Confirmada</h3>
+          </div>
+          <div class="box-content">
+            <b><span style="font-size: 20px">Prêmio {{concurso.dezenasPorCartela}} pts :</span>
+            </b>R$ <span style="font-size: 36px;weight: bold;color: red">{{concurso.premiacaoMaisPontos}}</span><br>
+            
+            <b>Prêmio  9 pts  : </b> R$
+            <span style="font-size: 24px;weight: bold;color: orange">622,50</span>
+            <br>
+              
+            <br>
+            <b>Prêmio 0 ponto: </b> R$
+            <span style="font-size: 18px;weight: bold;color: orange">207,50 + R$ 1.558,00(acumulado)</span>
+            <br>
+              
+          <span style="weight: bold;color: red"> OBS: Caso não haja jogos com 0 ponto, o prêmio irá acumular para o próximo grupo.</span><br>
+            <b>Participantes : </b> <span style="font-size: 16px;weight: bold;color: green">{{concurso.cartelasPagas.count}} apostas pagas</span><br>
+
+          <b>Situacão: </b> <span style="font-size: 16px;weight: bold;color: green">
+            Concurso {{concurso.estado}}<br><b>{{concurso.dezenasPorCartela}} Pontos: </b>{{concurso.vencedores.count}} apostador(es)<br>
+          <b>Prêmio por ganhador: </b> R$2.490,00<br><b>Ganhador(es) 10 Dezenas: <br></b> Fabio do Coco 02<br><br>      </span> </div>
+    </div>
+
+    <div class="box">
+      <div class="box-title">
+        <h3>Dezenas Sorteadas - LOTERIA FEDERAL</h3>
+      </div>
+      <div class="box-content">
+        <div class="table-responsive" style="border:0">
+          <table width="100%" class="table table-advance" id="table2">
+            <thead>
+              <tr>
+                <th>Concurso</th>
+                <th>Resultado</th>
+                <th>Loterial Federal</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+              {% for sorteioOficial in sorteiosOficiais %}
+                <tr class="table-flag-">
+                  <td width="50px">{{sorteioOficial.numeroConcursoOficial}}<br>15/09/2021</td>
+                  <td>{% for dezena in sorteioOficial.dezenas %}<div class="circuloSorteio">{{dezena}}</div>{% endfor %}</td>
+                  <td>{{sorteioOficial}}</td>
+                </tr>
+              {% endfor %}
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <div class="col-md-8"  style="padding: 0px;margin: 0px">
+      <div class="box" style="width: 96%;padding: 0px;margin: 0px">
+        <div class="box-title">
+          <h3>Jogos </h3>
+            <div class="box-tool">
+                <form action="" method="POST" class="search-form">
+                  <span class="search-pan">
+                    <input type="text" name="busca" placeholder="Buscar ..." autocomplete="off">
+                    <button type="submit">
+                      <i class="fa fa-search"></i>
+                    </button>
+                  </span>
+                </form>
+            </div>
+          </div>
+          <div class="box-content">
+            <div class="table-responsive" style="border:0">
+              <table class="table table-advance" id="table0">
+                <thead>
+                  <tr>
+                    <th style="min-width: 100px">Nome</th>
+                    <th style="width: 1px">Pagamento</th>
+                    <th style="min-width: 100px">Jogo</th>
+                    <th style="min-width: 5px">Pontos</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!--<tr style="color:black; background-color: #06d390"><th   style="color:black; background-color: #06d390">10 PONTOS  </th>  <th></th>  <th style="color:black">1 apostas</th> <th></th> </tr><tr class="table-flag-green">-->
+                  {% for cartela in cartelas %}
+                    <tr>
+                      <td>{{cartela.nomeJogador}}<br>({{cartela.telefoneJogador}})</td>
+                      <td>
+                        <span class="badge badge-{{ (cartela.statusPagamento == true) ? 'success' : 'important' }}">
+                          {{ (cartela.statusPagamento == true) ? 'Pago' : 'Aguardando' }}
+                        </span>
+                      </td>
+                      <td>
+                        {% for dezena in cartela.dezenas %}
+                          <div class="{{ (dezena in dezenasSorteadas) ? 'circuloCerto' : 'circulo' }}">{{dezena}}</div>
+                        {% endfor %}
+                      </td>
+                      <td><b>{{cartela.pontos}}</b></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>Bolão sem fins lucrativos - Taxa de Administração apenas para cobrir as despesas operacionais</p>
+      <p>&copy 2021 - MegaPalmeira</p>
+    </footer>
+    <a id="btn-scrollup" class="btn btn-circle btn-lg" href="#"><i class="fa fa-chevron-up"></i></a>
+  </div>
+</div>
+
+<!--basic scripts-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="assets/jquery/jquery-2.0.3.min.js"><\/script>')</script>
+  <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+  <script src="assets/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+  <script src="assets/jquery-cookie/jquery.cookie.js"></script>
+
+
+<!--page specific plugin scripts-->
+  <script type="text/javascript" src="assets/data-tables/jquery.dataTables.js"></script>
+  <script type="text/javascript" src="assets/data-tables/bootstrap3/dataTables.bootstrap.js"></script>
+  <!--flaty scripts-->
+  <script src="js/flaty.js"></script>
+  <script src="js/flaty-demo-codes.js"></script>
+</body>
+</html>
+

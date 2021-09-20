@@ -21,4 +21,9 @@ class MegaSena extends SorteioOficial
             throw new \DomainException("Mega Sena só pode ter 6 dezenas por sorteio");
         }
     }
+
+    public function __toString(): string
+    {
+        return "MegaSena";   
+    }
 }

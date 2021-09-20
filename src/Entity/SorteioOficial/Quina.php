@@ -21,4 +21,9 @@ class Quina extends SorteioOficial
             throw new \DomainException("Quina só pode ter 5 dezenas por sorteio");
         }
     }
+
+    public function __toString(): string
+    {
+        return "Quina";   
+    }
 }
