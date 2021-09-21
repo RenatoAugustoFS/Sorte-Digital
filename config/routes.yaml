@@ -26,6 +26,18 @@ concurso-por-id:
     - GET
   controller: App\Controller\Concurso\ListarConcursoPorId::handle
 
+formulario-adicionar-cartela:
+  path: /formulario-adicionar-cartela/{id}
+  methods:
+    - GET
+  controller: App\Controller\Concurso\FormularioAdicionarCartela::handle
+
+persistir-cartela:
+  path: /persistir-cartela/{id}
+  methods:
+    - POST
+  controller: App\Controller\Concurso\PersistirCartela::handle
+
 novo-sorteio-oficial:
   path: /atualizar-sorteio-oficial
   methods:

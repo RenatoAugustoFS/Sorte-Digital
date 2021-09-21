@@ -19,7 +19,6 @@ class RemovedorCartelasNaoPagas
     {
         foreach ($cartelas as $cartela) {
             if ($cartela->statusPagamento() === false){
-                echo 1;
                 $this->entityManager->remove($cartela);
                 $this->entityManager->flush();
             }

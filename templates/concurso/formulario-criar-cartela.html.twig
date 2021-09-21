@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Cadastro de Apostas  - Sorte Sigital</title>
+        <meta name="description" content="Sorte Digital">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{{ asset('assets/bootstrap/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/font-awesome/css/font-awesome.min.css') }}">
+        <link rel="stylesheet" href="{{asset('css/custom.css')}}">
+        <link rel="stylesheet" href="{{asset('css/custom2.css')}}">
+        <link rel="stylesheet" href="{{ asset('assets/data-tables/bootstrap3/dataTables.bootstrap.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('css/flaty.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/flaty-responsive.css') }}">
+        <link rel="shortcut icon" href="{{ asset('img/favicon.png') }}">
+    </head>
+    <body>
+        <div id="theme-setting"></div>
+        <div id="navbar" class="navbar">
+            <a class="navbar-brand" href="#">
+            	<img src="img/logoPequeno.png">
+            </a>
+        </div>
+        <div class="container" id="main-container">
+            <div id="main-content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box">
+                            <div class="box-content">
+                                 <form action="/persistir-cartela/{{ idConcurso }}" class="form-horizontal" method="post" name="form1" id="form1">
+                                  <h2>Crie já sua aposta</h2>
+                                  <div class="row">
+                                      <table width="100%" cellpadding="4px" align="center">
+                                        <tr>
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b1"  value="1" class="cb" name="cb[]"/>
+                                                    <label for="b1">1</label>
+                                                </div>
+                                                </div>
+                                            </td>
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b2"  value="2" class="cb" name="cb[]"/>
+                                                    <label for="b2">2</label>
+                                                </div>
+                                                </div>
+                                            </td>
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b3"  value="3" class="cb" name="cb[]"/>
+                                                    <label for="b3">3</label>
+                                                </div>
+                                                </div>
+                                            </td>                                    
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b4"  value="4" class="cb" name="cb[]"/>
+                                                    <label for="b4">4</label>
+                                                </div>
+                                                </div>
+                                            </td>                                  
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b5"  value="5" class="cb" name="cb[]"/>
+                                                    <label for="b5">5</label>
+                                                </div>
+                                                </div>
+                                            </td>
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b6"  value="6" class="cb" name="cb[]"/>
+                                                    <label for="b6">6</label>
+                                                </div>
+                                                </div>
+                                            </td>
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b7"  value="7" class="cb" name="cb[]"/>
+                                                    <label for="b7">7</label>
+                                                </div>
+                                                </div>
+                                            </td>                                    
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b8"  value="8" class="cb" name="cb[]"/>
+                                                    <label for="b8">8</label>
+                                                </div>
+                                                </div>
+                                            </td>                                
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b9"  value="9" class="cb" name="cb[]"/>
+                                                    <label for="b9">9</label>
+                                                </div>
+                                                </div>
+                                            </td>                                    
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b10"  value="10" class="cb" name="cb[]"/>
+                                                    <label for="b10">10</label>
+                                                </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b11"  value="11" class="cb" name="cb[]"/>
+                                                    <label for="b11">11</label>
+                                                </div>
+                                                </div>
+                                            </td>
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b12"  value="12" class="cb" name="cb[]"/>
+                                                    <label for="b12">12</label>
+                                                </div>
+                                                </div>
+                                            </td>
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b13"  value="13" class="cb" name="cb[]"/>
+                                                    <label for="b13">13</label>
+                                                </div>
+                                                </div>
+                                            </td>                                    
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b14"  value="14" class="cb" name="cb[]"/>
+                                                    <label for="b4">14</label>
+                                                </div>
+                                                </div>
+                                            </td>                                  
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b15"  value="15" class="cb" name="cb[]"/>
+                                                    <label for="b15">15</label>
+                                                </div>
+                                                </div>
+                                            </td>
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b16"  value="16" class="cb" name="cb[]"/>
+                                                    <label for="b16">16</label>
+                                                </div>
+                                                </div>
+                                            </td>
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b17"  value="17" class="cb" name="cb[]"/>
+                                                    <label for="b17">17</label>
+                                                </div>
+                                                </div>
+                                            </td>                                    
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b18"  value="18" class="cb" name="cb[]"/>
+                                                    <label for="b18">18</label>
+                                                </div>
+                                                </div>
+                                            </td>                                
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b19"  value="19" class="cb" name="cb[]"/>
+                                                    <label for="b19">19</label>
+                                                </div>
+                                                </div>
+                                            </td>                                    
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b20"  value="20" class="cb" name="cb[]"/>
+                                                    <label for="b20">20</label>
+                                                </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b21"  value="21" class="cb" name="cb[]"/>
+                                                    <label for="b21">21</label>
+                                                </div>
+                                                </div>
+                                            </td>
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b22"  value="22" class="cb" name="cb[]"/>
+                                                    <label for="b22">22</label>
+                                                </div>
+                                                </div>
+                                            </td>
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b23"  value="23" class="cb" name="cb[]"/>
+                                                    <label for="b23">23</label>
+                                                </div>
+                                                </div>
+                                            </td>                                    
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b24"  value="4" class="cb" name="cb[]"/>
+                                                    <label for="b24">24</label>
+                                                </div>
+                                                </div>
+                                            </td>                                  
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b25"  value="25" class="cb" name="cb[]"/>
+                                                    <label for="b25">25</label>
+                                                </div>
+                                                </div>
+                                            </td>
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b26"  value="26" class="cb" name="cb[]"/>
+                                                    <label for="b26">26</label>
+                                                </div>
+                                                </div>
+                                            </td>
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b27"  value="27" class="cb" name="cb[]"/>
+                                                    <label for="b27">27</label>
+                                                </div>
+                                                </div>
+                                            </td>                                    
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b28"  value="28" class="cb" name="cb[]"/>
+                                                    <label for="b28">28</label>
+                                                </div>
+                                                </div>
+                                            </td>                                
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b29"  value="29" class="cb" name="cb[]"/>
+                                                    <label for="b29">29</label>
+                                                </div>
+                                                </div>
+                                            </td>                                    
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b30"  value="30" class="cb" name="cb[]"/>
+                                                    <label for="b30">30</label>
+                                                </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b31"  value="31" class="cb" name="cb[]"/>
+                                                    <label for="b31">31</label>
+                                                </div>
+                                                </div>
+                                            </td>
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b32"  value="32" class="cb" name="cb[]"/>
+                                                    <label for="b32">32</label>
+                                                </div>
+                                                </div>
+                                            </td>
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b33"  value="33" class="cb" name="cb[]"/>
+                                                    <label for="b33">33</label>
+                                                </div>
+                                                </div>
+                                            </td>                                    
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b34"  value="34" class="cb" name="cb[]"/>
+                                                    <label for="b34">34</label>
+                                                </div>
+                                                </div>
+                                            </td>                                  
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b35"  value="35" class="cb" name="cb[]"/>
+                                                    <label for="b35">35</label>
+                                                </div>
+                                                </div>
+                                            </td>
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b36"  value="36" class="cb" name="cb[]"/>
+                                                    <label for="b36">36</label>
+                                                </div>
+                                                </div>
+                                            </td>
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b37"  value="37" class="cb" name="cb[]"/>
+                                                    <label for="b37">37</label>
+                                                </div>
+                                                </div>
+                                            </td>                                    
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b38"  value="38" class="cb" name="cb[]"/>
+                                                    <label for="b38">38</label>
+                                                </div>
+                                                </div>
+                                            </td>                                
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b39"  value="39" class="cb" name="cb[]"/>
+                                                    <label for="b39">39</label>
+                                                </div>
+                                                </div>
+                                            </td>                                    
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b40"  value="40" class="cb" name="cb[]"/>
+                                                    <label for="b40">40</label>
+                                                </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b41"  value="41" class="cb" name="cb[]"/>
+                                                    <label for="b41">41</label>
+                                                </div>
+                                                </div>
+                                            </td>
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b42"  value="42" class="cb" name="cb[]"/>
+                                                    <label for="b42">42</label>
+                                                </div>
+                                                </div>
+                                            </td>
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b43"  value="43" class="cb" name="cb[]"/>
+                                                    <label for="b43">43</label>
+                                                </div>
+                                                </div>
+                                            </td>                                    
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b44"  value="44" class="cb" name="cb[]"/>
+                                                    <label for="b44">44</label>
+                                                </div>
+                                                </div>
+                                            </td>                                  
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b45"  value="45" class="cb" name="cb[]"/>
+                                                    <label for="b45">45</label>
+                                                </div>
+                                                </div>
+                                            </td>
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b46"  value="46" class="cb" name="cb[]"/>
+                                                    <label for="b46">46</label>
+                                                </div>
+                                                </div>
+                                            </td>
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b47"  value="47" class="cb" name="cb[]"/>
+                                                    <label for="b47">47</label>
+                                                </div>
+                                                </div>
+                                            </td>                                    
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b48"  value="48" class="cb" name="cb[]"/>
+                                                    <label for="b48">48</label>
+                                                </div>
+                                                </div>
+                                            </td>                                
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b49"  value="49" class="cb" name="cb[]"/>
+                                                    <label for="b49">49</label>
+                                                </div>
+                                                </div>
+                                            </td>                                    
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b50"  value="50" class="cb" name="cb[]"/>
+                                                    <label for="b50">50</label>
+                                                </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b51"  value="51" class="cb" name="cb[]"/>
+                                                    <label for="b51">51</label>
+                                                </div>
+                                                </div>
+                                            </td>
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b52"  value="52" class="cb" name="cb[]"/>
+                                                    <label for="b52">52</label>
+                                                </div>
+                                                </div>
+                                            </td>
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b53"  value="53" class="cb" name="cb[]"/>
+                                                    <label for="b53">53</label>
+                                                </div>
+                                                </div>
+                                            </td>                                    
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b54"  value="54" class="cb" name="cb[]"/>
+                                                    <label for="b54">54</label>
+                                                </div>
+                                                </div>
+                                            </td>                                  
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b55"  value="55" class="cb" name="cb[]"/>
+                                                    <label for="b55">55</label>
+                                                </div>
+                                                </div>
+                                            </td>
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b56"  value="56" class="cb" name="cb[]"/>
+                                                    <label for="b56">56</label>
+                                                </div>
+                                                </div>
+                                            </td>
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b57"  value="57" class="cb" name="cb[]"/>
+                                                    <label for="b57">57</label>
+                                                </div>
+                                                </div>
+                                            </td>                                    
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b58"  value="58" class="cb" name="cb[]"/>
+                                                    <label for="b58">58</label>
+                                                </div>
+                                                </div>
+                                            </td>                                
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b59"  value="59" class="cb" name="cb[]"/>
+                                                    <label for="b59">59</label>
+                                                </div>
+                                                </div>
+                                            </td>                                    
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b60"  value="60" class="cb" name="cb[]"/>
+                                                    <label for="b60">60</label>
+                                                </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b61"  value="61" class="cb" name="cb[]"/>
+                                                    <label for="b61">61</label>
+                                                </div>
+                                                </div>
+                                            </td>
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b62"  value="62" class="cb" name="cb[]"/>
+                                                    <label for="b62">62</label>
+                                                </div>
+                                                </div>
+                                            </td>
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b63"  value="63" class="cb" name="cb[]"/>
+                                                    <label for="b63">63</label>
+                                                </div>
+                                                </div>
+                                            </td>                                    
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b64"  value="64" class="cb" name="cb[]"/>
+                                                    <label for="b64">64</label>
+                                                </div>
+                                                </div>
+                                            </td>                                  
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b65"  value="65" class="cb" name="cb[]"/>
+                                                    <label for="b65">65</label>
+                                                </div>
+                                                </div>
+                                            </td>
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b66"  value="66" class="cb" name="cb[]"/>
+                                                    <label for="b66">66</label>
+                                                </div>
+                                                </div>
+                                            </td>
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b67"  value="67" class="cb" name="cb[]"/>
+                                                    <label for="b67">67</label>
+                                                </div>
+                                                </div>
+                                            </td>                                    
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b68"  value="68" class="cb" name="cb[]"/>
+                                                    <label for="b68">68</label>
+                                                </div>
+                                                </div>
+                                            </td>                                
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b69"  value="69" class="cb" name="cb[]"/>
+                                                    <label for="b69">69</label>
+                                                </div>
+                                                </div>
+                                            </td>                                    
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b70"  value="70" class="cb" name="cb[]"/>
+                                                    <label for="b70">70</label>
+                                                </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b71"  value="71" class="cb" name="cb[]"/>
+                                                    <label for="b71">71</label>
+                                                </div>
+                                                </div>
+                                            </td>
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b72"  value="72" class="cb" name="cb[]"/>
+                                                    <label for="b72">72</label>
+                                                </div>
+                                                </div>
+                                            </td>
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b73"  value="73" class="cb" name="cb[]"/>
+                                                    <label for="b73">73</label>
+                                                </div>
+                                                </div>
+                                            </td>                                    
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b74"  value="74" class="cb" name="cb[]"/>
+                                                    <label for="b74">74</label>
+                                                </div>
+                                                </div>
+                                            </td>                                  
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b75"  value="75" class="cb" name="cb[]"/>
+                                                    <label for="b75">75</label>
+                                                </div>
+                                                </div>
+                                            </td>
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b76"  value="76" class="cb" name="cb[]"/>
+                                                    <label for="b76">76</label>
+                                                </div>
+                                                </div>
+                                            </td>
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b77"  value="77" class="cb" name="cb[]"/>
+                                                    <label for="b77">77</label>
+                                                </div>
+                                                </div>
+                                            </td>                                    
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b78"  value="78" class="cb" name="cb[]"/>
+                                                    <label for="b78">78</label>
+                                                </div>
+                                                </div>
+                                            </td>                                
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b79"  value="79" class="cb" name="cb[]"/>
+                                                    <label for="b79">79</label>
+                                                </div>
+                                                </div>
+                                            </td>                                    
+                                            <td width="30px" height="30px">
+                                                <div class="round">
+                                                    <input type="checkbox" id="b80"  value="80" class="cb" name="cb[]"/>
+                                                    <label for="b80">80</label>
+                                                </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                      </div>
+                                    <!--Dados Pessoais-->
+                                    <fieldset>
+                                    <legend>Nova Aposta VENDEDOR: </legend>
+                                    <div class="form-group">
+                                       <label class="col-sm-3 col-lg-2 control-label">Nome</label>
+                                       <div class="col-md-6">
+                                       		<div class="input-group">
+                                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                          <input name="nome" type="text" class="form-control input-sm" id="nome" placeholder="Nome do Participante"  value=""/>
+                                          	</div>
+                                          <span class="help-inline">Ex.: Fulano de Tal </span>
+                                       </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                       <label class="col-sm-3 col-lg-2 control-label">Celular</label>
+                                       <div class="col-md-6">
+                                          <div class="input-group">
+                                                <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                          <input name="telefone" type="text" class="form-control input-sm" id="telefone" placeholder="Telefone"  value=""/>
+                                            </div>
+                                          <span class="help-inline">(82) 99999-9999 </span>
+                                       </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-3 col-lg-2 control-label">Email</label>
+                                        <div class="col-md-6">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                                <input name="email" type="text" class="form-control input-sm" id="email" placeholder="Email"  value=""/>
+                                            </div>
+                                            <span class="help-inline">seuemail@gmail.com</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <input type="hidden" name='idGrupo' value="000037">
+                                    <input type="hidden" name='chave' value="b067c1378a7880766929156f48772605">
+                                      <input type="hidden" name="idVendedor" id="idVendedor" value="">
+                                    </fieldset>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2">
+                                        	<br>
+                                           <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i> Enviar Jogo</button>
+                                        </div>
+
+                                        <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2">
+                                        	<br>
+                                           <button type="reset" class="btn btn-gray"><i class="fa fa-trash"></i> Apagar Jogo</button>
+                                        </div>
+                                    </div>
+
+                                 </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END Main Content -->
+
+
+                <footer>
+                    <p>&copy 2021 - MegaPalmeira</p>
+                </footer>
+
+                <a id="btn-scrollup" class="btn btn-circle btn-lg" href="#"><i class="fa fa-chevron-up"></i></a>
+            </div>
+            <!-- END Content -->
+        </div>
+
+
+
+
+
+   <!--basic scripts-->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="assets/jquery/jquery-2.0.3.min.js"><\/script>')</script>
+        <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+        <script src="assets/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+        <script src="assets/jquery-cookie/jquery.cookie.js"></script>
+
+        <!--page specific plugin scripts-->
+        <script type="text/javascript" src="assets/data-tables/jquery.dataTables.js"></script>
+        <script type="text/javascript" src="assets/data-tables/bootstrap3/dataTables.bootstrap.js"></script>
+         <script type="text/javascript" src="js/jquery.mask.min.js"></script>
+         <script src="assets/jquery-validation/dist/jquery.validate.js"></script>
+
+        <!--flaty scripts-->
+        <script src="js/flaty.js"></script>
+        <script src="js/flaty-demo-codes.js"></script>
+
+
+<script>
+//$('#telefone').mask('(99) 99999-9999');
+
+$().ready(function () {
+
+		  // ##########
+
+		var SPMaskBehavior = function (val) {
+		  return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
+		},
+		spOptions = {
+		  onKeyPress: function(val, e, field, options) {
+			  field.mask(SPMaskBehavior.apply({}, arguments), options);
+			}
+		};
+
+	$('#telefone').mask(SPMaskBehavior, spOptions);
+	$('.jogos').mask('##');
+
+	 $("#form1").validate(
+          {
+
+
+
+			  errorPlacement: function(error, element) {
+    return false;
+},
+            invalidHandler: function(event, validator) {
+              // 'this' refers to the form
+              var errors = validator.numberOfInvalids();
+              if (errors) {
+                //alert(errors);
+
+
+                alert("preencha todos os campos");
+              } else {
+                $("div.error").hide();
+              }
+            }
+          });
+
+
+
+        $("#nome").each(function (item) {
+            $(this).rules("add", {
+                required: true,
+                minlength: 1,
+
+            });
+
+        });
+
+
+
+
+
+
+		 $(".jogos").each(function (item) {
+            $(this).rules("add", {
+                required: true,
+                minlength: 1
+            });
+
+        });
+
+
+
+        $("#telefone").each(function (item) {
+            $(this).rules("add", {
+                required: true,
+                minlength: 13
+            });
+
+
+        });
+
+
+
+     $(".cb").each(function (item) {
+            $(this).rules("add", {
+                required: true,
+                minlength: 10
+            });
+
+        });
+
+
+
+
+
+
+
+
+
+	 });
+
+
+
+
+</script>
+  <script>
+       $('input[type=checkbox]').on('change', function (e) {
+          if ($('input[type=checkbox]:checked').length > 10) {
+              $(this).prop('checked', false);
+              alert("Escolha 10 Dezenas dezenas");
+           }
+        });
+</script>
+
+
+    </body>
+</html>
+

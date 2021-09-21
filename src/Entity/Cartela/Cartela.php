@@ -48,6 +48,7 @@ class Cartela
         $this->dezenas = $dezenas;
         $this->jogador = $jogador;
         $this->pontos = 0;
+        $this->statusPagamento = false;
     }
 
     public function addConcurso(Concurso $concurso)

@@ -3,6 +3,7 @@
 namespace App\Controller\Concurso;
 
 use App\Repository\ConcursoRepository;
+use App\Service\Cartela\RemovedorCartelasNaoPagas;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,12 +13,17 @@ class IniciarConcursoAberto extends AbstractController
 {
     private ConcursoRepository $concursoRepository;
     private EntityManagerInterface $entityManager;
+    private RemovedorCartelasNaoPagas $removedorCartelasNaoPagas;
 
-    public function __construct(ConcursoRepository $concursoRepository, EntityManagerInterface $entityManager)
-    {
+    public function __construct(
+        ConcursoRepository $concursoRepository,
+        EntityManagerInterface $entityManager,
+        RemovedorCartelasNaoPagas $removedorCartelasNaoPagas
+    ) {
 
         $this->concursoRepository = $concursoRepository;
         $this->entityManager = $entityManager;
+        $this->removedorCartelasNaoPagas = $removedorCartelasNaoPagas;
     }
 
     public function handle(Request $request): Response
@@ -30,6 +36,7 @@ class IniciarConcursoAberto extends AbstractController
             $dataAtual = new \DateTime();
             if ($dataAtual->format('d/m/Y') === $dataAbertura){
                 $concurso->inicia();
+                $this->removedorCartelasNaoPagas->execute($concurso->cartelas());
                 $this->entityManager->persist($concurso);
             }
         }
