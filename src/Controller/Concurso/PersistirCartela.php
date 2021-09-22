@@ -26,9 +26,6 @@ class PersistirCartela extends AbstractController
 
     public function handle(int $id, Request $request): Response
     {
-        /**
-         * @var array $dezenas
-         */
         $dezenas = $request->request->get('cb');
         $nomeJogador = $request->request->get('nome');
         $telefone = $request->request->get('telefone');
@@ -45,7 +42,6 @@ class PersistirCartela extends AbstractController
             );
             $concurso = $this->concursoRepository->find($id);
             $concurso->addCartela($cartela);
-            $cartela->pagar();
             $this->entityManager->flush();
         } catch (\Exception $exception) {
             $this->addFlash('notice', $exception->getMessage());

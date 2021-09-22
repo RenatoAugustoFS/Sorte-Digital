@@ -9,7 +9,7 @@ home:
   controller: App\Controller\Concurso\ListarConcursos::handle
 
 formulario-concurso:
-  path: /formulario-concurso
+  path: /admin/formulario-concurso
   methods:
     - GET
   controller: App\Controller\Concurso\FormularioCriarConcurso::handle
