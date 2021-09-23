@@ -2,7 +2,6 @@
 
 namespace App\Service\Cartela;
 
-use App\Entity\Cartela\Cartela;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 

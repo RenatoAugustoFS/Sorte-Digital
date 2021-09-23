@@ -31,7 +31,7 @@ class ListarConcursoPorId extends AbstractController
 
         return $this
             ->render(
-                '/concurso/acompanhamento-concurso.twig', [
+                '/concurso/acompanhamento-concurso.html.twig', [
                     'concurso' => $concurso,
                     'cartelas' => $concurso->cartelas(),
                     'sorteiosOficiais' => $concurso->sorteiosOficiais(),

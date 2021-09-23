@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Entity\Cartela;
+namespace App\Entity\Concurso\Cartela;
 
 use App\Entity\Concurso\Concurso;
-use App\Entity\Cartela\Jogador\Jogador;
+use App\Entity\Concurso\Cartela\Jogador\Jogador;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -19,7 +19,7 @@ class Cartela
     private $id;
 
     /**
-     * @ORM\Embedded(class="App\Entity\Cartela\Jogador\Jogador")
+     * @ORM\Embedded(class="App\Entity\Concurso\Cartela\Jogador\Jogador")
      */
     private Jogador $jogador;
 
@@ -43,12 +43,18 @@ class Cartela
      */
     private $statusPagamento;
 
+
     public function __construct(array $dezenas, Jogador $jogador)
     {
         $this->dezenas = $dezenas;
         $this->jogador = $jogador;
         $this->pontos = 0;
         $this->statusPagamento = false;
+    }
+
+    public function token(): int
+    {
+        return $this->id;
     }
 
     public function addConcurso(Concurso $concurso)

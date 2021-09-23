@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity\SorteioOficial;
+namespace App\Entity\Concurso\SorteioOficial;
 
 interface SorteioOficialRepository
 {

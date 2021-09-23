@@ -2,7 +2,7 @@
 
 namespace App\Entity\Concurso\Vencedor;
 
-use App\Entity\Cartela\Cartela;
+use App\Entity\Concurso\Cartela\Cartela;
 use App\Entity\Concurso\Concurso;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -28,7 +28,7 @@ class Vencedor
      */
     private float $premio;
 
-    /** @ORM\OneToOne(targetEntity="App\Entity\Cartela\Cartela") */
+    /** @ORM\OneToOne(targetEntity="App\Entity\Concurso\Cartela\Cartela") */
     private Cartela $cartela;
 
     public function __construct(float $premio, Cartela $cartela)

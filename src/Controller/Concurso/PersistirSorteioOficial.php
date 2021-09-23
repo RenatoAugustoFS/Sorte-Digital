@@ -2,7 +2,7 @@
 
 namespace App\Controller\Concurso;
 
-use App\Entity\SorteioOficial\SorteioOficialRepository;
+use App\Entity\Concurso\SorteioOficial\SorteioOficialRepository;
 use App\Repository\ConcursoRepository;
 use App\Repository\SorteioOficialRepositoryAPILoterias;
 use Doctrine\ORM\EntityManagerInterface;

@@ -2,11 +2,10 @@
 
 namespace App\Controller\Concurso;
 
-use App\Entity\Cartela\Cartela;
-use App\Entity\Cartela\Jogador\Email\Email;
-use App\Entity\Cartela\Jogador\Jogador;
-use App\Entity\Cartela\Jogador\Telefone\Telefone;
-use App\Entity\Concurso\Estado\Aberto;
+use App\Entity\Concurso\Cartela\Cartela;
+use App\Entity\Concurso\Cartela\Jogador\Email\Email;
+use App\Entity\Concurso\Cartela\Jogador\Jogador;
+use App\Entity\Concurso\Cartela\Jogador\Telefone\Telefone;
 use App\Repository\ConcursoRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -46,6 +45,9 @@ class PersistirCartela extends AbstractController
         } catch (\Exception $exception) {
             $this->addFlash('notice', $exception->getMessage());
         }
-        return $this->redirectToRoute('home');
+        return $this->render('/concurso/agradecimentos.html.twig', [
+            'tokenCartela' => $cartela->token(),
+            'concursoId' => $concurso->id(),
+            ]);
     }
 }

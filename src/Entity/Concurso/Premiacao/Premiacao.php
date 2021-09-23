@@ -23,7 +23,7 @@ class Premiacao
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity=Concurso::class)
+     * @ORM\OneToOne(targetEntity=Concurso::class, inversedBy="premiacao")
      */
     private Concurso $concurso;
 

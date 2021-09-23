@@ -5,7 +5,6 @@ namespace App\Service\Concurso;
 use App\Entity\Concurso\Concurso;
 use App\Entity\Concurso\Periodo\Periodo;
 use App\Entity\Concurso\QuantidadeDezenasPorCartela\QuantidadeDezenasPorCartela;
-use App\Entity\Concurso\Restricao\RestricaoDezenasPorCartela;
 
 class ConcursoFactory
 {

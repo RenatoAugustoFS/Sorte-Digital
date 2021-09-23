@@ -2,13 +2,13 @@
 
 namespace App\Repository;
 
-use App\Entity\SorteioOficial\MegaSena;
-use App\Entity\SorteioOficial\Quina;
-use App\Entity\SorteioOficial\SorteioOficialRepository;
+use App\Entity\Concurso\SorteioOficial\MegaSena;
+use App\Entity\Concurso\SorteioOficial\Quina;
+use App\Entity\Concurso\SorteioOficial\SorteioOficialRepository;
 
 class SorteioOficialRepositoryAPILoterias implements SorteioOficialRepository
 {
-    const URL_QUINA = "http://apiloterias.com.br/app/resultado?loteria=quina&token=79wY8WeG0ajGwl5&concurso=5639";
+    const URL_QUINA = "http://apiloterias.com.br/app/resultado?loteria=quina&token=79wY8WeG0ajGwl5";
     const URL_MEGASENA = "http://apiloterias.com.br/app/resultado?loteria=megasena&token=79wY8WeG0ajGwl5";
 
     public function buscarResultadoOficialQuina(): Quina

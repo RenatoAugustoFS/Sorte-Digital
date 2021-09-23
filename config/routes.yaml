@@ -1,24 +1,8 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
-
 home:
   path: /
   methods:
     - GET
   controller: App\Controller\Concurso\ListarConcursos::handle
-
-formulario-concurso:
-  path: /admin/formulario-concurso
-  methods:
-    - GET
-  controller: App\Controller\Concurso\FormularioCriarConcurso::handle
-
-novo-concurso:
-  path: /novo-concurso
-  methods:
-    - POST
-  controller: App\Controller\Concurso\PersistirConcurso::handle
 
 concurso-por-id:
   path: /concursos/{id}
@@ -38,14 +22,39 @@ persistir-cartela:
     - POST
   controller: App\Controller\Concurso\PersistirCartela::handle
 
+formulario-concurso:
+  path: /admin/formulario-concurso
+  methods:
+    - GET
+  controller: App\Controller\Concurso\FormularioCriarConcurso::handle
+
+novo-concurso:
+  path: /admin/novo-concurso
+  methods:
+    - POST
+  controller: App\Controller\Concurso\PersistirConcurso::handle
+
 novo-sorteio-oficial:
-  path: /atualizar-sorteio-oficial
+  path: /admin/atualizar-sorteio-oficial
   methods:
     - GET
   controller: App\Controller\Concurso\PersistirSorteioOficial::handle
 
 iniciar-concursos:
-  path: /iniciar-concursos
+  path: /admin/iniciar-concursos
   methods:
     - GET
   controller: App\Controller\Concurso\IniciarConcursoAberto::handle
+
+app_login:
+  path: /admin/login
+  methods:
+    - GET
+    - POST
+  controller: App\Controller\SecurityController::login
+
+app_logout:
+  path: /admin/logout
+  methods:
+    - GET
+  controller: App\Controller\SecurityController::logout

@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Entity\SorteioOficial;
+namespace App\Entity\Concurso\SorteioOficial;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
  */
-class Quina extends SorteioOficial
+class MegaSena extends SorteioOficial
 {
     public function __construct(array $dezenas, int $numeroConcursoOficial)
     {
@@ -17,13 +17,13 @@ class Quina extends SorteioOficial
 
     protected function validarQuantidadeDezenas(array $dezenas)
     {
-        if (count($dezenas) != 5){
-            throw new \DomainException("Quina só pode ter 5 dezenas por sorteio");
+        if (count($dezenas) != 6){
+            throw new \DomainException("Mega Sena só pode ter 6 dezenas por sorteio");
         }
     }
 
     public function __toString(): string
     {
-        return "Quina";   
+        return "MegaSena";   
     }
 }

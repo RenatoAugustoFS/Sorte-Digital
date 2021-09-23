@@ -2,7 +2,7 @@
 
 namespace App\Entity\Concurso\QuantidadeDezenasPorCartela;
 
-use App\Entity\Cartela\Cartela;
+use App\Entity\Concurso\Cartela\Cartela;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

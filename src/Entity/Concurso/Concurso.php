@@ -2,14 +2,14 @@
 
 namespace App\Entity\Concurso;
 
-use App\Entity\Cartela\Cartela;
+use App\Entity\Concurso\Cartela\Cartela;
 use App\Entity\Concurso\Estado\Aberto;
 use App\Entity\Concurso\Estado\EmAndamento;
 use App\Entity\Concurso\Premiacao\Premiacao;
 use App\Entity\Concurso\Periodo\Periodo;
 use App\Entity\Concurso\QuantidadeDezenasPorCartela\QuantidadeDezenasPorCartela;
 use App\Entity\Concurso\Vencedor\Vencedor;
-use App\Entity\SorteioOficial\SorteioOficial;
+use App\Entity\Concurso\SorteioOficial\SorteioOficial;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -37,15 +37,15 @@ class Concurso
     private QuantidadeDezenasPorCartela $quantidadeDezenasPorCartela;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Cartela\Cartela", mappedBy="concurso", cascade={"remove", "persist"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Concurso\Cartela\Cartela", mappedBy="concurso", cascade={"remove", "persist"})
      * @ORM\OrderBy({"pontos" = "DESC"})
      */
     private $cartelas;
 
-    /** @ORM\ManyToMany(targetEntity="App\Entity\SorteioOficial\SorteioOficial", mappedBy="concursos", cascade={"remove", "persist"}) */
+    /** @ORM\ManyToMany(targetEntity="App\Entity\Concurso\SorteioOficial\SorteioOficial", mappedBy="concursos", cascade={"remove", "persist"}) */
     private $sorteiosOficiais;
 
-    /** @ORM\OneToOne(targetEntity="App\Entity\Concurso\Premiacao\Premiacao", cascade={"remove", "persist"}) */
+    /** @ORM\OneToOne(targetEntity="App\Entity\Concurso\Premiacao\Premiacao", mappedBy="concurso", cascade={"remove", "persist"}) */
     private Premiacao $premiacao;
 
     /** @ORM\OneToMany(targetEntity="App\Entity\Concurso\Vencedor\Vencedor", mappedBy="concurso", cascade={"remove", "persist"}) */

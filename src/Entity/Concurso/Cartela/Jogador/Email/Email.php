@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity\Cartela\Jogador\Email;
+namespace App\Entity\Concurso\Cartela\Jogador\Email;
 
 use Doctrine\ORM\Mapping as ORM;
 
