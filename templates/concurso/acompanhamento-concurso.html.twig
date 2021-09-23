@@ -154,6 +154,9 @@
                     <th style="width: 1px">Pagamento</th>
                     <th style="min-width: 100px">Jogo</th>
                     <th style="min-width: 5px">Pontos</th>
+                    {% if is_granted('ROLE_ADMIN') %}
+                      <th style="min-width: 5px">Ações</th>
+                    {% endif %}
                   </tr>
                 </thead>
                 <tbody>
@@ -172,6 +175,11 @@
                         {% endfor %}
                       </td>
                       <td><b>{{cartela.pontos}}</b></td>
+                      <td>
+                        {% if is_granted('ROLE_ADMIN') %}
+                          <a href="{{ path('pagar-cartela', {'id': cartela.token})}}">Pagar</a>
+                        {% endif %}
+                      </td>
                     </tr>
                     {% endfor %}
                 </tbody>

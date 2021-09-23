@@ -46,6 +46,12 @@ iniciar-concursos:
     - GET
   controller: App\Controller\Admin\IniciarConcursoAberto::handle
 
+pagar-cartela:
+  path: /admin/pagar-cartela/{id}
+  methods:
+    - GET
+  controller: App\Controller\Admin\PagarCartela::handle
+
 app_login:
   path: /admin/login
   methods:
