@@ -6,7 +6,7 @@ use App\Repository\ConcursoRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
-class ListarConcursoPorId extends AbstractController
+class AcompanhamentoConcurso extends AbstractController
 {
     private ConcursoRepository $concursoRepository;
 

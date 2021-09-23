@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Concurso;
+namespace App\Controller\Admin;
 
 use App\Repository\ConcursoRepository;
 use App\Service\Cartela\RemovedorCartelasNaoPagas;

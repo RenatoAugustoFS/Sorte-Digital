@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Concurso;
+namespace App\Controller\Admin;
 
 use App\Entity\Concurso\SorteioOficial\SorteioOficialRepository;
 use App\Repository\ConcursoRepository;

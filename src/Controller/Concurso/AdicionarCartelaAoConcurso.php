@@ -12,7 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class PersistirCartela extends AbstractController
+class AdicionarCartelaAoConcurso extends AbstractController
 {
     private ConcursoRepository $concursoRepository;
     private EntityManagerInterface $entityManager;

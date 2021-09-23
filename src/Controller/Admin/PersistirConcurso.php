@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Concurso;
+namespace App\Controller\Admin;
 
 use App\Service\Concurso\ConcursoDto;
 use App\Service\Concurso\ConcursoFactory;

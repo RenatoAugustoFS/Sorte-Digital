@@ -8,7 +8,7 @@ concurso-por-id:
   path: /concursos/{id}
   methods:
     - GET
-  controller: App\Controller\Concurso\ListarConcursoPorId::handle
+  controller: App\Controller\Concurso\AcompanhamentoConcurso::handle
 
 formulario-adicionar-cartela:
   path: /formulario-adicionar-cartela/{id}
@@ -20,41 +20,41 @@ persistir-cartela:
   path: /persistir-cartela/{id}
   methods:
     - POST
-  controller: App\Controller\Concurso\PersistirCartela::handle
+  controller: App\Controller\Concurso\AdicionarCartelaAoConcurso::handle
 
 formulario-concurso:
   path: /admin/formulario-concurso
   methods:
     - GET
-  controller: App\Controller\Concurso\FormularioCriarConcurso::handle
+  controller: App\Controller\Admin\FormularioCriarConcurso::handle
 
 novo-concurso:
   path: /admin/novo-concurso
   methods:
     - POST
-  controller: App\Controller\Concurso\PersistirConcurso::handle
+  controller: App\Controller\Admin\PersistirConcurso::handle
 
 novo-sorteio-oficial:
   path: /admin/atualizar-sorteio-oficial
   methods:
     - GET
-  controller: App\Controller\Concurso\PersistirSorteioOficial::handle
+  controller: App\Controller\Admin\PersistirSorteioOficial::handle
 
 iniciar-concursos:
   path: /admin/iniciar-concursos
   methods:
     - GET
-  controller: App\Controller\Concurso\IniciarConcursoAberto::handle
+  controller: App\Controller\Admin\IniciarConcursoAberto::handle
 
 app_login:
   path: /admin/login
   methods:
     - GET
     - POST
-  controller: App\Controller\SecurityController::login
+  controller: App\Controller\Login\SecurityController::login
 
 app_logout:
   path: /admin/logout
   methods:
     - GET
-  controller: App\Controller\SecurityController::logout
+  controller: App\Controller\Login\SecurityController::logout
