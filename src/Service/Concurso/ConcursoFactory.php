@@ -3,19 +3,17 @@
 namespace App\Service\Concurso;
 
 use App\Entity\Concurso\Concurso;
-use App\Entity\Concurso\Periodo\Periodo;
-use App\Entity\Concurso\QuantidadeDezenasPorCartela\QuantidadeDezenasPorCartela;
 
 class ConcursoFactory
 {
     public function criarConcurso(ConcursoDto $concursoDto): Concurso
     {
         $this->checarPropriedadesEnviadas($concursoDto);
-        $descricao = $concursoDto->descricao;
-        $periodo = new Periodo(new \DateTimeImmutable($concursoDto->periodo));
-        $dezenasPorCartela = new QuantidadeDezenasPorCartela($concursoDto->restricaoDezenasPorCartela);
-
-        return new Concurso($descricao, $periodo, $dezenasPorCartela);
+        return new Concurso(
+            $concursoDto->descricao,
+            $concursoDto->periodo,
+            $concursoDto->dezenasPorCartela
+        );
     }
 
     private function checarPropriedadesEnviadas(ConcursoDto $concursoDto)
@@ -29,7 +27,7 @@ class ConcursoFactory
             );
         }
 
-        if (!$concursoDto->restricaoDezenasPorCartela) {
+        if (!$concursoDto->dezenasPorCartela) {
             throw new \DomainException(
                 "Quantidade de dezenas que será permitido em cada cartela deste concurso deve ser especificada!"
             );

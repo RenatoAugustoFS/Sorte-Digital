@@ -22,7 +22,7 @@ class ConcursoRepository extends ServiceEntityRepository
     public function findConcursosAbertos()
     {
         $classe = Concurso::class;
-        $dql = "SELECT c FROM $classe c WHERE c.estado = 'aberto'";
+        $dql = "SELECT c FROM $classe c WHERE c.estado = 'Aberto'";
 
         $concursosAbertos = $this->getEntityManager()
             ->createQuery($dql)
@@ -34,7 +34,7 @@ class ConcursoRepository extends ServiceEntityRepository
     public function findConcursosEmAndamento()
     {
         $classe = Concurso::class;
-        $dql = "SELECT c FROM $classe c WHERE c.estado = 'emandamento'";
+        $dql = "SELECT c FROM $classe c WHERE c.estado = 'Em Andamento'";
 
         $concursosAbertos = $this->getEntityManager()
             ->createQuery($dql)
@@ -46,7 +46,7 @@ class ConcursoRepository extends ServiceEntityRepository
     public function findConcursosFechados()
     {
         $classe = Concurso::class;
-        $dql = "SELECT c FROM $classe c WHERE c.estado = 'fechado'";
+        $dql = "SELECT c FROM $classe c WHERE c.estado = 'Fechado'";
 
         $concursosAbertos = $this->getEntityManager()
             ->createQuery($dql)

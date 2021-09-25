@@ -6,12 +6,12 @@ class ConcursoDto
 {
     public string $descricao;
     public string $periodo;
-    public string $restricaoDezenasPorCartela;
+    public string $dezenasPorCartela;
 
-    public function __construct(string $descricao, string $periodo, string $restricaoDezenasPorCartela)
+    public function __construct(string $descricao, string $periodo, string $dezenasPorCartela)
     {
         $this->descricao = $descricao;
         $this->periodo = $periodo;
-        $this->restricaoDezenasPorCartela = $restricaoDezenasPorCartela;
+        $this->dezenasPorCartela = $dezenasPorCartela;
     }
 }

@@ -3,7 +3,7 @@
 <head>
     <title>Sorte Digital</title>
     <meta charset="utf-8">
-    <link rel="shortcut icon" href="img/favicon.png">
+    <link rel="shortcut icon" href="{{ asset('img/favicon.png') }}">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="description" content="Sorte Digital">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -56,7 +56,7 @@
                                          </td>
                                         <td>R$ {{ concurso.valorCota }},00</td>
                                         <td>{{ concurso.dataAbertura }}</td>
-                                        <td>R$ 1250,00</td>
+                                        <td>R$ {{ concurso.premiacaoMaisPontos }},00</td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>
@@ -92,7 +92,7 @@
                                          </td>
                                         <td>R$ {{ concurso.valorCota }},00</td>
                                         <td>{{ concurso.cartelas.count }}</td>
-                                        <td>R$ 1250,00</td>
+                                        <td>R$ {{ concurso.premiacaoMaisPontos }},00</td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>
@@ -125,8 +125,16 @@
                                                 <button type="button" class="btn btn-info btn-lg">Ver Resultado: <i class="far fa-hand-point-right"></i></button> 
                                             </a>
                                          </td>
-                                        <td>R$ 1250,00</td>
-                                        <td>Renato Augusto / Agatha Oliveira</td>
+                                        <td>R$ {{ concurso.premiacaoMaisPontos }},00</td>
+                                        <td>
+                                        {% for vencedor in concurso.vencedores %}
+                                            {% if is_granted('ROLE_ADMIN') %}
+                                                 {{ vencedor }}<br>
+                                            {% else %}
+                                                ({{ vencedor[:-4] }}-XXXX)<br>
+                                            {% endif %}
+                                        {% endfor %}
+                                        </td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>

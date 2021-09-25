@@ -4,10 +4,10 @@ namespace App\Service\Cartela;
 
 class CartelaDto
 {
-    public array $dezenas;
-    public string $nomeJogador;
-    public string $telefone;
-    public string $email;
+    public $dezenas;
+    public $nomeJogador;
+    public $telefone;
+    public $email;
 
     public function __construct($dezenas, $nomeJogador, $telefone, $email)
     {

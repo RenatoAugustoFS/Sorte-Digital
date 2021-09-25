@@ -8,9 +8,9 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
 class EnumTypeEstadoConcurso extends Type
 {
     const ENUM_ESTADOCONCURSO = 'enumestadoconcurso';
-    const ESTADO_ABERTO = 'aberto';
-    const ESTADO_EMANDAMENTO = 'emandamento';
-    const ESTADO_FECHADO = 'fechado';
+    const ESTADO_ABERTO = 'Aberto';
+    const ESTADO_EMANDAMENTO = 'Em Andamento';
+    const ESTADO_FECHADO = 'Fechado';
 
 
     public function getSQLDeclaration(array $column, AbstractPlatform $platform)

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity\Concurso\QuantidadeDezenasPorCartela;
+namespace App\Entity\Concurso\DezenasPorCartela;
 
 use App\Entity\Concurso\Cartela\Cartela;
 use Doctrine\ORM\Mapping as ORM;
@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Embeddable
  */
-class QuantidadeDezenasPorCartela
+class DezenasPorCartela
 {
     /**
      * @ORM\Column(type="integer")
@@ -34,12 +34,12 @@ class QuantidadeDezenasPorCartela
         $quantidadeDezenas = count($cartela->dezenas());
         if ($quantidadeDezenas != $this->dezenasPorCartela){
             throw new \DomainException(
-                "Este concurso só pode receber cartelas com {$this->dezenasPorCartela()} dezenas"
+                "Este concurso só pode receber cartelas com {$this->total()} dezenas"
             );
         }
     }
 
-    public function dezenasPorCartela(): int
+    public function total(): int
     {
         return $this->dezenasPorCartela;
     }

@@ -30,7 +30,6 @@ class PersistirSorteioOficial extends AbstractController
     public function handle(Request $request): Response
     {
         $this->entityManager->beginTransaction();
-
         $concursosEmAndamento = $this->concursoRepository->findConcursosEmAndamento();
         $sorteioOficial = $this->sorteioOficialRepository->buscarResultadoOficialQuina();
 

@@ -28,14 +28,19 @@ abstract class SorteioOficial
     /** @ORM\Column(type="integer") */
     protected $numeroConcursoOficial;
 
+    /** @ORM\Column(type="datetime_immutable") */
+    protected \DateTimeImmutable $dataConcurso;
+
     /** @ORM\ManyToMany(targetEntity="App\Entity\Concurso\Concurso", inversedBy="sorteiosOficiais") */
     protected $concursos;
 
-    public function __construct(array $dezenas, int $numeroConcursoOficial)
+    public function __construct(array $dezenas, int $numeroConcursoOficial, \DateTimeImmutable $dataConcurso)
     {
         $this->concursos = new ArrayCollection();
         $this->definirDezenas($dezenas);
         $this->numeroConcursoOficial = $numeroConcursoOficial;
+        $this->dataConcurso = $dataConcurso;
+
     }
 
     public function addConcurso(Concurso $concurso)
@@ -60,6 +65,11 @@ abstract class SorteioOficial
             $dezenasLimpas[] = (int) $dezena;
         }
         $this->dezenas = $dezenasLimpas;
+    }
+
+    public function dataConcurso(): string
+    {
+        return $this->dataConcurso->format('d/m/Y');
     }
 
     abstract protected function validarQuantidadeDezenas(array $dezenas);

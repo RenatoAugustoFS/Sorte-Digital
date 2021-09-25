@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 class Aberto extends EstadoConcurso
 {
-    const ESTADO = 'aberto';
+    const ESTADO = 'Aberto';
 
     public function inicia(Concurso $concurso)
     {
@@ -16,6 +16,6 @@ class Aberto extends EstadoConcurso
 
     public function __toString()
     {
-        return self::ESTADO;
+        return 'Aberto';
     }
 }

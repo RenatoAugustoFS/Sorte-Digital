@@ -16,15 +16,10 @@
         <link rel="shortcut icon" href="{{ asset('img/favicon.png') }}">
     </head>
     <body>
-        {% for message in app.flashes('notice') %}
-            <div class="flash-notice">
-                {{ message }}
-            </div>
-        {% endfor %}
         <div id="theme-setting"></div>
         <div id="navbar" class="navbar">
             <a class="navbar-brand" href="#">
-            	<img src="img/logoPequeno.png">
+            	<img src="{{ asset('img/logoPequeno.png') }}">
             </a>
         </div>
         <div class="container" id="main-container">
@@ -135,7 +130,7 @@
                                             <td width="30px" height="30px">
                                                 <div class="round">
                                                     <input type="checkbox" id="b14"  value="14" class="cb" name="cb[]"/>
-                                                    <label for="b4">14</label>
+                                                    <label for="b14">14</label>
                                                 </div>
                                                 </div>
                                             </td>                                  
@@ -624,6 +619,8 @@
 
                                       </div>
                                     <!--Dados Pessoais-->
+        <br>
+
                                     <fieldset>
                                     <legend>Nova Aposta VENDEDOR: </legend>
                                     <div class="form-group">
@@ -675,6 +672,11 @@
                                            <button type="reset" class="btn btn-gray"><i class="fa fa-trash"></i> Apagar Jogo</button>
                                         </div>
                                     </div>
+                                    {% for message in app.flashes('notice') %}
+                                        <div class="flash-notice">
+                                            {{ message }}
+                                        </div>
+                                    {% endfor %}
 
                                  </form>
                             </div>
@@ -685,7 +687,7 @@
 
 
                 <footer>
-                    <p>&copy 2021 - MegaPalmeira</p>
+                    <p>&copy 2021 - Sorte digital</p>
                 </footer>
 
                 <a id="btn-scrollup" class="btn btn-circle btn-lg" href="#"><i class="fa fa-chevron-up"></i></a>
@@ -693,30 +695,22 @@
             <!-- END Content -->
         </div>
 
-
-
-
-
    <!--basic scripts-->
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="assets/jquery/jquery-2.0.3.min.js"><\/script>')</script>
-        <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-        <script src="assets/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-        <script src="assets/jquery-cookie/jquery.cookie.js"></script>
+        <script src="{{ asset('assets/bootstrap/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('assets/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
+        <script src="{{ asset('assets/jquery-cookie/jquery.cookie.js') }}"></script>
 
         <!--page specific plugin scripts-->
-        <script type="text/javascript" src="assets/data-tables/jquery.dataTables.js"></script>
-        <script type="text/javascript" src="assets/data-tables/bootstrap3/dataTables.bootstrap.js"></script>
-         <script type="text/javascript" src="js/jquery.mask.min.js"></script>
-         <script src="assets/jquery-validation/dist/jquery.validate.js"></script>
-
-        <!--flaty scripts-->
-        <script src="js/flaty.js"></script>
-        <script src="js/flaty-demo-codes.js"></script>
+        <script type="text/javascript" src="{{ asset('assets/data-tables/jquery.dataTables.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/data-tables/bootstrap3/dataTables.bootstrap.js') }}"></script>
+         <script type="text/javascript" src="{{ asset('js/jquery.mask.min.js') }}"></script>
+         <script src="{{ asset('assets/jquery-validation/dist/jquery.validate.js') }}"></script>
+        <script src="{{ asset('js/flaty.js') }}"></script>
+        <script src="{{ asset('js/flaty-demo-codes.js') }}"></script>
 
 
 <script>
-//$('#telefone').mask('(99) 99999-9999');
 
 $().ready(function () {
 
@@ -736,90 +730,54 @@ $().ready(function () {
 
 	 $("#form1").validate(
           {
-
-
-
-			  errorPlacement: function(error, element) {
-    return false;
-},
+          errorPlacement: function(error, element) {
+              return false;
+            },
             invalidHandler: function(event, validator) {
               // 'this' refers to the form
               var errors = validator.numberOfInvalids();
               if (errors) {
                 //alert(errors);
-
-
-                alert("preencha todos os campos");
+                alert("preencha todos os campos corretamente");
               } else {
                 $("div.error").hide();
               }
             }
           });
 
-
-
         $("#nome").each(function (item) {
             $(this).rules("add", {
                 required: true,
                 minlength: 1,
-
             });
-
         });
-
-
-
-
-
 
 		 $(".jogos").each(function (item) {
             $(this).rules("add", {
                 required: true,
                 minlength: 1
             });
-
         });
-
-
 
         $("#telefone").each(function (item) {
             $(this).rules("add", {
                 required: true,
-                minlength: 13
+                minlength: 12
             });
-
-
         });
-
-
 
      $(".cb").each(function (item) {
             $(this).rules("add", {
                 required: true,
-                minlength: 10
             });
-
         });
-
-
-
-
-
-
-
-
-
 	 });
-
-
-
-
 </script>
   <script>
        $('input[type=checkbox]').on('change', function (e) {
-          if ($('input[type=checkbox]:checked').length > 10) {
+          if ($('input[type=checkbox]:checked').length > {{ dezenasPorCartela }}) {
               $(this).prop('checked', false);
-              alert("Escolha 10 Dezenas dezenas");
+              alert("Escolha {{ dezenasPorCartela }} Dezenas dezenas");
            }
         });
 </script>

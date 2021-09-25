@@ -6,10 +6,10 @@ use Doctrine\ORM\Mapping as ORM;
 
 class Fechado extends EstadoConcurso
 {
-    const ESTADO = 'fechado';
+    const ESTADO = 'Fechado';
 
     public function __toString()
     {
-        return self::ESTADO;
+        return 'Fechado';
     }
 }

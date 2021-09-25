@@ -9,10 +9,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Quina extends SorteioOficial
 {
-    public function __construct(array $dezenas, int $numeroConcursoOficial)
+    public function __construct(array $dezenas, int $numeroConcursoOficial, \DateTimeImmutable $dataConcurso)
     {
         $this->validarQuantidadeDezenas($dezenas);
-        parent::__construct($dezenas, $numeroConcursoOficial);
+        parent::__construct($dezenas, $numeroConcursoOficial, $dataConcurso);
+
     }
 
     protected function validarQuantidadeDezenas(array $dezenas)

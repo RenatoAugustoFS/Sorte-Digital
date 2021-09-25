@@ -7,7 +7,7 @@ use App\Entity\Concurso\Estado\Aberto;
 use App\Entity\Concurso\Estado\EmAndamento;
 use App\Entity\Concurso\Premiacao\Premiacao;
 use App\Entity\Concurso\Periodo\Periodo;
-use App\Entity\Concurso\QuantidadeDezenasPorCartela\QuantidadeDezenasPorCartela;
+use App\Entity\Concurso\DezenasPorCartela\DezenasPorCartela;
 use App\Entity\Concurso\Vencedor\Vencedor;
 use App\Entity\Concurso\SorteioOficial\SorteioOficial;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -33,8 +33,8 @@ class Concurso
     /** @ORM\Embedded(class="App\Entity\Concurso\Periodo\Periodo") */
     private Periodo $periodo;
 
-    /** @ORM\Embedded(class="App\Entity\Concurso\QuantidadeDezenasPorCartela\QuantidadeDezenasPorCartela") */
-    private QuantidadeDezenasPorCartela $quantidadeDezenasPorCartela;
+    /** @ORM\Embedded(class="App\Entity\Concurso\DezenasPorCartela\DezenasPorCartela") */
+    private DezenasPorCartela $dezenasPorCartela;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Concurso\Cartela\Cartela", mappedBy="concurso", cascade={"remove", "persist"})
@@ -53,12 +53,12 @@ class Concurso
 
     public function __construct(
         string $descricao,
-        Periodo $periodo,
-        QuantidadeDezenasPorCartela $quantidadeDezenasPorCartela
+        string $periodo,
+        string $quantidadeDezenasPorCartela
     ) {
         $this->descricao = $descricao;
-        $this->periodo = $periodo;
-        $this->quantidadeDezenasPorCartela = $quantidadeDezenasPorCartela;
+        $this->periodo = new Periodo(new \DateTimeImmutable($periodo));
+        $this->dezenasPorCartela = new DezenasPorCartela($quantidadeDezenasPorCartela);
         $this->estado = new Aberto();
         $this->cartelas = new ArrayCollection();
         $this->sorteiosOficiais = new ArrayCollection();
@@ -91,13 +91,12 @@ class Concurso
         $cartelasPagas = $this->cartelas->filter(function($cartela) {
             return $cartela->statusPagamento() === true;
         });
-
         return $cartelasPagas;
     }
 
     public function dezenasPorCartela(): int
     {
-        return $this->quantidadeDezenasPorCartela->dezenasPorCartela();
+        return $this->dezenasPorCartela->total();
     }
 
     public function sorteiosOficiais(): Collection
@@ -119,7 +118,7 @@ class Concurso
     public function addCartela(Cartela $cartela): void
     {
         $this->checarSeConcursoEstaAberto();
-        $this->quantidadeDezenasPorCartela->validarQuantidadeDezenasCartela($cartela);
+        $this->dezenasPorCartela->validarQuantidadeDezenasCartela($cartela);
         $this->cartelas->add($cartela);
         $cartela->addConcurso($this);
     }
@@ -135,27 +134,53 @@ class Concurso
 
     public function addSorteioOficial(SorteioOficial $sorteioOficial): void
     {
-        $this->checarSeConcursoEstaEmAndamento();
+        if(!$this->checarSeConcursoEstaEmAndamento()){return;};
         if($this->checarSesorteioOficialJaFoiAdd($sorteioOficial)){return;}
         $this->sorteiosOficiais->add($sorteioOficial);
         $sorteioOficial->addConcurso($this);
         $this->pontuaCartelas();
-        $this->verificarSeHouveVencedores();
+        $this->checarSeHouveCartelaVencedora();
     }
 
-    public function checarSeConcursoEstaEmAndamento(): void
+    private function checarSeConcursoEstaEmAndamento(): bool
     {
         if (!$this->estado instanceof EmAndamento) {
-            throw new \DomainException(
-                "Concurso com estado " . $this->estado . " não está aptos à apostas e sorteios"
-            );
+            return false;
         }
+        return true;
+    }
+
+    private function checarSesorteioOficialJaFoiAdd(SorteioOficial $sorteioOficial): bool
+    {
+        if ($this->sorteiosOficiais->exists(function($key, $element) use ($sorteioOficial) {
+            return $element->numeroConcursoOficial() === $sorteioOficial->numeroConcursoOficial();
+        })) {
+            return true;
+        }
+        return false;
     }
 
     public function pontuaCartelas(): void
     {
         foreach ($this->cartelas as $cartela) {
             $cartela->pontuar();
+        }
+    }
+
+    private function cartelasVencedoras(): ?Collection
+    {
+        $cartelasVencedoras = $this->cartelas->filter(function($cartela) {
+            return $cartela->pontos() == $this->dezenasPorCartela->total();
+        });
+        return $cartelasVencedoras;
+    }
+
+    private function checarSeHouveCartelaVencedora()
+    {
+        $cartelasVencedoras = $this->cartelasVencedoras();
+        if($cartelasVencedoras->count() > 0){
+            $this->encerra();
+            $this->premiacao->premia($cartelasVencedoras);
         }
     }
 
@@ -169,28 +194,6 @@ class Concurso
             );
         }
         return $dezenasSorteadas;
-    }
-
-    private function checarSesorteioOficialJaFoiAdd(SorteioOficial $sorteioOficial): bool
-    {
-        if ($this->sorteiosOficiais->exists(function($key, $element) use ($sorteioOficial) {
-            return $element->numeroConcursoOficial() === $sorteioOficial->numeroConcursoOficial();
-        })) {
-            return true;
-        }
-        return false;
-    }
-
-    private function verificarSeHouveVencedores()
-    {
-        $cartelasVencedoras = $this->cartelas->filter(function($cartela) {
-            return $cartela->pontos() == $this->quantidadeDezenasPorCartela->dezenasPorCartela();
-        });
-
-        if ($cartelasVencedoras->count() > 0){
-            $this->encerra();
-            $this->premiacao->premia($cartelasVencedoras);
-        }
     }
 
     public function atualizarPremiacao(): void
@@ -213,4 +216,5 @@ class Concurso
     {
         return $this->premiacao->premioMaisPontos();
     }
+
 }

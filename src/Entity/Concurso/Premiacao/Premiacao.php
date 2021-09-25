@@ -75,7 +75,7 @@ class Premiacao
 
     private function caulcarPremioDividido($cartelasVencedoras): float
     {
-        $premio = ($this->premioMaisPontos / $cartelasVencedoras->count());
-        return $premio;
+        $this->premioPorGanhador = ($this->premioMaisPontos / $cartelasVencedoras->count());
+        return $this->premioPorGanhador;
     }
 }

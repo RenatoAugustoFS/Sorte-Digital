@@ -26,6 +26,10 @@ class AdicionarCartelaAoConcurso extends AbstractController
     public function handle(int $id, Request $request): Response
     {
         $concurso = $this->concursoRepository->find($id);
+        
+        if(is_null($concurso)){
+            return new Response('', Response::HTTP_NOT_FOUND);
+        }
 
         $dezenas = $request->request->get('cb');
         $nomeJogador = $request->request->get('nome');

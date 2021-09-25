@@ -44,6 +44,6 @@ class Vencedor
 
     public function __toString(): string
     {
-        return $this->cartela->nomeJogador() . ' / '  . $this->cartela->telefoneJogador();
+        return $this->cartela->nomeJogador() . ' - ' . $this->cartela->telefoneJogador();
     }
 }

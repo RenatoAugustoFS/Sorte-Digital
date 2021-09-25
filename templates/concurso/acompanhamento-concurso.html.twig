@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="{{ asset('css/flaty-responsive.css') }}">
     <link rel="shortcut icon" href="{{ asset('img/favicon.png') }}">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
-    <meta property="og:description" content="MEGAPALMEIRA - CONCURSO {{concurso.id}}">
+    <meta property="og:description" content="Cartela Premiada - CONCURSO {{concurso.id}}">
     <meta property="og:title" content="Acompanhamento de sorteio - Concurso:  {{concurso.id}}">
     <meta property="og:url" content="https://www.sortedigital.com.br">
     <meta property="og:image" content="{{ asset('/img/letsDive.png') }}">
@@ -43,7 +43,7 @@
             <a class="show-tooltip" title="Entrar no Grupo Whatssapp" href="https://chat.whatsapp.com/41jsxh06XowKTMBF9ii4rq">
               <button class="btn btn-success2"><i class="fa fa-whatsapp"></i>Entrar no Grupo do  Whatsapp</button>
             </a>
-            <a class="show-tooltip" title="Instagram" href="http://www.instagram.com/megapalmeira">
+            <a class="show-tooltip" title="Instagram" href="http://www.instagram.com/">
               <button class="btn btn-warning2"><i class="fa fa-instagram" target='_blank'></i>Instagram</button>
             </a>
             <a class="show-tooltip" title="REGRAS" href="javascript:abreDetalhes('000036')">
@@ -53,7 +53,7 @@
         </div>
       </div>
 
-    {% if concurso.estado == 'aberto'%}
+    {% if concurso.estado == 'Aberto'%}
       <div class="alert alert-success">
         <button class="close" data-dismiss="alert">×</button>
           <h2 style="color: red">Início: {{concurso.dataAbertura}}</h2>
@@ -63,11 +63,11 @@
           - HAVENDO MAIS DE UM GANHADOR SERÁ FEITO A DIVISÃO IGUALMENTE<BR>
           <a class="show-tooltip" title="Nova Aposta" href="/formulario-adicionar-cartela/{{ concurso.id }}"><br>
           <button class="btn btn-success2"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-plus"></i> Faça Seu Jogo Agora!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button></a><br>
-          <h2 style="color: red"> Valor da cota: R$ 10,00 ou 3 cotas por R$ 25,00</h2>
+          <h2 style="color: red"> Valor da cota: R$ {{ concurso.valorCota }},00 ou 3 cotas por R$ 25,00</h2>
       </div>
     {% endif %}
     
-    <div class="alert alert-{{ (concurso.estado == 'fechado') ? 'danger' : 'success' }}">
+    <div class="alert alert-{{ (concurso.estado == 'Fechado') ? 'danger' : 'success' }}">
       <button class="close" data-dismiss="alert">×</button>
       <strong>Concurso {{concurso.estado}}</strong> Acompanhe os resultados!
     </div>
@@ -80,23 +80,39 @@
           </div>
           <div class="box-content">
             <b><span style="font-size: 20px">Prêmio {{concurso.dezenasPorCartela}} pts :</span>
-            </b>R$ <span style="font-size: 36px;weight: bold;color: red">{{concurso.premiacaoMaisPontos}}</span><br>
-            
+            </b>R$ <span style="font-size: 36px;weight: bold;color: red">{{concurso.premiacaoMaisPontos}},00</span><br>
+            <!--
             <b>Prêmio  9 pts  : </b> R$
             <span style="font-size: 24px;weight: bold;color: orange">622,50</span>
             <br>
-              
+
             <br>
             <b>Prêmio 0 ponto: </b> R$
             <span style="font-size: 18px;weight: bold;color: orange">207,50 + R$ 1.558,00(acumulado)</span>
             <br>
-              
-          <span style="weight: bold;color: red"> OBS: Caso não haja jogos com 0 ponto, o prêmio irá acumular para o próximo grupo.</span><br>
+             -->
+          <span style="weight: bold;color: red"> OBS: Prêmios não acumulam! <br>
+            O Concurso só será encerrado quando houver um ganhador do prêmio total.<br>
+            Havendo mais de um ganhador o prêmio será dividido igualmente
+          </span><br>
             <b>Participantes : </b> <span style="font-size: 16px;weight: bold;color: green">{{concurso.cartelasPagas.count}} apostas pagas</span><br>
+            <b>Situacão:
+            </b> <span style="font-size: 16px;weight: bold;color: green">Concurso {{concurso.estado}}<br>
+            {% if concurso.estado == 'Fechado' %}
+            <b>{{concurso.dezenasPorCartela}} Pontos: </b>{{concurso.vencedores.count}} apostador(es)<br>
+            <b>Prêmio por ganhador: </b> R${{ (concurso.premiacaoMaisPontos / concurso.vencedores.count)|number_format }},00<br>
+            <b>Ganhador(es) {{ concurso.dezenasPorCartela }} Dezenas:<br>
+            {% for vencedor in concurso.vencedores %}
+              {% if is_granted('ROLE_ADMIN') %}
+              </b>{{ vencedor }}<br>
+              {% else %}
+              </b>({{ vencedor[:-4] }}-XXXX)<br>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+          </span>
 
-          <b>Situacão: </b> <span style="font-size: 16px;weight: bold;color: green">
-            Concurso {{concurso.estado}}<br><b>{{concurso.dezenasPorCartela}} Pontos: </b>{{concurso.vencedores.count}} apostador(es)<br>
-          <b>Prêmio por ganhador: </b> R$2.490,00<br><b>Ganhador(es) 10 Dezenas: <br></b> Fabio do Coco 02<br><br>      </span> </div>
+        </div>
     </div>
 
     <div class="box">
@@ -117,7 +133,7 @@
               
               {% for sorteioOficial in sorteiosOficiais %}
                 <tr class="table-flag-">
-                  <td width="50px">{{sorteioOficial.numeroConcursoOficial}}<br>15/09/2021</td>
+                  <td width="50px">{{sorteioOficial.numeroConcursoOficial}}<br>{{ sorteioOficial.dataConcurso }}</td>
                   <td>{% for dezena in sorteioOficial.dezenas %}<div class="circuloSorteio">{{dezena}}</div>{% endfor %}</td>
                   <td>{{sorteioOficial}}</td>
                 </tr>
@@ -192,7 +208,7 @@
 
     <footer>
       <p>Bolão sem fins lucrativos - Taxa de Administração apenas para cobrir as despesas operacionais</p>
-      <p>&copy 2021 - MegaPalmeira</p>
+      <p>&copy 2021 - Sorte Digital</p>
     </footer>
     <a id="btn-scrollup" class="btn btn-circle btn-lg" href="#"><i class="fa fa-chevron-up"></i></a>
   </div>
@@ -200,18 +216,13 @@
 
 <!--basic scripts-->
   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-  <script>window.jQuery || document.write('<script src="assets/jquery/jquery-2.0.3.min.js"><\/script>')</script>
-  <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-  <script src="assets/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-  <script src="assets/jquery-cookie/jquery.cookie.js"></script>
-
-
-<!--page specific plugin scripts-->
-  <script type="text/javascript" src="assets/data-tables/jquery.dataTables.js"></script>
-  <script type="text/javascript" src="assets/data-tables/bootstrap3/dataTables.bootstrap.js"></script>
-  <!--flaty scripts-->
-  <script src="js/flaty.js"></script>
-  <script src="js/flaty-demo-codes.js"></script>
+  <script src="{{ asset('assets/bootstrap/js/bootstrap.min.js') }}"></script>
+  <script src="{{ asset('assets/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
+  <script src="{{ asset('assets/jquery-cookie/jquery.cookie.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('assets/data-tables/jquery.dataTables.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('assets/data-tables/bootstrap3/dataTables.bootstrap.js') }}"></script>
+  <script src="{{ asset('js/flaty.js') }}"></script>
+  <script src="{{ asset('js/flaty-demo-codes.js') }}"></script>
 </body>
 </html>
 

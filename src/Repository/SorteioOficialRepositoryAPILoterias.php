@@ -8,7 +8,7 @@ use App\Entity\Concurso\SorteioOficial\SorteioOficialRepository;
 
 class SorteioOficialRepositoryAPILoterias implements SorteioOficialRepository
 {
-    const URL_QUINA = "http://apiloterias.com.br/app/resultado?loteria=quina&token=79wY8WeG0ajGwl5";
+    const URL_QUINA = "http://apiloterias.com.br/app/resultado?loteria=quina&token=79wY8WeG0ajGwl5&concurso=5401";
     const URL_MEGASENA = "http://apiloterias.com.br/app/resultado?loteria=megasena&token=79wY8WeG0ajGwl5";
 
     public function buscarResultadoOficialQuina(): Quina
@@ -18,7 +18,8 @@ class SorteioOficialRepositoryAPILoterias implements SorteioOficialRepository
         $this->checarErroNaRespostaRequisicao($respostaApi);
         return new Quina(
             $respostaApi['dezenas'],
-            $respostaApi['numero_concurso']
+            $respostaApi['numero_concurso'],
+            new \DateTimeImmutable($respostaApi['data_concurso'])
         );
     }
 
@@ -29,7 +30,8 @@ class SorteioOficialRepositoryAPILoterias implements SorteioOficialRepository
         $this->checarErroNaRespostaRequisicao($respostaApi);
         return new MegaSena(
             $respostaApi['dezenas'],
-            $respostaApi['numero_concurso']
+            $respostaApi['numero_concurso'],
+            new \DateTimeImmutable($respostaApi['data_concurso'])
         );
     }
 

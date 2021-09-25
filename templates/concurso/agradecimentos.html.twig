@@ -6,31 +6,17 @@
     <title>Dashboard - MegaPalmeira </title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-
-    <!--base css styles-->
     <link rel="stylesheet" href="{{ asset('assets/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     <link rel="stylesheet" href="{{ asset('assets/font-awesome/css/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{asset('css/custom.css')}}">
-
-    <!--page specific css styles-->
-
-    <!--flaty css styles-->
     <link rel="stylesheet" href="{{ asset('css/flaty.css') }}">
     <link rel="stylesheet" href="{{ asset('css/flaty-responsive.css') }}">
     <link rel="shortcut icon" href="{{ asset('img/favicon.png') }}">
 </head>
 <body>
 
-<!-- BEGIN Theme Setting -->
-<div id="theme-setting">
-
 </div>
-<!-- END Theme Setting -->
-
-<!-- BEGIN Navbar -->
 <div id="navbar" class="navbar">
     <button type="button" class="navbar-toggle navbar-btn collapsed" data-toggle="collapse" data-target="#sidebar">
         <span class="fa fa-bars"></span>
@@ -39,121 +25,53 @@
         <img src="{{asset('img/logoPequeno.png')}}">
     </a>
 
-    <!-- BEGIN Navbar Buttons -->
     <div align="center">
         <h2 style="color: white"></h2>
     </div>
-    <script>
-        function editaPerfil(idUsuario) {
-            $('#main-containerModal').html('Carregando...');
-            $('#main-containerModal').load('editaPerfil.php?idUsuario='+idUsuario);
-            $('#modalDetalhes').modal('show');
-            //$('#lblDetalhes').text('Nome do Aluno ');
-
-
-        }
-        function PrintContent()
-        {
-            var DocumentContainer = document.getElementById('main-containerModal');
-            var WindowObject = window.open("", "PrintWindow",
-                "width=700,height=650,top=50,left=50,toolbars=no,scrollbars=yes,status=no,resizable=yes");
-            var strHtml = "<html>\n<head>\n <link rel=\"stylesheet\" type=\"text/css\"  href=\"assets/bootstrap/css/bootstrap.min.css\">\n<link rel=\"stylesheet\" type=\"text/css\"  href=\"css/flaty.css\">\n</head><body><div style=\"testStyle\">\n"
-                + DocumentContainer.innerHTML + "\n</div>\n</body>\n</html>";
-
-            WindowObject.document.writeln(strHtml);
-
-            WindowObject.document.close();
-            WindowObject.focus();
-            WindowObject.print();
-            WindowObject.close();
-        }
-    </script>
-
-    <!-- END Navbar Buttons -->
 </div>
-<!-- END Navbar -->
-
-<!-- BEGIN Container -->
 <div class="container" id="main-container">
-    <!-- BEGIN Sidebar -->
-
-    <!-- END Sidebar -->
-
-    <!-- BEGIN Content -->
     <div id="main-content">
-        <!-- BEGIN Page Title -->
         <div class="page-title">
             <div>
                 <h1><i class="fa fa-tachometer"></i> Acompanhamento de Jogos</h1>
                 <h3> Grupo: 000037 - GRUPO 37</h3>
             </div>
         </div>
-        <!-- END Page Title -->
-
-        <!-- BEGIN Main Content -->
         <div class="row">
 
             <div class="alert alert-success">
 
-                <strong>APOSTA RECEBIDA</strong> Recebemos sua aposta, mas para validar o jogo você precisa fazer o pagamento.<br><br>Formas de Recolhimento:<br> Recebimento:
+                <strong>APOSTA RECEBIDA</strong> Recebemos sua aposta, mas para validar o jogo você precisa fazer o pagamento.<br>
+                <br><strong>Formas de Recolhimento:</strong><br>
                 Entre em contato com o administrador para que ele recolha <br>ou<br>
-                TransferÃªncia bancÃ¡ria: <br>
+                Transferência bancária: PIX: <strong>10040b13-612e-4f14-9634-01a891ae4377<strong><br>
                 <br>
 
-                Banco Do Brasil<br>
-                Ag 0136-8<br>
-                Conta corrente: <br>
-                27988-9<br>
-                Rafael Medeiros Paranhos<br>
-                <br>
-                ou
-                <br>
-                Caixa:<br>ag 0057<br>?Poupanca op 013<br>
-                Conta 10223-0<br>
-                <br>
-
-                ApÃ³s a transferÃªncia, envie o comprovante para o administrador ou para o grupo do bolÃ£o no whatsapp junto com
-                o TOKEN de sua aposta: {{ tokenCartela }}.
-
-
-
-
-
-
+                Após a transferência, envie o comprovante para o administrador ou para o grupo do bolão no whatsapp junto com
+                o TOKEN de sua aposta: <strong><h3 style="font-size: 50px;">TOKEN: {{ tokenCartela }}</h3></strong>
             </div>
             <br>
             <div align=center>
-                <a class="show-tooltip" title="Nova Aposta" href="apostasIncluir.php?idGrupo=000037&chave=b067c1378a7880766929156f48772605&idVendedor="><br>
+                <a class="show-tooltip" title="Nova Aposta" href="/formulario-adicionar-cartela/{{concursoId}}"><br>
                     <button class="btn btn-success2"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-plus"></i> Fazer Novo Jogo!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button></a>
 
-                <a class="show-tooltip" title="Acompanhamento" href="acompanhamento.php?idGrupo=000037&idVendedor="><button class="btn btn-warning"><i class="fa fa-globe"></i> Página de Acompanhamento</button></a>
+                <a class="show-tooltip" title="Acompanhamento" href="/concursos/{{ concursoId }}"><button class="btn btn-warning"><i class="fa fa-globe"></i> Página de Acompanhamento</button></a>
             </div>
-
-
-            <!-- END Content -->
         </div>
 
-        <!--basic scripts-->
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="assets/jquery/jquery-2.0.3.min.js"><\/script>')</script>
-        <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-        <script src="assets/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-        <script src="assets/jquery-cookie/jquery.cookie.js"></script>
-
-        <!--page specific plugin scripts-->
-        <script src="assets/flot/jquery.flot.js"></script>
-        <script src="assets/flot/jquery.flot.resize.js"></script>
-        <script src="assets/flot/jquery.flot.pie.js"></script>
-        <script src="assets/flot/jquery.flot.stack.js"></script>
-        <script src="assets/flot/jquery.flot.crosshair.js"></script>
-        <script src="assets/flot/jquery.flot.tooltip.min.js"></script>
-        <script src="assets/sparkline/jquery.sparkline.min.js"></script>
-
-        <!--flaty scripts-->
-        <script src="js/flaty.js"></script>
-        <script src="js/flaty-demo-codes.js"></script>
-
-
-
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="assets/jquery/jquery-2.0.3.min.js"><\/script>')</script>
+<script src="{{ asset('assets/bootstrap/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('assets/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
+<script src="{{ asset('assets/jquery-cookie/jquery.cookie.js') }}"></script>
+<script src="{{ asset('assets/flot/jquery.flot.js') }}"></script>
+<script src="{{ asset('assets/flot/jquery.flot.resize.js') }}"></script>
+<script src="{{ asset('assets/flot/jquery.flot.pie.js') }}"></script>
+<script src="{{ asset('assets/flot/jquery.flot.stack.js') }}"></script>
+<script src="{{ asset('assets/flot/jquery.flot.crosshair.js') }}"></script>
+<script src="{{ asset('assets/flot/jquery.flot.tooltip.min.js') }}"></script>
+<script src="{{ asset('assets/sparkline/jquery.sparkline.min.js') }}"></script>
+<script src="{{ asset('js/flaty.js') }}"></script>
+<script src="{{ asset('js/flaty-demo-codes.js') }}"></script>
 </body>
 </html>
