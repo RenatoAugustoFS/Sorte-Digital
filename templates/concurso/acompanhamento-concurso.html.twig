@@ -29,7 +29,7 @@
         <button type="button" class="navbar-toggle navbar-btn collapsed" data-toggle="collapse" data-target="#sidebar">
             <span class="fa fa-bars"></span>
         </button>
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="/">
           <img src="{{asset('img/logoPequeno.png')}}">
         </a>
     </div>
@@ -151,14 +151,14 @@
         <div class="box-title">
           <h3>Jogos </h3>
             <div class="box-tool">
-                <form action="" method="POST" class="search-form">
+                <for action="#" method="POST" class="search-form">
                   <span class="search-pan">
                     <input type="text" name="busca" placeholder="Buscar ..." autocomplete="off">
                     <button type="submit">
                       <i class="fa fa-search"></i>
                     </button>
                   </span>
-                </form>
+                </for>
             </div>
           </div>
           <div class="box-content">
@@ -179,7 +179,12 @@
                   <!--<tr style="color:black; background-color: #06d390"><th   style="color:black; background-color: #06d390">10 PONTOS  </th>  <th></th>  <th style="color:black">1 apostas</th> <th></th> </tr><tr class="table-flag-green">-->
                   {% for cartela in cartelas %}
                     <tr>
-                      <td>{{cartela.nomeJogador}}<br>({{cartela.telefoneJogador}})</td>
+                      <td>{{cartela.nomeJogador}}<br>
+                        {% if is_granted('ROLE_ADMIN') %}
+                        ({{ cartela.telefoneJogador}})</td>
+                        {% else %}
+                          ({{ cartela.telefoneJogador[:-4]}}XXXX)</td>
+                        {% endif %}
                       <td>
                         <span class="badge badge-{{ (cartela.statusPagamento == true) ? 'success' : 'important' }}">
                           {{ (cartela.statusPagamento == true) ? 'Pago' : 'Aguardando' }}

@@ -7,8 +7,8 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ asset('assets/bootstrap/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     <link rel="stylesheet" href="{{ asset('assets/font-awesome/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     <link rel="stylesheet" href="{{asset('css/custom.css')}}">
     <link rel="stylesheet" href="{{ asset('css/flaty.css') }}">
     <link rel="stylesheet" href="{{ asset('css/flaty-responsive.css') }}">
@@ -21,7 +21,7 @@
     <button type="button" class="navbar-toggle navbar-btn collapsed" data-toggle="collapse" data-target="#sidebar">
         <span class="fa fa-bars"></span>
     </button>
-    <a class="navbar-brand" href="#">
+    <a class="navbar-brand" href="/">
         <img src="{{asset('img/logoPequeno.png')}}">
     </a>
 
@@ -34,7 +34,7 @@
         <div class="page-title">
             <div>
                 <h1><i class="fa fa-tachometer"></i> Acompanhamento de Jogos</h1>
-                <h3> Grupo: 000037 - GRUPO 37</h3>
+                <h3> Concurso: {{ concursoId }}</h3>
             </div>
         </div>
         <div class="row">
