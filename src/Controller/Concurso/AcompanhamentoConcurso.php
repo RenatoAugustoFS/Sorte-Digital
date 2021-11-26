@@ -22,20 +22,13 @@ class AcompanhamentoConcurso extends AbstractController
             return new Response('', Response::HTTP_NOT_FOUND);
         }
 
-        $dezenasSorteadas = [];
-        foreach ($concurso->sorteiosOficiais() as $sorteioOficial){
-            foreach ($sorteioOficial->dezenas() as $dezena ) {
-                $dezenasSorteadas[] = $dezena;
-            }
-        }
-
         return $this
             ->render(
                 '/concurso/acompanhamento-concurso.html.twig', [
                     'concurso' => $concurso,
                     'cartelas' => $concurso->cartelas(),
                     'sorteiosOficiais' => $concurso->sorteiosOficiais(),
-                    'dezenasSorteadas' => $dezenasSorteadas,
+                    'dezenasSorteadas' => $concurso->dezenasOficiaisSorteadas(),
                 ]
             );
     }

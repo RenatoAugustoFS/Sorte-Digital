@@ -712,12 +712,8 @@
 
 
 <script>
-
 $().ready(function () {
-
-		  // ##########
-
-		var SPMaskBehavior = function (val) {
+	    var SPMaskBehavior = function (val) {
 		  return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
 		},
 		spOptions = {
@@ -774,13 +770,14 @@ $().ready(function () {
         });
 	 });
 </script>
-  <script>
-       $('input[type=checkbox]').on('change', function (e) {
-          if ($('input[type=checkbox]:checked').length > {{ dezenasPorCartela }}) {
-              $(this).prop('checked', false);
-              alert("Escolha {{ dezenasPorCartela }} Dezenas dezenas");
-           }
-        });
+
+<script>
+   $('input[type=checkbox]').on('change', function (e) {
+      if ($('input[type=checkbox]:checked').length > {{ dezenasPorCartela }}) {
+          $(this).prop('checked', false);
+          alert("Escolha {{ dezenasPorCartela }} Dezenas dezenas");
+       }
+    });
 </script>
 
 
