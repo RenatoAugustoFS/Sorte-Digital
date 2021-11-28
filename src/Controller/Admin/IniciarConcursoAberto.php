@@ -34,7 +34,7 @@ class IniciarConcursoAberto extends AbstractController
         foreach ($concursosAbertos as $concurso) {
             $dataAbertura = $concurso->dataAbertura();
             $dataAtual = new \DateTime();
-            if ($dataAtual->format('d/m/Y') == $dataAbertura){
+            if ($dataAtual->format('d/m/Y') >= $dataAbertura){
                 $concurso->inicia();
                 $this->removedorCartelasNaoPagas->execute($concurso->cartelas());
                 $this->entityManager->persist($concurso);
