@@ -81,7 +81,7 @@ class Concurso
         return $this->cartelas;
     }
 
-    public function valorCota(): float
+    public function valorCota(): float|int
     {
         return 10;
     }
