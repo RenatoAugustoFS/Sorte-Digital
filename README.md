@@ -48,5 +48,5 @@ Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 ---
 
 <h4 align="center">
-    Feito com 💜 by <a href="https://www.linkedin.com/in/RenatoAugustoFS/" target="_blank">Renato Augusto</a>
+    Feito com muito💜 by <a href="https://www.linkedin.com/in/RenatoAugustoFS/" target="_blank">Renato Augusto</a>
 </h4>
